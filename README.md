@@ -1,5 +1,8 @@
 # bookbook
 
+## Project description
+description
+
 ## Project setup
 ```
 npm install
