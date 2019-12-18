@@ -31,8 +31,8 @@ export default {
       drawer: false,
       items: [
         { title: "Home", to: "/" },
-        { title: "My books", to: "/search" },
-        { title: "About", to: "/overview" }
+        { title: "My books", to: "/books" },
+        { title: "About", to: "/about" }
       ]
     };
   },
