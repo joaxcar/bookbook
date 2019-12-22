@@ -30,8 +30,8 @@ export default {
       title: "Bookbook",
       drawer: false,
       items: [
-        { title: "Home", to: "/" },
-        { title: "My books", to: "/books" },
+        { title: "Welcome", to: "/" },
+        { title: "My books", to: "/home" },
         { title: "About", to: "/about" }
       ]
     };
