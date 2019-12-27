@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   props: {
     links: {
@@ -60,11 +61,12 @@ export default {
     title: {
       type: String,
       default: "Title"
-    },
-    user: {
-      type: String,
-      default: "No user"
     }
+  },
+  computed: {
+    ...mapGetters({
+      user: "user"
+    })
   },
   data() {
     return {};
