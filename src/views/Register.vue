@@ -5,10 +5,12 @@
         <v-card>
           <v-card-title>Register</v-card-title>
           <v-card-text>
-            <div v-if="error" class="alert alert-danger">{{ error }}</div>
+            <div v-if="error" class="alert alert-danger red--text">
+              {{ error }}
+            </div>
             <form>
-              <label for="name" class="col-md-4 col-form-label text-md-right"
-                >Name</label
+              <label for="name" class="col-md-4 col-form-label text-md-right">
+                Name</label
               >
 
               <v-text-field
@@ -22,8 +24,8 @@
                 v-model="form.name"
               />
 
-              <label for="email" class="col-md-4 col-form-label text-md-right"
-                >Email</label
+              <label for="email" class="col-md-4 col-form-label text-md-right">
+                Email</label
               >
 
               <v-text-field
@@ -40,8 +42,9 @@
               <label
                 for="password"
                 class="col-md-4 col-form-label text-md-right"
-                >Password</label
               >
+                Password
+              </label>
 
               <v-text-field
                 id="password"
@@ -51,7 +54,6 @@
                 required
                 :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
                 :rules="[rules.required, rules.min]"
-                label="Normal with hint text"
                 hint="At least 8 characters"
                 counter
                 @click:append="showPass = !showPass"

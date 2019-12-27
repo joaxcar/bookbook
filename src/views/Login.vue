@@ -3,9 +3,11 @@
     <v-row>
       <v-col>
         <v-card>
-          <v-card-title>Register</v-card-title>
+          <v-card-title>Login</v-card-title>
           <v-card-text>
-            <div v-if="error" class="alert alert-danger">{{ error }}</div>
+            <div v-if="error" class="alert alert-danger red--text">
+              {{ error }}
+            </div>
             <form>
               <label for="email" class="col-md-4 col-form-label text-md-right"
                 >Email</label
@@ -35,14 +37,13 @@
                 name="password"
                 required
                 :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
-                label="Normal with hint text"
                 hint="At least 8 characters"
                 counter
                 @click:append="showPass = !showPass"
                 v-model="form.password"
               />
 
-              <v-btn @click="submit" class="btn btn-primary">Register</v-btn>
+              <v-btn @click="submit" class="btn btn-primary">Login</v-btn>
             </form>
           </v-card-text>
         </v-card>
@@ -70,7 +71,7 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.form.email, this.form.password)
         .then(() => {
-          this.$router.replace({ name: "Home" });
+          this.$router.replace({ name: "Dashboard" });
         })
         .catch(err => {
           this.error = err.message;

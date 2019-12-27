@@ -17,9 +17,15 @@
 import NavigationBar from "@/components/NavigationBar";
 import NavigationDrawer from "@/components/NavigationDrawer";
 import Footer from "@/components/Footer";
+import { mapGetters } from "vuex";
 
 export default {
   name: "App",
+  computed: {
+    ...mapGetters({
+      user: "user"
+    })
+  },
   components: {
     "navigation-bar": NavigationBar,
     "navigation-drawer": NavigationDrawer,
@@ -30,7 +36,7 @@ export default {
       title: "Bookbook",
       drawer: false,
       items: [
-        { title: "Welcome", to: "/" },
+        { title: "Dashboard", to: "/dashboard" },
         { title: "My books", to: "/home" },
         { title: "About", to: "/about" }
       ]

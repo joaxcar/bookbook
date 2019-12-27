@@ -22,7 +22,7 @@
             </v-row>
             <v-row>
               <v-col justify="center" align="center">
-                <v-btn dark outlined class="font-weight-bold">
+                <v-btn dark outlined class="font-weight-bold" to="/register">
                   Create account
                 </v-btn>
               </v-col>
@@ -40,7 +40,7 @@
               <h2 class="font-weight-bold">
                 Find and store all your books
               </h2>
-              No more restrictions, no more limits
+              Search for ISBN or by barcode scanner
             </v-col>
           </v-row>
           <v-row>
@@ -75,22 +75,21 @@
           <v-flex xs12 sm4>
             <v-card class="elevation-0 transparent">
               <v-card-title primary-title class="layout justify-center">
-                <div class="headline">Company info</div>
+                <div class="headline">Group info</div>
               </v-card-title>
               <v-card-text>
-                We are not a company. We hate companies. Just imagine us like
-                the guys from the Silicon Valley series.
+                We are a group of students doing this for the first time. Dont
+                expect greatnes!
               </v-card-text>
             </v-card>
           </v-flex>
           <v-flex xs12 sm4 offset-sm1>
             <v-card class="elevation-0 transparent">
               <v-card-title primary-title class="layout justify-center">
-                <div class="headline">We are hiring</div>
+                <div class="headline">Books</div>
               </v-card-title>
               <v-card-text>
-                Are you a creative person? Do you like techy stuff? Complete the
-                email form by writing your skills and interests
+                Do you like books? We do! And want to help you store them.
               </v-card-text>
             </v-card>
           </v-flex>
@@ -120,18 +119,18 @@ export default {
       infobox: [
         {
           title: "Search for books",
-          icon: "arrow_up",
+          icon: "mdi-book",
           text: `This text explains how a search is made. How it is awsome, and how to move forward!`
         },
         {
           title: "Store your thoughts",
-          icon: "arrow_next",
-          text: `This text explains how a search is made. How it is awsome, and how to move forward!`
+          icon: "mdi-book-open-page-variant",
+          text: `This text explains how the data is stored. How it is awsome, and how to move forward!`
         },
         {
-          title: "Connect",
-          icon: "",
-          text: `This text explains how a search is made. How it is awsome, and how to move forward!`
+          title: "Organize",
+          icon: "mdi-book-open",
+          text: `This text explains how to organize books. How it is awsome, and how to move forward!`
         }
       ],
       book: {}
