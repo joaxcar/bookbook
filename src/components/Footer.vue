@@ -1,5 +1,5 @@
 <template>
-  <v-footer app>
+  <v-footer app absolute padless>
     <v-col class="text-center" cols="12">
       {{ new Date().getFullYear() }} — <strong>{{ title }}</strong>
     </v-col>

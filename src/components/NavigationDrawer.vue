@@ -1,16 +1,38 @@
 <template>
   <v-navigation-drawer v-model="drawer" app absolute temporary>
     <v-list>
-      <v-list-item v-for="item in links" :key="item.title" :to="item.to" link>
-        <v-list-item-content>
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+      <template v-if="user.loggedIn">
+        <v-list-item two-line>
+          <v-list-item-content>
+            <v-list-item-title>{{ user.data.displayName }}</v-list-item-title>
+            <v-list-item-subtitle>Logged In</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-content>
+            Sign out
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item v-for="item in links" :key="item.title" :to="item.to" link>
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </template>
+      <template v-else>
+        <v-list-item to="/login">
+          Login
+        </v-list-item>
+        <v-list-item to="/register">
+          Register
+        </v-list-item>
+      </template>
     </v-list>
   </v-navigation-drawer>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   props: {
     title: {
@@ -25,6 +47,11 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  computed: {
+    ...mapGetters({
+      user: "user"
+    })
   },
   data() {
     return {
