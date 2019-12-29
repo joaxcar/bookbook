@@ -20,8 +20,8 @@
         </v-btn>
         <v-menu offset-y>
           <template v-slot:activator="{ on }">
-            <v-btn class="d-none d-sm-flex" v-on="on" text>
-              Dropdown
+            <v-btn class="d-none d-sm-flex" v-on="on" text icon rounded>
+              <v-icon>mdi-dots-vertical</v-icon>
             </v-btn>
           </template>
           <v-list>

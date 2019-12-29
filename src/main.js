@@ -20,6 +20,9 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
+
+var db = firebase.firestore();
+
 firebase.auth().onAuthStateChanged(user => {
   store.dispatch("fetchUser", user);
 });
@@ -28,5 +31,6 @@ new Vue({
   router,
   store,
   vuetify,
+  db,
   render: h => h(App)
 }).$mount("#app");

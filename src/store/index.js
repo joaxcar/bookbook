@@ -8,6 +8,9 @@ export default new Vuex.Store({
     user: {
       loggedIn: false,
       data: null
+    },
+    data: {
+      books: []
     }
   },
   getters: {
@@ -21,6 +24,9 @@ export default new Vuex.Store({
     },
     SET_USER(state, data) {
       state.user.data = data;
+    },
+    ADD_BOOK(state, book) {
+      state.data.books.push(book);
     }
   },
   actions: {

@@ -102,15 +102,9 @@ export default {
             .then(() => {
               this.$router.push("/login");
             });
-          if (data.emailVerified === false) {
-            data.sendEmailVerification().then(function() {
-              alert("email verification sent to user");
-            });
-          }
         })
         .catch(err => {
           this.error = err.message;
-          alert("fel");
         });
     }
   }

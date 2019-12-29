@@ -1,33 +1,22 @@
 <template>
-  <v-container fluid class="pa-0 ma-0">
+  <v-container fluid pt-0>
     <section>
       <v-row justify="center" align="center" class="bg white--text">
-        <v-col cols="12">
-          <v-container>
-            <v-row>
-              <v-col justify="center" align="center">
-                <h1 class=" display-3 font-weight-bold">
-                  Bookbook
-                </h1>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col
-                justify="center"
-                align="center"
-                class=" display-1 font-weight-bold"
-              >
-                Make sense of your bookshelf
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col justify="center" align="center">
-                <v-btn dark outlined class="font-weight-bold" to="/register">
-                  Create account
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-container>
+        <v-col cols="12" align="center">
+          <h1 class="display-3 font-weight-bold d-none d-md-block ">
+            Bookbook
+          </h1>
+          <h1 class="display-2 font-weight-bold d-xs-block d-md-none">
+            Bookbook
+          </h1>
+          <div class=" display-1 font-weight-bold ma-4">
+            Make sense of your bookshelf
+          </div>
+          <div class="mt-10">
+            <v-btn dark outlined class="font-weight-bold" to="/register">
+              Get started
+            </v-btn>
+          </div>
         </v-col>
       </v-row>
     </section>
@@ -70,38 +59,34 @@
     </section>
 
     <section>
-      <v-container grid-list-xl fluid class="dark">
-        <v-layout row wrap justify-center class="my-5">
-          <v-flex xs12 sm4>
-            <v-card class="elevation-0 transparent">
-              <v-card-title primary-title class="layout justify-center">
-                <div class="headline">Group info</div>
-              </v-card-title>
-              <v-card-text>
-                We are a group of students doing this for the first time. Dont
-                expect greatnes!
-              </v-card-text>
-            </v-card>
-          </v-flex>
-          <v-flex xs12 sm4 offset-sm1>
-            <v-card class="elevation-0 transparent">
-              <v-card-title primary-title class="layout justify-center">
-                <div class="headline">Books</div>
-              </v-card-title>
-              <v-card-text>
-                Do you like books? We do! And want to help you store them.
-              </v-card-text>
-            </v-card>
-          </v-flex>
-        </v-layout>
-      </v-container>
+      <v-row>
+        <v-col>
+          <v-card class="elevation-0 transparent">
+            <v-card-title primary-title class="layout justify-center">
+              <div class="headline">Group info</div>
+            </v-card-title>
+            <v-card-text>
+              We are a group of students doing this for the first time. Dont
+              expect greatnes!
+            </v-card-text>
+          </v-card>
+          <v-card class="elevation-0 transparent">
+            <v-card-title primary-title class="layout justify-center">
+              <div class="headline">Books</div>
+            </v-card-title>
+            <v-card-text>
+              Do you like books? We do! And want to help you store them.
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
     </section>
 
     <v-row>
       <v-col align="center" class="display-1">Example API-data: </v-col>
     </v-row>
     <v-row>
-      <v-col v-if="book.items" align="center">{{
+      <v-col v-if="book.items" align="center" cols="12" class="testAPI">{{
         book.items[0].volumeInfo
       }}</v-col>
     </v-row>
@@ -152,13 +137,12 @@ export default {
   background: rgb(214, 220, 227);
 }
 .bg {
-  width: 100%;
   height: 400px;
-  top: 0;
-  left: 0;
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url("../assets/books.jpg") no-repeat center center;
   background-size: cover;
-  transform: scale(1.1);
+}
+.testAPI {
+  overflow-wrap: break-word;
 }
 </style>

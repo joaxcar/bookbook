@@ -3,7 +3,7 @@
     <v-row>
       <v-col>
         <v-text-field
-          label="Search"
+          label="Search (pres enter with prefilled content for example)"
           filled
           rounded
           v-model="searchText"
@@ -35,21 +35,21 @@
               </v-card-text>
             </div>
             <v-spacer />
-            <div>
-              <v-card-actions>
-                <v-btn color="purple" text>
-                  Add to library
-                </v-btn>
+          </div>
+          <div>
+            <v-card-actions>
+              <v-btn color="purple" text>
+                Add to library
+              </v-btn>
 
-                <v-spacer></v-spacer>
+              <v-spacer></v-spacer>
 
-                <v-btn icon @click="show = !show">
-                  <v-icon>{{
-                    show ? "mdi-chevron-up" : "mdi-chevron-down"
-                  }}</v-icon>
-                </v-btn>
-              </v-card-actions>
-            </div>
+              <v-btn icon @click="show = !show">
+                <v-icon>{{
+                  show ? "mdi-chevron-up" : "mdi-chevron-down"
+                }}</v-icon>
+              </v-btn>
+            </v-card-actions>
           </div>
           <div v-if="show">{{ item.volumeInfo.description }}</div>
         </v-card>
@@ -67,7 +67,7 @@ export default {
     return {
       message: "",
       books: [],
-      searchText: "",
+      searchText: "9781405924412",
       show: false
     };
   },
@@ -85,6 +85,7 @@ export default {
     getBook() {
       getBook(this.searchText).then(ret => {
         ret.items.map(book => (this.books = [book, ...this.books]));
+        this.searchText = "";
       });
     }
   }

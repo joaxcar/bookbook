@@ -3,11 +3,11 @@
     <navigation-drawer :value="drawer" :links="items" :title="title" />
     <navigation-bar @drawer="toggleDrawer" :links="items" :title="title" />
     <v-content fluid>
-      <v-container fluid class="ma-0 pa-0" fill-height>
-        <keep-alive>
-          <router-view />
-        </keep-alive>
-      </v-container>
+      <keep-alive>
+        <router-view>
+          <v-container fluid fill-height> </v-container>
+        </router-view>
+      </keep-alive>
     </v-content>
     <dpfooter :title="title" />
   </v-app>
