@@ -1,5 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import firebase from "firebase";
+import router from "../router";
 
 Vue.use(Vuex);
 
@@ -40,6 +42,19 @@ export default new Vuex.Store({
       } else {
         commit("SET_USER", null);
       }
+    },
+    signOut() {
+      firebase
+        .auth()
+        .signOut()
+        .then(
+          () => {
+            router.push("/");
+          },
+          function(error) {
+            this.console.log("Sign out error: ", error);
+          }
+        );
     }
   },
   modules: {}

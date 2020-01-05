@@ -52,6 +52,8 @@
 
 <script>
 import { mapGetters } from "vuex";
+import store from "../store";
+
 export default {
   props: {
     links: {
@@ -74,6 +76,9 @@ export default {
   methods: {
     toggleDrawer() {
       this.$emit("drawer");
+    },
+    signOut() {
+      store.dispatch("signOut");
     }
   }
 };

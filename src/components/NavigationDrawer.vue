@@ -9,7 +9,7 @@
           </v-list-item-content>
         </v-list-item>
         <v-list-item>
-          <v-list-item-content>
+          <v-list-item-content id="click" @click.prevent="signOut">
             Sign out
           </v-list-item-content>
         </v-list-item>
@@ -33,6 +33,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import store from "../store";
 export default {
   props: {
     title: {
@@ -62,6 +63,17 @@ export default {
     value: function() {
       this.drawer = !this.drawer;
     }
+  },
+  methods: {
+    signOut() {
+      store.dispatch("signOut");
+    }
   }
 };
 </script>
+
+<style scoped>
+#click:hover {
+  cursor: pointer;
+}
+</style>
