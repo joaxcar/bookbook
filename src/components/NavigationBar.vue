@@ -1,7 +1,17 @@
 <template>
   <v-app-bar dark fixed color="primary" app>
+    <!-- <v-toolbar-side-icon>
+      <v-img
+        class="mr-3"
+        src="@/assets/icons8-book-shelf-100-3.png"
+        height="50%"
+        width="50%"
+      >
+      </v-img>
+    </v-toolbar-side-icon> -->
+    <img src="@/assets/icons8-book-shelf-100-3.png" style="height: inherit;" />
     <v-toolbar-title>
-      <a href="/#/" class="white--text">
+      <a href="/#/" class="black--text font-weight-black">
         {{ title }}
       </a>
     </v-toolbar-title>
