@@ -10,7 +10,7 @@
   },
   "hosting": {
     "site": "bookbookfiretest",
-    "public": "public",
+    "public": "dist",
     "ignore": [
       "firebase.json",
       "**/.*",
