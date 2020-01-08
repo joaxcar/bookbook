@@ -1,0 +1,39 @@
+[debug] [2020-01-08T16:34:26.360Z] ----------------------------------------------------------------------
+[debug] [2020-01-08T16:34:26.362Z] Command:       /usr/bin/node /usr/bin/firebase serve
+[debug] [2020-01-08T16:34:26.362Z] CLI Version:   7.11.0
+[debug] [2020-01-08T16:34:26.362Z] Platform:      linux
+[debug] [2020-01-08T16:34:26.362Z] Node Version:  v13.5.0
+[debug] [2020-01-08T16:34:26.363Z] Time:          Wed Jan 08 2020 17:34:26 GMT+0100 (Central European Standard Time)
+[debug] [2020-01-08T16:34:26.363Z] ----------------------------------------------------------------------
+[debug] [2020-01-08T16:34:26.363Z] 
+[debug] [2020-01-08T16:34:26.369Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-01-08T16:34:26.369Z] > authorizing via signed-in user
+[debug] [2020-01-08T16:34:26.370Z] [iam] checking project bookfiretest for permissions ["firebase.projects.get"]
+[debug] [2020-01-08T16:34:26.371Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/bookfiretest:testIamPermissions  
+
+[debug] [2020-01-08T16:34:27.283Z] <<< HTTP RESPONSE 200
+[debug] [2020-01-08T16:34:27.286Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/bookfiretest  
+ 
+[debug] [2020-01-08T16:34:27.509Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/home/ps/bookbook'...
+[info] 
+[debug] [2020-01-08T16:34:27.535Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/bookfiretest/webApps/-/config  
+ 
+[warn] ⚠  Your requested "node" version "8" doesn't match your global version "13"
+[info] ✔  functions: Emulator started at http://localhost:5001
+[debug] [2020-01-08T16:34:28.242Z] <<< HTTP RESPONSE 200
+[info] i  functions: Watching "/home/ps/bookbook/functions" for Cloud Functions...
+[debug] [2020-01-08T16:34:28.278Z] [worker-pool] addWorker(~diagnostic~)
+[debug] [2020-01-08T16:34:28.279Z] [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2020-01-08T16:34:28.279Z] [worker-pool] submitWork(triggerId=)
+[debug] [2020-01-08T16:34:28.280Z] [worker-~diagnostic~-de203d90-bece-4884-afa3-ae55ac2b6ba5]: Assigning socketPath: /tmp/fire_emu_4101.sock
+[debug] [2020-01-08T16:34:28.281Z] [worker-~diagnostic~-de203d90-bece-4884-afa3-ae55ac2b6ba5]: BUSY
+[info] i  hosting[bookbookfiretest]: Serving hosting files from: public
+[info] ✔  hosting[bookbookfiretest]: Local server: http://localhost:5000
+[debug] [2020-01-08T16:34:28.592Z] [runtime-status] [4101] Functions runtime initialized. {"cwd":"/home/ps/bookbook/functions","node_version":"13.5.0"}
+[debug] [2020-01-08T16:34:28.593Z] [runtime-status] [4101] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true,"pubsub_emulator":true}
+[debug] [2020-01-08T16:34:28.596Z] [runtime-status] [4101] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.9.0","resolution":"/home/ps/bookbook/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-01-08T16:34:28.598Z] [runtime-status] [4101] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"/home/ps/bookbook/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-01-08T16:34:28.600Z] [runtime-status] [4101] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"/home/ps/bookbook/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-01-08T16:34:28.639Z] [worker-~diagnostic~-de203d90-bece-4884-afa3-ae55ac2b6ba5]: IDLE
