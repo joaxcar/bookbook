@@ -21,3 +21,6 @@ yarn-error.log*
 *.sw?
 
 .firebase
+
+# firestore test api key
+bookbook-dh2642-1c4f34f2fd63.json
