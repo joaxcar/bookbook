@@ -1,7 +1,7 @@
 <template>
   <div class="mybooks-container">
     <h1>My books View</h1>
-    <button @click.prevent="getDocs">test getDocs()</button>
+    <button @click.prevent="getDocs">add newbook</button>
   </div>
 </template>
 
@@ -13,10 +13,14 @@ export default {
   methods: {
     getDocs() {
       window.console.log("test logging");
+      const newbook = {
+        title: "maos lilla roda",
+        author: "maou zeTung"
+      };
       db.collection("mybooks")
-        .get()
-        .then(snapshot => {
-          window.console.log(snapshot.docs);
+        .add(newbook)
+        .then(() => {
+          window.console.log("added newbook");
         });
     }
   }
