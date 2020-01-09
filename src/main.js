@@ -22,6 +22,9 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
 const db = firebase.firestore();
+// not sure if still mandatory:
+//db.settings({ timestampsInSnapshots: true });
+export default db;
 
 firebase.auth().onAuthStateChanged(user => {
   store.dispatch("fetchUser", user);

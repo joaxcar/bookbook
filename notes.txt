@@ -11,3 +11,7 @@ fonts
 
 <!-- Initialize Firebase -->
 <script src="/__/firebase/init.js"></script>
+
+libs for firestore
+  vuefire 
+  vue easy firestore
