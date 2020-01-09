@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import firebase from "firebase";
 import router from "../router";
+import db from "@/main";
 
 Vue.use(Vuex);
 
@@ -55,6 +56,20 @@ export default new Vuex.Store({
             this.console.log("Sign out error: ", error);
           }
         );
+      // commit SETLOGGEDIN false
+    },
+    // change to array append to AVOID DUPLICATES
+    addBook({ commit }, volumeInfo) {
+      window.console.log("adding new book...");
+      db.collection("users")
+        .doc(firebase.auth().currentUser.uid)
+        .collection("mybooks")
+        .add(volumeInfo)
+        .catch(err => window.console.log("error: " + err))
+        .then(() => {
+          window.console.log("added " + volumeInfo.title);
+        });
+      commit("ADD_BOOK", volumeInfo);
     }
   },
   modules: {}
