@@ -1,26 +1,42 @@
 <template>
   <div class="mybooks-container">
     <h1>My books View</h1>
-    <button @click.prevent="getDocs">add newbook</button>
+    <button @click.prevent="addBook">add new book</button>
+    <button @click.prevent="getBooks">get books</button>
   </div>
 </template>
 
 <script>
+// imports could be moved to App.vue if needed elsewhere?
 import db from "@/main";
+import firebase from "firebase";
 
 export default {
   mounted() {},
   methods: {
-    getDocs() {
-      window.console.log("test logging");
+    addBook() {
+      window.console.log("adding new book...");
       const newbook = {
         title: "maos lilla roda",
         author: "maou zeTung"
       };
-      db.collection("mybooks")
+      db.collection("users")
+        .doc(firebase.auth().currentUser.uid)
+        .collection("mybooks")
         .add(newbook)
         .then(() => {
-          window.console.log("added newbook");
+          window.console.log("added new book");
+        });
+    },
+    getBooks() {
+      window.console.log("getting books...");
+      window.console.log("from uid: " + firebase.auth().currentUser.uid);
+      db.collection("users")
+        .doc(firebase.auth().currentUser.uid)
+        .collection("mybooks")
+        .get()
+        .then(QuerySnapShot => {
+          window.console.log(QuerySnapShot.docs);
         });
     }
   }

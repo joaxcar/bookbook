@@ -15,3 +15,15 @@ fonts
 libs for firestore
   vuefire 
   vue easy firestore
+
+
+INFÖR HANDLEDNING
+  - Authentication State Persistence: 
+    https://firebase.google.com/docs/auth/web/auth-state-persistence
+    # lägga till "remember me" option till login sidan
+    # tillåta anonym användning tills användaren signs up
+
+  - offline data persistence:
+    # vill vi cacha firestore data så användaren kan fortsätta tsv om anslutning bryts? 
+      - nej tror jag ändå
+    
