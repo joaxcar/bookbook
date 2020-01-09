@@ -21,3 +21,9 @@ yarn-error.log*
 *.sw?
 
 .firebase
+
+# service account keys
+bookfiretest-firebase-adminsdk-hs0kg-b5f1e46d1b.json
+bookbook-dh2642-1c4f34f2fd63.json
+
+notes.txt

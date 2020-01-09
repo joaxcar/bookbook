@@ -2,3 +2,6 @@ fonts
   https://fonts.google.com/specimen/Neucha
   https://fonts.google.com/specimen/Patrick+Hand+SC
 
+libs for firestore
+  vuefire 
+  vue easy firestore
