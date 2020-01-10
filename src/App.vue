@@ -37,7 +37,7 @@ export default {
       drawer: false,
       items: [
         { title: "Dashboard", to: "/dashboard" },
-        { title: "My books", to: "/home" },
+        { title: "My books", to: "/mybooks" },
         { title: "About", to: "/about" }
       ]
     };
