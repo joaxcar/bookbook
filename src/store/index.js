@@ -13,10 +13,9 @@ export default new Vuex.Store({
       data: null
     },
     data: {
-      books: [],
-      // FIX HERE
-      unsubscribeFunction: null
-    }
+      books: []
+    },
+    unsubscribe: {}
   },
   getters: {
     user(state) {
@@ -67,7 +66,7 @@ export default new Vuex.Store({
     signOut() {
       // FIX HERE
       window.console.log("unsubscribing signOut() action");
-      this.data.unsubscribeFunction();
+      this.unsubscribe.func();
       firebase
         .auth()
         .signOut()
@@ -99,7 +98,8 @@ export default new Vuex.Store({
     // eslint-disable-next-line no-unused-vars
     addListener({ commit }, uid) {
       // FIX HERE
-      const unsubFunc = db
+      const unsub = { func: null };
+      unsub.func = db
         .collection("users")
         .doc(uid)
         .collection("mybooks")
@@ -117,7 +117,7 @@ export default new Vuex.Store({
           });
         });
       // FIX HERE
-      this.state.data.unsubscribeFunction = unsubFunc;
+      this.unsubscribe = unsub;
     }
   },
 
