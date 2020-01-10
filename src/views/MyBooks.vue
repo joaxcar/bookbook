@@ -1,7 +1,6 @@
 <template>
   <div class="mybooks-container">
     <h1>My books View</h1>
-    <button @click.prevent="addBook">add new book</button>
     <button @click.prevent="getBooks">get books</button>
   </div>
 </template>
@@ -11,23 +10,14 @@
 import db from "@/main";
 import firebase from "firebase";
 
+// const mybooks = db
+//   .collection("users")
+//   .doc(firebase.auth().currentUser.uid)
+//   .collection("mybooks");
+
 export default {
   mounted() {},
   methods: {
-    addBook() {
-      window.console.log("adding new book...");
-      const newbook = {
-        title: "maos lilla roda",
-        author: "maou zeTung"
-      };
-      db.collection("users")
-        .doc(firebase.auth().currentUser.uid)
-        .collection("mybooks")
-        .add(newbook)
-        .then(() => {
-          window.console.log("added new book");
-        });
-    },
     getBooks() {
       window.console.log("getting books...");
       window.console.log("from uid: " + firebase.auth().currentUser.uid);
@@ -35,8 +25,10 @@ export default {
         .doc(firebase.auth().currentUser.uid)
         .collection("mybooks")
         .get()
-        .then(QuerySnapShot => {
-          window.console.log(QuerySnapShot.docs);
+        .then(querySnapShot => {
+          querySnapShot.forEach(doc => {
+            window.console.log("Current data: ", doc.data());
+          });
         });
     }
   }
