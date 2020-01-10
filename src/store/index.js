@@ -15,17 +15,12 @@ export default new Vuex.Store({
     data: {
       books: []
     },
-    unsubscribe: {}
+    // call func to unsubscribe from realtime firestore updates
+    unsubscribe: { func: null }
   },
   getters: {
     user(state) {
       return state.user;
-    },
-    // FIX HERE
-    // HOW ELSE CALL A METHOD IN STATE PROPERTY?
-    unsubscribe(state) {
-      window.console.log("unsubscribing getter");
-      return state.unsubscribeFunction;
     }
   },
   mutations: {
@@ -41,16 +36,19 @@ export default new Vuex.Store({
     UPDATE_BOOKS(state, books) {
       state.data.books = books;
     },
-    SET_UNSUBSCRIBE(state, unsubFunc) {
-      state.data.unsubscribeFunction = unsubFunc;
+    SET_UNSUBSCRIBE(state, unsub) {
+      state.unsubscribe.func = unsub.func;
     },
     // FIX HERE
-    UNSUBSCRIBE() {
-      window.console.log("unsubscribing mutation");
-      this.getters.unsubscribe;
+    UNSUBSCRIBE(state, uid) {
+      window.console.log("mutation unsubscribing: " + uid);
+      state.unsubscribe.func();
     }
   },
   actions: {
+    // is this called on signout too?? FIX!
+    // currently a page reload triggers firestore observer callbacks to fire
+    // this is because user is fetched on reload? dunno if wanted behaviour or not
     fetchUser({ commit, dispatch }, user) {
       commit("SET_LOGGED_IN", user !== null);
       if (user) {
@@ -63,10 +61,11 @@ export default new Vuex.Store({
         commit("SET_USER", null);
       }
     },
-    signOut() {
-      // FIX HERE
+    signOut({ commit }) {
+      // unsubscribe from firestore observer on signout
       window.console.log("unsubscribing signOut() action");
-      this.unsubscribe.func();
+      commit("UNSUBSCRIBE", firebase.auth().currentUser.uid);
+
       firebase
         .auth()
         .signOut()
@@ -78,7 +77,7 @@ export default new Vuex.Store({
             this.console.log("Sign out error: ", error);
           }
         );
-      // TODO: commit SETLOGGEDIN false
+      // TODO: commit SETLOGGEDIN false and flush user data / book collection
     },
     // TODO: set security rules not to set if same doc exists
     addBook({ commit }, volumeInfo) {
@@ -94,15 +93,15 @@ export default new Vuex.Store({
         });
       commit("ADD_BOOK", volumeInfo);
     },
-    // implemented as action since query is async but nothing to commit
-    // eslint-disable-next-line no-unused-vars
+    // Subscribe to realtime updates in user's mybooks firestore collection
     addListener({ commit }, uid) {
-      // FIX HERE
       const unsub = { func: null };
       unsub.func = db
         .collection("users")
         .doc(uid)
         .collection("mybooks")
+        // onSnapShot takes a function to call back when specified collection is changed
+        // change.doc.data() returns the updated object: document or field
         .onSnapshot(snapshot => {
           snapshot.docChanges().forEach(change => {
             if (change.type === "added") {
@@ -116,8 +115,8 @@ export default new Vuex.Store({
             }
           });
         });
-      // FIX HERE
-      this.unsubscribe = unsub;
+      // save the returned unsubscribe function
+      commit("SET_UNSUBSCRIBE", unsub);
     }
   },
 
