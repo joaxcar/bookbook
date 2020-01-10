@@ -1,57 +1,58 @@
 <template>
   <v-container>
-    <v-row>
-      <v-col>
+    <v-row dense align="center" justify="center">
+      <v-col cols="12" md="8">
         <v-text-field
           label="Search (pres enter with prefilled content for example)"
           filled
           rounded
           v-model="searchText"
+          append-outer-icon="mdi-send"
           prepend-inner-icon="mdi-book-open-page-variant"
           clear-icon="mdi-close-circle"
           clearable
           type="text"
           @keydown.enter="getBook"
+          @click:append-outer="getBook"
         ></v-text-field>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col v-for="item in books" :key="item.title" cols="12">
-        <v-card>
+    <v-row align="center" justify="center">
+      <v-col cols="12" md="8">
+        <v-card v-for="item in books" :key="item.title" tile>
           <div class="d-flex flex-no-wrap">
             <div>
               <v-img
-                width="100px"
+                width="60px"
                 :src="item.volumeInfo.imageLinks.thumbnail"
               ></v-img>
             </div>
             <div>
-              <v-card-title>
-                {{ item.volumeInfo.title }}
-              </v-card-title>
               <v-card-text>
+                <div>{{ item.volumeInfo.title }}</div>
                 <div>{{ item.volumeInfo.publisher }}</div>
                 <div>{{ item.volumeInfo.authors[0] }}</div>
               </v-card-text>
             </div>
             <v-spacer />
-          </div>
-          <div>
-            <v-card-actions>
-              <v-btn color="purple" text>
-                Add to library
-              </v-btn>
+            <div>
+              <v-card-actions>
+                <v-btn color="purple" text>
+                  Add
+                </v-btn>
 
-              <v-spacer></v-spacer>
+                <v-spacer></v-spacer>
 
-              <v-btn icon @click="show = !show">
-                <v-icon>{{
-                  show ? "mdi-chevron-up" : "mdi-chevron-down"
-                }}</v-icon>
-              </v-btn>
-            </v-card-actions>
+                <v-btn icon @click="item.show = !item.show">
+                  <v-icon>{{
+                    item.show ? "mdi-chevron-up" : "mdi-chevron-down"
+                  }}</v-icon>
+                </v-btn>
+              </v-card-actions>
+            </div>
           </div>
-          <div v-if="show">{{ item.volumeInfo.description }}</div>
+
+          <div v-if="item.show">{{ item.volumeInfo.description }}</div>
         </v-card>
       </v-col>
     </v-row>
@@ -67,8 +68,7 @@ export default {
     return {
       message: "",
       books: [],
-      searchText: "9781405924412",
-      show: false
+      searchText: "9781405924412"
     };
   },
   created() {
@@ -84,7 +84,7 @@ export default {
     debounce: Debounce,
     getBook() {
       getBook(this.searchText).then(ret => {
-        ret.items.map(book => (this.books = [book, ...this.books]));
+        this.books = ret.items.map(item => ({ ...item, show: false }));
         this.searchText = "";
       });
     }

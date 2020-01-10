@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar dark fixed color="primary" app>
+  <v-app-bar dark fixed color="primary" app hide-on-scroll>
     <v-toolbar-title>
       <a href="/#/" class="white--text">
         {{ title }}

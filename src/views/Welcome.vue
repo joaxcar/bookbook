@@ -60,7 +60,7 @@
 
     <section>
       <v-row>
-        <v-col>
+        <v-col justify="center" align="center">
           <v-card class="elevation-0 transparent">
             <v-card-title primary-title class="layout justify-center">
               <div class="headline">Group info</div>
@@ -123,7 +123,7 @@ export default {
     };
   },
   created() {
-    this.get(9789178090730).then(ret => {
+    this.get(9781405924412).then(ret => {
       this.book = ret;
     });
   },
