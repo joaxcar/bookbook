@@ -39,16 +39,16 @@ export default new Vuex.Store({
     SET_UNSUBSCRIBE(state, unsub) {
       state.unsubscribe.func = unsub.func;
     },
-    // FIX HERE
+    // unsubscribes from firestore realtime updates
     UNSUBSCRIBE(state, uid) {
       window.console.log("mutation unsubscribing: " + uid);
       state.unsubscribe.func();
     }
   },
   actions: {
-    // is this called on signout too?? FIX!
     // currently a page reload triggers firestore observer callbacks to fire
-    // this is because user is fetched on reload? dunno if wanted behaviour or not
+    // this is because user is fetched on reload. dunno if wanted behaviour or not
+    // the observers will probably redundant anyway
     fetchUser({ commit, dispatch }, user) {
       commit("SET_LOGGED_IN", user !== null);
       if (user) {
