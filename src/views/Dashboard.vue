@@ -38,9 +38,16 @@
           </div>
           <div>
             <v-card-actions>
-              <v-btn color="purple" text>
+              <!-- todo CHANGE BTN WHEN BOOK ALREADY IN LIBRARY  -->
+              <v-btn
+                v-if="true"
+                @click="addBook(item.volumeInfo)"
+                text
+                color="purple"
+              >
                 Add to library
               </v-btn>
+              <v-btn v-else text color="green">In My Books ✔</v-btn>
 
               <v-spacer></v-spacer>
 
@@ -87,6 +94,15 @@ export default {
         ret.items.map(book => (this.books = [book, ...this.books]));
         this.searchText = "";
       });
+    },
+    addBook(volumeInfo) {
+      this.$store.dispatch("addBook", volumeInfo);
+    },
+    inLibrary(volumeInfo) {
+      this.show =
+        this.$store.state.data.books.filter(
+          book => book.title === volumeInfo.title
+        ).length > 0;
     }
   }
 };

@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import firebase from "firebase";
 import router from "../router";
+import db from "@/main";
 
 Vue.use(Vuex);
 
@@ -13,7 +14,9 @@ export default new Vuex.Store({
     },
     data: {
       books: []
-    }
+    },
+    // call func to unsubscribe from realtime firestore updates
+    unsubscribe: { func: null }
   },
   getters: {
     user(state) {
@@ -29,12 +32,27 @@ export default new Vuex.Store({
     },
     ADD_BOOK(state, book) {
       state.data.books.push(book);
+    },
+    UPDATE_BOOKS(state, books) {
+      state.data.books = books;
+    },
+    SET_UNSUBSCRIBE(state, unsub) {
+      state.unsubscribe.func = unsub.func;
+    },
+    // FIX HERE
+    UNSUBSCRIBE(state, uid) {
+      window.console.log("mutation unsubscribing: " + uid);
+      state.unsubscribe.func();
     }
   },
   actions: {
-    fetchUser({ commit }, user) {
+    // is this called on signout too?? FIX!
+    // currently a page reload triggers firestore observer callbacks to fire
+    // this is because user is fetched on reload? dunno if wanted behaviour or not
+    fetchUser({ commit, dispatch }, user) {
       commit("SET_LOGGED_IN", user !== null);
       if (user) {
+        dispatch("addListener", user.uid);
         commit("SET_USER", {
           displayName: user.displayName,
           email: user.email
@@ -43,7 +61,11 @@ export default new Vuex.Store({
         commit("SET_USER", null);
       }
     },
-    signOut() {
+    signOut({ commit }) {
+      // unsubscribe from firestore observer on signout
+      window.console.log("unsubscribing signOut() action");
+      commit("UNSUBSCRIBE", firebase.auth().currentUser.uid);
+
       firebase
         .auth()
         .signOut()
@@ -55,7 +77,48 @@ export default new Vuex.Store({
             this.console.log("Sign out error: ", error);
           }
         );
+      // TODO: commit SETLOGGEDIN false and flush user data / book collection
+    },
+    // TODO: set security rules not to set if same doc exists
+    addBook({ commit }, volumeInfo) {
+      window.console.log("adding new book...");
+      db.collection("users")
+        .doc(firebase.auth().currentUser.uid)
+        .collection("mybooks")
+        .doc(volumeInfo.industryIdentifiers[0].identifier)
+        .set(volumeInfo)
+        .catch(err => window.console.log("error: " + err))
+        .then(() => {
+          window.console.log("added " + volumeInfo.title);
+        });
+      commit("ADD_BOOK", volumeInfo);
+    },
+    // Subscribe to realtime updates in user's mybooks firestore collection
+    addListener({ commit }, uid) {
+      const unsub = { func: null };
+      unsub.func = db
+        .collection("users")
+        .doc(uid)
+        .collection("mybooks")
+        // onSnapShot takes a function to call back when specified collection is changed
+        // change.doc.data() returns the updated object: document or field
+        .onSnapshot(snapshot => {
+          snapshot.docChanges().forEach(change => {
+            if (change.type === "added") {
+              window.console.log("added: ", change.doc.data());
+            }
+            if (change.type === "modified") {
+              window.console.log("Modified: ", change.doc.data());
+            }
+            if (change.type === "removed") {
+              window.console.log("Removed: ", change.doc.data());
+            }
+          });
+        });
+      // save the returned unsubscribe function
+      commit("SET_UNSUBSCRIBE", unsub);
     }
   },
+
   modules: {}
 });
