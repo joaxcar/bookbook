@@ -31,7 +31,8 @@ export default new Vuex.Store({
       state.user.data = data;
     },
     ADD_BOOK(state, book) {
-      state.data.books.push(book);
+      if (!state.data.books.some(item => item.id === book.id))
+        state.data.books.push(book);
     },
     UPDATE_BOOKS(state, books) {
       state.data.books = books;
@@ -83,7 +84,7 @@ export default new Vuex.Store({
     },
     // TODO: set security rules not to set if same doc exists
     addBook({ commit }, volumeInfo) {
-      window.console.log("adding new book...");
+      window.console.log(volumeInfo);
       // decouple to separate func:
       fs.addBook(volumeInfo);
       commit("ADD_BOOK", volumeInfo);
