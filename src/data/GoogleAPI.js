@@ -23,10 +23,21 @@ function makeData(d) {
         thumbnail:
           "https://upload.wikimedia.org/wikipedia/commons/5/50/Closed_Book_Icon.svg"
       };
-  return { id, description, title, authors, publisher, imageLinks };
+  const industryIdentifiers = d.volumeInfo.industryIdentifiers
+    ? d.volumeInfo.industryIdentifiers
+    : ["No identifier"];
+  return {
+    id,
+    description,
+    title,
+    authors,
+    publisher,
+    imageLinks,
+    industryIdentifiers
+  };
 }
 
-const filter = `&fields=totalItems,items/id,items/volumeInfo(description,title,subtitle,publishedDate,publisher,authors,imageLinks)`;
+const filter = `&fields=totalItems,items/id,items/volumeInfo(description,title,subtitle,publishedDate,publisher,authors,imageLinks,industryIdentifiers)`;
 /**
  * Do an API call to the search API endpoint.
  * @returns {Promise<any>}

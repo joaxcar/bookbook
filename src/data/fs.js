@@ -1,5 +1,6 @@
 import firebase from "firebase";
 import db from "@/main";
+import store from "@/store";
 
 // firestore update methods
 const fs = {
@@ -37,6 +38,7 @@ const fs = {
         snapshot.docChanges().forEach(change => {
           if (change.type === "added") {
             window.console.log("added: ", change.doc.data());
+            store.dispatch("addBook", change.doc.data());
           }
           if (change.type === "modified") {
             window.console.log("Modified: ", change.doc.data());

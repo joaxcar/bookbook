@@ -28,7 +28,6 @@
               <v-card-text>
                 <div>{{ item.title }}</div>
                 <div>{{ item.publisher }}</div>
-                <div>{{ item.authors[0] }}</div>
               </v-card-text>
             </div>
             <v-spacer />
@@ -94,8 +93,8 @@ export default {
         this.searchText = "";
       });
     },
-    addBook(volumeInfo) {
-      this.$store.dispatch("addBook", volumeInfo);
+    addBook(book) {
+      this.$store.dispatch("addBook", book);
     },
     inLibrary(volumeInfo) {
       this.show =

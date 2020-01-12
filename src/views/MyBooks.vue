@@ -12,7 +12,8 @@
           clear-icon="mdi-close-circle"
           clearable
           type="text"
-          @keydown.enter="() => getBook(item)"
+          @input="debounceFilterBooks"
+          @keydown.enter="filterBooks"
           @click:append-outer="filterBooks"
         ></v-text-field>
       </v-col>
@@ -68,21 +69,29 @@ export default {
     return {
       message: "",
       books: [],
-      searchText: "9781405924412"
+      searchText: ""
     };
   },
   created() {
-    this.debounceGetBooks = this.debounce(
+    this.debounceFilterBooks = this.debounce(
       function() {
-        this.getBook(this.searchText);
+        window.console.log("hmm");
+        this.filterBooks(this.searchText);
       }.bind(this),
-      2000
+      400
     );
     this.books = [...this.data.books];
   },
   methods: {
     debounce: Debounce,
-    filterBooks() {},
+    filterBooks() {
+      this.books =
+        this.searchText === ""
+          ? [...this.data.books]
+          : this.data.books.filter(book =>
+              book.title.includes(this.searchText)
+            );
+    },
     getBooks() {
       window.console.log("getting books...");
       window.console.log("from uid: " + this.$firebase.auth().currentUser.uid);
