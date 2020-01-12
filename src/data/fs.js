@@ -10,7 +10,7 @@ const fs = {
       .doc(firebase.auth().currentUser.uid)
       .collection("mybooks")
       // takes first identifier in array maybe look for isbn13 first
-      .doc(volumeInfo.industryIdentifiers[0].identifier)
+      .doc(volumeInfo.id)
       .set(volumeInfo)
       .catch(err => window.console.log("error: " + err))
       .then(() => {

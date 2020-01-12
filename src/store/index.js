@@ -83,7 +83,7 @@ export default new Vuex.Store({
     },
     // TODO: set security rules not to set if same doc exists
     addBook({ commit }, volumeInfo) {
-      window.console.log("adding new book...");
+      window.console.log(volumeInfo);
       // decouple to separate func:
       fs.addBook(volumeInfo);
       commit("ADD_BOOK", volumeInfo);

@@ -37,7 +37,7 @@
             <v-card-actions>
               <!-- todo CHANGE BTN WHEN BOOK ALREADY IN LIBRARY  -->
               <v-btn
-                v-if="true"
+                v-if="() => inLibrary(item)"
                 @click="() => addBook(item)"
                 text
                 color="purple"
@@ -72,7 +72,8 @@ export default {
     return {
       message: "",
       books: [],
-      searchText: "9781405924412"
+      searchText: "9781405924412",
+      library: []
     };
   },
   created() {
@@ -94,14 +95,15 @@ export default {
         this.searchText = "";
       });
     },
-    addBook(volumeInfo) {
-      this.$store.dispatch("addBook", volumeInfo);
-    },
-    inLibrary(volumeInfo) {
-      this.show =
-        this.$store.state.data.books.filter(
-          book => book.title === volumeInfo.title
-        ).length > 0;
+    addBook(book) {
+      if (!this.$store.state.data.books.some(item => item.id === book.id))
+        this.$store.dispatch("addBook", book);
+    }
+  },
+  // ! can't get v-if to show/hide element dynamically !
+  computed: {
+    inLibrary(item) {
+      return this.library.filter(book => book.id === item.id).length > 0;
     }
   }
 };
