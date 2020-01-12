@@ -16,15 +16,18 @@ const firebaseConfig = {
   storageBucket: "bookbook-dh2642.appspot.com",
   messagingSenderId: "1066546781536",
   appId: "1:1066546781536:web:d0e0ed3651a1d0e3e2d205",
-  measurementId: "G-REN3JR2G7C"
+  measurementId: "G-REN3JR2G7C",
+  devtools: "true"
 };
 
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
-var db = firebase.firestore();
+const db = firebase.firestore();
+export default db;
 
 firebase.auth().onAuthStateChanged(user => {
+  window.console.log("auth state changed");
   store.dispatch("fetchUser", user);
 });
 

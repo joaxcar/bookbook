@@ -53,6 +53,10 @@
 </template>
 
 <script>
+// const mybooks = db
+//   .collection("users")
+//   .doc(firebase.auth().currentUser.uid)
+//   .collection("mybooks");
 import Debounce from "@/utils/debounce";
 import { mapState } from "vuex";
 
@@ -78,7 +82,21 @@ export default {
   },
   methods: {
     debounce: Debounce,
-    filterBooks() {}
+    filterBooks() {},
+    getBooks() {
+      window.console.log("getting books...");
+      window.console.log("from uid: " + this.$firebase.auth().currentUser.uid);
+      this.$db
+        .collection("users")
+        .doc(this.$firebase.auth().currentUser.uid)
+        .collection("mybooks")
+        .get()
+        .then(querySnapShot => {
+          querySnapShot.forEach(doc => {
+            window.console.log("Current data: ", doc.data());
+          });
+        });
+    }
   }
 };
 </script>

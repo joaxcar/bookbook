@@ -71,6 +71,7 @@
 
 <script>
 import firebase from "firebase";
+import fs from "@/data/fs";
 
 export default {
   data() {
@@ -100,8 +101,11 @@ export default {
               displayName: this.form.name
             })
             .then(() => {
-              this.$router.push("/login");
-            });
+              // suggestion: user is signed in on account creation goto straight to dashboard
+              this.$router.push("/dashboard");
+            }).finally;
+          // setup collections and user data in firestore
+          fs.addUser();
         })
         .catch(err => {
           this.error = err.message;
