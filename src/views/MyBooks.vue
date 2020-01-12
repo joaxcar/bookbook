@@ -1,28 +1,94 @@
 <template>
-  <div class="mybooks-container">
-    <h1>My books View</h1>
-    <button @click.prevent="getBooks">get books</button>
-  </div>
+  <v-container>
+    <v-row dense align="center" justify="center">
+      <v-col cols="12" md="8">
+        <v-text-field
+          label="Filter books"
+          filled
+          rounded
+          v-model="searchText"
+          append-outer-icon="mdi-send"
+          prepend-inner-icon="mdi-book-open-page-variant"
+          clear-icon="mdi-close-circle"
+          clearable
+          type="text"
+          @keydown.enter="() => getBook(item)"
+          @click:append-outer="filterBooks"
+        ></v-text-field>
+      </v-col>
+    </v-row>
+    <v-row align="center" justify="center">
+      <v-col cols="12" md="8">
+        <v-card v-for="item in books" :key="item.title" tile>
+          <div class="d-flex flex-no-wrap">
+            <div>
+              <v-img width="60px" :src="item.imageLinks.thumbnail"></v-img>
+            </div>
+            <div>
+              <v-card-text>
+                <div>{{ item.title }}</div>
+                <div>{{ item.publisher }}</div>
+                <div>{{ item.authors[0] }}</div>
+              </v-card-text>
+            </div>
+            <v-spacer />
+            <div>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+
+                <v-btn icon @click="item.show = !item.show">
+                  <v-icon>{{
+                    item.show ? "mdi-chevron-up" : "mdi-chevron-down"
+                  }}</v-icon>
+                </v-btn>
+              </v-card-actions>
+            </div>
+          </div>
+
+          <div v-if="item.show">{{ item.volumeInfo.description }}</div>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
-// imports could be moved to App.vue if needed elsewhere?
-import db from "@/main";
-import firebase from "firebase";
-
 // const mybooks = db
 //   .collection("users")
 //   .doc(firebase.auth().currentUser.uid)
 //   .collection("mybooks");
+import Debounce from "@/utils/debounce";
+import { mapState } from "vuex";
 
 export default {
-  mounted() {},
+  computed: {
+    ...mapState(["data"])
+  },
+  data: function() {
+    return {
+      message: "",
+      books: [],
+      searchText: "9781405924412"
+    };
+  },
+  created() {
+    this.debounceGetBooks = this.debounce(
+      function() {
+        this.getBook(this.searchText);
+      }.bind(this),
+      2000
+    );
+    this.books = [...this.data.books];
+  },
   methods: {
+    debounce: Debounce,
+    filterBooks() {},
     getBooks() {
       window.console.log("getting books...");
-      window.console.log("from uid: " + firebase.auth().currentUser.uid);
-      db.collection("users")
-        .doc(firebase.auth().currentUser.uid)
+      window.console.log("from uid: " + this.$firebase.auth().currentUser.uid);
+      this.$db
+        .collection("users")
+        .doc(this.$firebase.auth().currentUser.uid)
         .collection("mybooks")
         .get()
         .then(querySnapShot => {
@@ -34,20 +100,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-button {
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  box-shadow: inset 0 1px 3px #ddd;
-  border-radius: 4px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-top: 12px;
-  padding-bottom: 12px;
-}
-</style>

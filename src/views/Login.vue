@@ -21,6 +21,7 @@
                 value
                 required
                 autofocus
+                @keydown.enter="submit"
                 v-model="form.email"
               />
 
@@ -40,6 +41,7 @@
                 hint="At least 8 characters"
                 counter
                 @click:append="showPass = !showPass"
+                @keydown.enter="submit"
                 v-model="form.password"
               />
 

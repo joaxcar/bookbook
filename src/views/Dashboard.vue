@@ -1,37 +1,34 @@
 <template>
   <v-container>
-    <v-row>
-      <v-col>
+    <v-row dense align="center" justify="center">
+      <v-col cols="12" md="8">
         <v-text-field
           label="Search (pres enter with prefilled content for example)"
           filled
           rounded
           v-model="searchText"
+          append-outer-icon="mdi-send"
           prepend-inner-icon="mdi-book-open-page-variant"
           clear-icon="mdi-close-circle"
           clearable
           type="text"
           @keydown.enter="getBook"
+          @click:append-outer="getBook"
         ></v-text-field>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col v-for="item in books" :key="item.title" cols="12">
-        <v-card>
+    <v-row align="center" justify="center">
+      <v-col cols="12" md="8">
+        <v-card v-for="item in books" :key="item.id" tile>
           <div class="d-flex flex-no-wrap">
             <div>
-              <v-img
-                width="100px"
-                :src="item.volumeInfo.imageLinks.thumbnail"
-              ></v-img>
+              <v-img width="60px" :src="item.imageLinks.thumbnail"></v-img>
             </div>
             <div>
-              <v-card-title>
-                {{ item.volumeInfo.title }}
-              </v-card-title>
               <v-card-text>
-                <div>{{ item.volumeInfo.publisher }}</div>
-                <div>{{ item.volumeInfo.authors[0] }}</div>
+                <div>{{ item.title }}</div>
+                <div>{{ item.publisher }}</div>
+                <div>{{ item.authors[0] }}</div>
               </v-card-text>
             </div>
             <v-spacer />
@@ -41,7 +38,7 @@
               <!-- todo CHANGE BTN WHEN BOOK ALREADY IN LIBRARY  -->
               <v-btn
                 v-if="true"
-                @click="addBook(item.volumeInfo)"
+                @click="() => addBook(item)"
                 text
                 color="purple"
               >
@@ -51,14 +48,15 @@
 
               <v-spacer></v-spacer>
 
-              <v-btn icon @click="show = !show">
+              <v-btn icon @click="item.show = !item.show">
                 <v-icon>{{
-                  show ? "mdi-chevron-up" : "mdi-chevron-down"
+                  item.show ? "mdi-chevron-up" : "mdi-chevron-down"
                 }}</v-icon>
               </v-btn>
             </v-card-actions>
           </div>
-          <div v-if="show">{{ item.volumeInfo.description }}</div>
+
+          <div v-if="item.show">{{ item.description }}</div>
         </v-card>
       </v-col>
     </v-row>
@@ -66,7 +64,7 @@
 </template>
 
 <script>
-import getBook from "@/data/GoogleAPI";
+import getsBook from "@/data/GoogleAPI";
 import Debounce from "@/utils/debounce";
 
 export default {
@@ -74,8 +72,7 @@ export default {
     return {
       message: "",
       books: [],
-      searchText: "9781405924412",
-      show: false
+      searchText: "9781405924412"
     };
   },
   created() {
@@ -87,11 +84,13 @@ export default {
     );
   },
   methods: {
-    get: getBook,
+    get: getsBook,
     debounce: Debounce,
     getBook() {
-      getBook(this.searchText).then(ret => {
-        ret.items.map(book => (this.books = [book, ...this.books]));
+      this.books = [];
+      getsBook(this.searchText).then(ret => {
+        window.console.log(ret);
+        this.books = ret.items.map(item => ({ ...item, show: false }));
         this.searchText = "";
       });
     },

@@ -60,7 +60,7 @@
 
     <section>
       <v-row>
-        <v-col>
+        <v-col justify="center" align="center">
           <v-card class="elevation-0 transparent">
             <v-card-title primary-title class="layout justify-center">
               <div class="headline">Group info</div>
@@ -72,10 +72,11 @@
           </v-card>
           <v-card class="elevation-0 transparent">
             <v-card-title primary-title class="layout justify-center">
-              <div class="headline">Books</div>
+              <div class="headline">Project code</div>
             </v-card-title>
             <v-card-text>
-              Do you like books? We do! And want to help you store them.
+              Project source code can be found at
+              <a href="https://github.com/joaxcar/bookbook">GitHub</a>
             </v-card-text>
           </v-card>
         </v-col>
@@ -122,7 +123,7 @@ export default {
     };
   },
   created() {
-    this.get(9789178090730).then(ret => {
+    this.get(9781405924412).then(ret => {
       this.book = ret;
     });
   },
