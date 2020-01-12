@@ -37,7 +37,11 @@
             <v-spacer />
             <div>
               <v-card-actions>
-                <v-btn color="purple" text>
+                <v-btn
+                  color="purple"
+                  text
+                  @click="() => addBook(item.volumeInfo)"
+                >
                   Add
                 </v-btn>
 
@@ -87,6 +91,10 @@ export default {
         this.books = ret.items.map(item => ({ ...item, show: false }));
         this.searchText = "";
       });
+    },
+    addBook(b) {
+      window.console.log(b);
+      this.$store.commit("ADD_BOOK", b);
     }
   }
 };
