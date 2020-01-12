@@ -2,8 +2,8 @@ import Vue from "vue";
 import Vuex from "vuex";
 import firebase from "firebase";
 import router from "../router";
-import db from "@/main";
-
+import fs from "@/data/fs";
+//import db from "@/main";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -52,13 +52,16 @@ export default new Vuex.Store({
     fetchUser({ commit, dispatch }, user) {
       commit("SET_LOGGED_IN", user !== null);
       if (user) {
+        window.console.log("user signed in:\n" + user.displayName);
         dispatch("addListener", user.uid);
         commit("SET_USER", {
           displayName: user.displayName,
           email: user.email
         });
       } else {
+        window.console.log("user signed out");
         commit("SET_USER", null);
+        commit("UPDATE_BOOKS", null);
       }
     },
     signOut({ commit }) {
@@ -77,44 +80,18 @@ export default new Vuex.Store({
             this.console.log("Sign out error: ", error);
           }
         );
-      // TODO: commit SETLOGGEDIN false and flush user data / book collection
     },
     // TODO: set security rules not to set if same doc exists
     addBook({ commit }, volumeInfo) {
       window.console.log("adding new book...");
-      db.collection("users")
-        .doc(firebase.auth().currentUser.uid)
-        .collection("mybooks")
-        .doc(volumeInfo.industryIdentifiers[0].identifier)
-        .set(volumeInfo)
-        .catch(err => window.console.log("error: " + err))
-        .then(() => {
-          window.console.log("added " + volumeInfo.title);
-        });
+      // decouple to separate func:
+      fs.addBook(volumeInfo);
       commit("ADD_BOOK", volumeInfo);
     },
     // Subscribe to realtime updates in user's mybooks firestore collection
     addListener({ commit }, uid) {
       const unsub = { func: null };
-      unsub.func = db
-        .collection("users")
-        .doc(uid)
-        .collection("mybooks")
-        // onSnapShot takes a function to call back when specified collection is changed
-        // change.doc.data() returns the updated object: document or field
-        .onSnapshot(snapshot => {
-          snapshot.docChanges().forEach(change => {
-            if (change.type === "added") {
-              window.console.log("added: ", change.doc.data());
-            }
-            if (change.type === "modified") {
-              window.console.log("Modified: ", change.doc.data());
-            }
-            if (change.type === "removed") {
-              window.console.log("Removed: ", change.doc.data());
-            }
-          });
-        });
+      unsub.func = fs.subscribe(uid);
       // save the returned unsubscribe function
       commit("SET_UNSUBSCRIBE", unsub);
     }

@@ -26,6 +26,7 @@ const db = firebase.firestore();
 export default db;
 
 firebase.auth().onAuthStateChanged(user => {
+  window.console.log("auth state changed");
   store.dispatch("fetchUser", user);
 });
 
