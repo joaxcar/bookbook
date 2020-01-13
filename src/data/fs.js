@@ -11,7 +11,7 @@ const fs = {
       .doc(firebase.auth().currentUser.uid)
       .collection("mybooks")
       // takes first identifier in array maybe look for isbn13 first
-      .doc(volumeInfo.industryIdentifiers[0].identifier)
+      .doc(volumeInfo.id)
       .set(volumeInfo)
       .catch(err => window.console.log("error: " + err))
       .then(() => {
@@ -19,12 +19,12 @@ const fs = {
       });
   },
   addUser: () => {
-    window.console.log("adding user collections");
     const user = firebase.auth().currentUser;
+    window.console.log("addUser to Firestore: " + user.uid);
     db.collection("users")
       .doc(user.uid)
-      .set({ displayName: user.displayName, email: user.email, mybooks: [] })
-      .then(() => window.console.log("user created successfully"))
+      .set({ displayName: user.displayName, email: user.email })
+      .then(() => window.console.log("user added: " + user))
       .catch(err => window.console.error("firestore adduser error: " + err));
   },
   subscribe: uid => {

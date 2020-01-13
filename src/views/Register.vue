@@ -101,11 +101,13 @@ export default {
               displayName: this.form.name
             })
             .then(() => {
-              // suggestion: user is signed in on account creation goto straight to dashboard
+              // add user to firestore
+              fs.addUser();
+              // user is signed in on account creation goto straight to dashboard
               this.$router.push("/dashboard");
-            }).finally;
-          // setup collections and user data in firestore
-          fs.addUser();
+              // reload to force vue to render username in menu
+              //location.reload();
+            });
         })
         .catch(err => {
           this.error = err.message;
