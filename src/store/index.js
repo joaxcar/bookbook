@@ -61,7 +61,7 @@ export default new Vuex.Store({
       } else {
         window.console.log("user signed out");
         commit("SET_USER", null);
-        commit("UPDATE_BOOKS", null);
+        commit("UPDATE_BOOKS", []);
       }
     },
     signOut({ commit }) {

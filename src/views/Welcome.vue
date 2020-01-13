@@ -13,7 +13,14 @@
             Make sense of your bookshelf
           </div>
           <div class="mt-10">
-            <v-btn dark outlined class="font-weight-bold" to="/register">
+            <v-btn
+              dark
+              rounded
+              x-large
+              class="font-weight-bold"
+              to="/register"
+              color="primary"
+            >
               Get started
             </v-btn>
           </div>
