@@ -31,7 +31,8 @@ export default new Vuex.Store({
       state.user.data = data;
     },
     ADD_BOOK(state, book) {
-      state.data.books.push(book);
+      if (!state.data.books.some(item => item.id === book.id))
+        state.data.books.push(book);
     },
     UPDATE_BOOKS(state, books) {
       state.data.books = books;
