@@ -8,15 +8,21 @@
           rounded
           v-model="searchText"
           append-outer-icon="mdi-send"
-          prepend-inner-icon="mdi-book-open-page-variant"
+          append-icon="mdi-camera"
           clear-icon="mdi-close-circle"
           clearable
+          prepend-inner-icon="mdi-book-open-page-variant"
           type="text"
           @keydown.enter="getBook"
           @click:append-outer="getBook"
+          @click:append="startScan"
         ></v-text-field>
-        <v-btn>&#128247;</v-btn>
       </v-col>
+    </v-row>
+    <v-row>
+      <div id="scanner-wrapper">
+        <div id="interactive" class="viewport" />
+      </div>
     </v-row>
     <v-row align="center" justify="center">
       <v-col cols="12" md="8">
@@ -61,10 +67,6 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-btn @click="start">engage video search va</v-btn>
-    <div id="scanner-wrapper">
-      <div id="interactive" class="viewport" />
-    </div>
   </v-container>
 </template>
 
@@ -105,12 +107,7 @@ export default {
         locate: true,
         locator: {
           halfSample: true,
-          patchSize: "small",
-          debug: {
-            showCanvas: true,
-            showPatches: true,
-            showFoundPatches: true
-          }
+          patchSize: "small"
         }
       }
     };
@@ -126,7 +123,7 @@ export default {
   methods: {
     get: getsBook,
     debounce: Debounce,
-    start() {
+    startScan() {
       Quagga.init(this.quaggaState, function(err) {
         if (err) {
           window.console.log(err);
