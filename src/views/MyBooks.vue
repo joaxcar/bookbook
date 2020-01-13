@@ -48,9 +48,17 @@
           </div>
           <div>
             <v-card-text>
-              <div>{{ item.title }}</div>
-              <div>{{ item.authors[0] }}</div>
-              <div>{{ item.publisher }}</div>
+              <div class="body-2 font-weight-medium">{{ item.title }}</div>
+              <span
+                v-for="author in item.authors"
+                :key="item.id + author"
+                class="caption"
+              >
+                {{ author }}
+              </span>
+              <div class="caption font-weight-light">
+                {{ item.publisher }}
+              </div>
             </v-card-text>
           </div>
           <v-spacer />

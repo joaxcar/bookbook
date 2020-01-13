@@ -3,7 +3,7 @@
     <v-row dense align="center" justify="center">
       <v-col cols="12" md="8">
         <v-text-field
-          label="Search (pres enter with prefilled content for example)"
+          label="Search for isbn/title/author/publisher"
           filled
           rounded
           v-model="searchText"
@@ -34,18 +34,28 @@
             </div>
             <div>
               <v-card-text>
-                <div>{{ item.title }}</div>
-                <div>{{ item.publisher }}</div>
+                <div class="body-2 font-weight-medium">{{ item.title }}</div>
+                <span
+                  v-for="author in item.authors"
+                  :key="item.id + author"
+                  class="caption"
+                >
+                  {{ author }}
+                </span>
+                <div class="caption font-weight-light">
+                  {{ item.publisher }}
+                </div>
               </v-card-text>
             </div>
             <v-spacer />
-            <div>
+            <div justify="center">
               <v-card-actions>
                 <!-- todo CHANGE BTN WHEN BOOK ALREADY IN LIBRARY  -->
                 <v-btn
                   v-if="inLib(item)"
                   @click="() => addBook(item)"
                   outlined
+                  small
                   color="purple"
                 >
                   Add to library
