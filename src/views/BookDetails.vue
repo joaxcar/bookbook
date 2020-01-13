@@ -1,10 +1,10 @@
 <template>
   <v-container>
-    <div v-if="!loading">
+    <template>
       <v-row align="center" justify="center">
         <v-col cols="12" md="8">
-          <v-card tile>
-            <div class="d-flex flex-no-wrap">
+          <v-card :loading="loading" tile>
+            <div v-if="!loading" class="d-flex flex-no-wrap">
               <div>
                 <v-img width="60px" :src="book.imageLinks.thumbnail"> </v-img>
               </div>
@@ -24,44 +24,37 @@
                 <v-btn v-if="true" text color="purple">
                   Add to library
                 </v-btn>
-                <v-btn v-else text color="green">In My Books ✔</v-btn>
-
-                <v-spacer></v-spacer>
-
-                <v-btn icon @click="book.show = !book.show">
-                  <v-icon>{{
-                    book.show ? "mdi-chevron-up" : "mdi-chevron-down"
-                  }}</v-icon>
-                </v-btn>
               </v-card-actions>
             </div>
-
-            <div v-if="book.show">{{ book.description }}</div>
           </v-card>
         </v-col>
       </v-row>
-    </div>
+    </template>
   </v-container>
 </template>
 
 <script>
-import getBookById from "@/data/GoogleAPI";
+import { getBookById } from "@/data/GoogleAPI";
 export default {
   data() {
     return {
       book: {},
-      loading: false
+      loading: true
     };
   },
   activated() {
+    this.loading = true;
+    this.book = {};
     this.getBookInfo();
   },
+  deactivated() {},
   methods: {
     getBookInfo: function() {
       this.loading = true;
       const id = this.$route.params.id;
-      getBookById(id).then(ret => (this.book = ret.items[0]));
-      this.loading = false;
+      getBookById(id)
+        .then(ret => (this.book = ret))
+        .then(() => (this.loading = false));
     }
   },
   computed: {
