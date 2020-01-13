@@ -125,7 +125,9 @@ export default {
     }
   },
   deactivated() {
-    if (this.isScanning) {this.toggleScan()};
+    if (this.isScanning) {
+      this.toggleScan();
+    }
   },
   methods: {
     get: getsBook,
