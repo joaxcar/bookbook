@@ -29,7 +29,7 @@ function makeData(d) {
     publisher,
     imageLinks,
     industryIdentifiers,
-    rating: "0",
+    rating: 0,
     review: "",
     comment: "",
     tags: []

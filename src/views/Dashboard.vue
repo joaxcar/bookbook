@@ -38,31 +38,21 @@
               </v-card-text>
             </div>
             <v-spacer />
+            <div>
+              <v-card-actions>
+                <!-- todo CHANGE BTN WHEN BOOK ALREADY IN LIBRARY  -->
+                <v-btn
+                  v-if="inLib(item)"
+                  @click="() => addBook(item)"
+                  outlined
+                  color="purple"
+                >
+                  Add to library
+                </v-btn>
+                <v-btn v-else text color="green">In My Books ✔</v-btn>
+              </v-card-actions>
+            </div>
           </div>
-          <div>
-            <v-card-actions>
-              <!-- todo CHANGE BTN WHEN BOOK ALREADY IN LIBRARY  -->
-              <v-btn
-                v-if="inLib(item)"
-                @click="() => addBook(item)"
-                text
-                color="purple"
-              >
-                Add to library
-              </v-btn>
-              <v-btn v-else text color="green">In My Books ✔</v-btn>
-
-              <v-spacer></v-spacer>
-
-              <v-btn icon @click="item.show = !item.show">
-                <v-icon>{{
-                  item.show ? "mdi-chevron-up" : "mdi-chevron-down"
-                }}</v-icon>
-              </v-btn>
-            </v-card-actions>
-          </div>
-
-          <div v-if="item.show">{{ item.description }}</div>
         </v-card>
       </v-col>
     </v-row>

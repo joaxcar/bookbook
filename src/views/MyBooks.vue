@@ -67,6 +67,37 @@
         </v-card>
       </template>
     </v-row>
+    <v-speed-dial
+      v-model="fab"
+      direction="top"
+      top
+      transition="slide-y-reverse-transition"
+    >
+      <template v-slot:activator>
+        <v-btn
+          color="success"
+          v-model="fab"
+          fab
+          x-large
+          dark
+          fixed
+          right
+          bottom
+        >
+          <v-icon v-if="fab">mdi-close</v-icon>
+          <v-icon v-else>mdi-plus</v-icon>
+        </v-btn>
+      </template>
+      <v-btn fab dark small color="green">
+        <v-icon>mdi-pencil</v-icon>
+      </v-btn>
+      <v-btn fab dark small color="indigo">
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+      <v-btn fab dark small color="red">
+        <v-icon>mdi-delete</v-icon>
+      </v-btn>
+    </v-speed-dial>
   </v-container>
 </template>
 
@@ -88,7 +119,8 @@ export default {
       searchText: "",
       tags: ["In shelf", "On loan", "Reading"],
       fronts: false,
-      rating: "4"
+      rating: "4",
+      fab: false
     };
   },
   created() {
