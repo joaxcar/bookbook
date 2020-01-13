@@ -7,20 +7,21 @@
           filled
           rounded
           v-model="searchText"
-          prepend-inner-icon="mdi-book-open-page-variant"
+          prepend-inner-icon="mdi-magnify"
           clear-icon="mdi-close-circle"
+          :append-icon="
+            fronts ? 'mdi-format-list-bulleted-square' : 'mdi-view-grid'
+          "
           clearable
           type="text"
           @input="debounceFilterBooks"
           @keydown.enter="filterBooks"
-          @click:append-outer="filterBooks"
+          @click:append="fronts = !fronts"
           ref="textArea"
         ></v-text-field>
       </v-col>
     </v-row>
-    <v-btn @click="fronts = !fronts">
-      List/Fronts
-    </v-btn>
+
     <v-row align="center" justify="start" v-for="tag in tags" :key="tag">
       <v-col cols="12">
         <h1>{{ tag }}</h1>
