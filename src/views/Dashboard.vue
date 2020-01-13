@@ -1,58 +1,63 @@
 <template>
   <v-container>
-    <v-row>
-      <v-col>
+    <v-row dense align="center" justify="center">
+      <v-col cols="12" md="8">
         <v-text-field
           label="Search (pres enter with prefilled content for example)"
           filled
           rounded
           v-model="searchText"
+          append-outer-icon="mdi-send"
           prepend-inner-icon="mdi-book-open-page-variant"
           clear-icon="mdi-close-circle"
           clearable
           type="text"
           @keydown.enter="getBook"
+          @click:append-outer="getBook"
         ></v-text-field>
         <v-btn>&#128247;</v-btn>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col v-for="item in books" :key="item.title" cols="12">
-        <v-card>
+    <v-row align="center" justify="center">
+      <v-col cols="12" md="8">
+        <v-card v-for="item in books" :key="item.id" tile>
           <div class="d-flex flex-no-wrap">
             <div>
-              <v-img
-                width="100px"
-                :src="item.volumeInfo.imageLinks.thumbnail"
-              ></v-img>
+              <v-img width="60px" :src="item.imageLinks.thumbnail"></v-img>
             </div>
             <div>
-              <v-card-title>
-                {{ item.volumeInfo.title }}
-              </v-card-title>
               <v-card-text>
-                <div>{{ item.volumeInfo.publisher }}</div>
-                <div>{{ item.volumeInfo.authors[0] }}</div>
+                <div>{{ item.title }}</div>
+                <div>{{ item.publisher }}</div>
+                <div>{{ item.authors[0] }}</div>
               </v-card-text>
             </div>
             <v-spacer />
           </div>
           <div>
             <v-card-actions>
-              <v-btn color="purple" text>
+              <!-- todo CHANGE BTN WHEN BOOK ALREADY IN LIBRARY  -->
+              <v-btn
+                v-if="() => inLibrary(item)"
+                @click="() => addBook(item)"
+                text
+                color="purple"
+              >
                 Add to library
               </v-btn>
+              <v-btn v-else text color="green">In My Books ✔</v-btn>
 
               <v-spacer></v-spacer>
 
-              <v-btn icon @click="show = !show">
+              <v-btn icon @click="item.show = !item.show">
                 <v-icon>{{
-                  show ? "mdi-chevron-up" : "mdi-chevron-down"
+                  item.show ? "mdi-chevron-up" : "mdi-chevron-down"
                 }}</v-icon>
               </v-btn>
             </v-card-actions>
           </div>
-          <div v-if="show">{{ item.volumeInfo.description }}</div>
+
+          <div v-if="item.show">{{ item.description }}</div>
         </v-card>
       </v-col>
     </v-row>
@@ -64,10 +69,9 @@
 </template>
 
 <script>
-import getBook from "@/data/GoogleAPI";
+import getsBook from "@/data/GoogleAPI";
 import Debounce from "@/utils/debounce";
 import Quagga from "quagga";
-// import { is } from "@babel/types";
 
 export default {
   data: function() {
@@ -75,6 +79,7 @@ export default {
       message: "",
       books: [],
       searchText: "9781405924412",
+      library: [],
       show: false,
       readerSize: {
         width: 640,
@@ -110,22 +115,6 @@ export default {
       }
     };
   },
-  // mounted() {
-  //   this.$nextTick(() => {
-  //     Quagga.init(this.quaggaState, function(err) {
-  //       if (err) {
-  //         window.console.log(err);
-  //         return;
-  //       }
-  //       window.console.log("init complete");
-  //       Quagga.start();
-  //       Quagga.onDetected(result => {
-  //         let isbn = result.codeResult.code;
-  //         window.console.log(isbn);
-  //       });
-  //     });
-  //   });
-  // },
   created() {
     this.debounceGetBooks = this.debounce(
       function() {
@@ -135,7 +124,7 @@ export default {
     );
   },
   methods: {
-    get: getBook,
+    get: getsBook,
     debounce: Debounce,
     start() {
       Quagga.init(this.quaggaState, function(err) {
@@ -152,8 +141,10 @@ export default {
       });
     },
     getBook() {
-      getBook(this.searchText).then(ret => {
-        ret.items.map(book => (this.books = [book, ...this.books]));
+      this.books = [];
+      getsBook(this.searchText).then(ret => {
+        window.console.log(ret);
+        this.books = ret.items.map(item => ({ ...item, show: false }));
         this.searchText = "";
       });
     },
@@ -177,25 +168,15 @@ export default {
         }
       });
     },
-    async getVideoStream() {
-      // prompt user: is ok to use your cam dude?
-      // to require rear cam, use:
-      // video: {
-      //   facingMode: {
-      //     exact: "environment"
-      //   }
-      // }
-      let videoStream = null;
-
-      try {
-        videoStream = await navigator.mediaDevices.getUserMedia({
-          audio: false,
-          video: "user"
-        });
-      } catch (error) {
-        window.console.log(error);
-      }
-      window.console.log(videoStream);
+    addBook(book) {
+      if (!this.$store.state.data.books.some(item => item.id === book.id))
+        this.$store.dispatch("addBook", book);
+    }
+  },
+  // ! can't get v-if to show/hide element dynamically !
+  computed: {
+    inLibrary(item) {
+      return this.library.filter(book => book.id === item.id).length > 0;
     }
   }
 };

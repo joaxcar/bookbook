@@ -71,6 +71,7 @@
 
 <script>
 import firebase from "firebase";
+import fs from "@/data/fs";
 
 export default {
   data() {
@@ -100,7 +101,12 @@ export default {
               displayName: this.form.name
             })
             .then(() => {
-              this.$router.push("/login");
+              // add user to firestore
+              fs.addUser();
+              // user is signed in on account creation goto straight to dashboard
+              this.$router.push("/dashboard");
+              // reload to force vue to render username in menu
+              //location.reload();
             });
         })
         .catch(err => {
