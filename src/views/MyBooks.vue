@@ -14,6 +14,7 @@
           @input="debounceFilterBooks"
           @keydown.enter="filterBooks"
           @click:append-outer="filterBooks"
+          ref="textArea"
         ></v-text-field>
       </v-col>
     </v-row>
@@ -69,33 +70,24 @@
     </v-row>
     <v-speed-dial
       v-model="fab"
+      bottom
+      right
+      absolute
+      fixed
       direction="top"
-      top
-      transition="slide-y-reverse-transition"
+      transition="slide-x-transition"
     >
       <template v-slot:activator>
-        <v-btn
-          color="success"
-          v-model="fab"
-          fab
-          x-large
-          dark
-          fixed
-          right
-          bottom
-        >
+        <v-btn color="success" v-model="fab" fab large>
           <v-icon v-if="fab">mdi-close</v-icon>
           <v-icon v-else>mdi-plus</v-icon>
         </v-btn>
       </template>
-      <v-btn fab dark small color="green">
-        <v-icon>mdi-pencil</v-icon>
+      <v-btn fab dark small color="green" to="/dashboard">
+        <v-icon>mdi-format-text</v-icon>
       </v-btn>
-      <v-btn fab dark small color="indigo">
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
-      <v-btn fab dark small color="red">
-        <v-icon>mdi-delete</v-icon>
+      <v-btn fab dark small color="indigo" to="/dashboard/camera">
+        <v-icon>mdi-camera</v-icon>
       </v-btn>
     </v-speed-dial>
   </v-container>
@@ -131,6 +123,10 @@ export default {
       400
     );
     this.books = [...this.data.books];
+    this.$nextTick(() => this.$refs.textArea.focus());
+  },
+  activated() {
+    this.$nextTick(() => this.$refs.textArea.focus());
   },
   methods: {
     debounce: Debounce,

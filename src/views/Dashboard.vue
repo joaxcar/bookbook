@@ -16,6 +16,7 @@
           @keydown.enter="getBook"
           @click:append-outer="getBook"
           @click:append="toggleScan"
+          ref="textArea"
         ></v-text-field>
       </v-col>
     </v-row>
@@ -74,7 +75,7 @@ export default {
     return {
       message: "",
       books: [],
-      searchText: "9781405924412",
+      searchText: "",
       library: [],
       show: false,
       isScanning: false,
@@ -114,6 +115,17 @@ export default {
       }.bind(this),
       2000
     );
+    this.$nextTick(() => this.$refs.textArea.focus());
+  },
+  activated() {
+    this.$nextTick(() => this.$refs.textArea.focus());
+    window.console.log(this.$route.params.type);
+    if (this.$route.params.type === "camera") {
+      this.toggleScan();
+    }
+  },
+  deactivated() {
+    if (this.isScanning) {this.toggleScan()};
   },
   methods: {
     get: getsBook,
