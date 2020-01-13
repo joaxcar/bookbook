@@ -22,7 +22,11 @@
     </v-row>
     <v-row>
       <div id="scanner-wrapper" v-show="this.isScanning">
-        <div id="interactive" class="viewport" />
+        <div id="interactive" class="viewport">
+          <v-overlay absolute="true" opacity="0.2">
+            <div class="overlay">stay calm</div>
+          </v-overlay>
+        </div>
       </div>
     </v-row>
     <v-row align="center" justify="center">
@@ -90,8 +94,8 @@ export default {
       show: false,
       isScanning: false,
       readerSize: {
-        width: 640,
-        height: 480
+        width: innerWidth,
+        height: innerHeight
       },
       quaggaState: {
         inputStream: {
@@ -108,13 +112,13 @@ export default {
           readers: ["ean_reader"],
           debug: {
             drawBoundingBox: true,
-            drawScanline: true
+            drawScanLine: true
           }
         },
         locate: true,
         locator: {
           halfSample: true,
-          patchSize: "small"
+          patchSize: "large"
         }
       }
     };
@@ -156,10 +160,10 @@ export default {
         }
         window.console.log("init complete");
         Quagga.start();
-        Quagga.onProcessed(self._onProcessed());
         Quagga.onDetected(
           function(result) {
             if (result) {
+              Quagga.onProcessed(self._onProcessed);
               window.console.log(result.codeResult.code);
               window.console.log(self);
               let isbn = result.codeResult.code;
@@ -173,44 +177,46 @@ export default {
         );
       });
     },
-    _onProcessed(result) {
-      var drawingCtx = Quagga.canvas.ctx.overlay,
-        drawingCanvas = Quagga.canvas.dom.overlay;
+    _onProcessed() {
+      result => {
+        var drawingCtx = Quagga.canvas.ctx.overlay,
+          drawingCanvas = Quagga.canvas.dom.overlay;
 
-      if (result) {
-        if (result.boxes) {
-          drawingCtx.clearRect(
-            0,
-            0,
-            parseInt(drawingCanvas.getAttribute("width")),
-            parseInt(drawingCanvas.getAttribute("height"))
-          );
-          result.boxes
-            .filter(function(box) {
-              return box !== result.box;
-            })
-            .forEach(function(box) {
-              Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCtx, {
-                color: "#ffffff",
-                lineWidth: 2
+        if (result) {
+          if (result.boxes) {
+            drawingCtx.clearRect(
+              0,
+              0,
+              parseInt(drawingCanvas.getAttribute("width")),
+              parseInt(drawingCanvas.getAttribute("height"))
+            );
+            result.boxes
+              .filter(function(box) {
+                return box !== result.box;
+              })
+              .forEach(function(box) {
+                Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCtx, {
+                  color: "#ffffff",
+                  lineWidth: 2
+                });
               });
+          }
+          if (result.box) {
+            Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, {
+              color: "blue",
+              lineWidth: 2
             });
+          }
+          if (result.codeResult && result.codeResult.code) {
+            Quagga.ImageDebug.drawPath(
+              result.line,
+              { x: "x", y: "y" },
+              drawingCtx,
+              { color: "red", lineWidth: 3 }
+            );
+          }
         }
-        if (result.box) {
-          Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, {
-            color: "green",
-            lineWidth: 2
-          });
-        }
-        if (result.codeResult && result.codeResult.code) {
-          Quagga.ImageDebug.drawPath(
-            result.line,
-            { x: "x", y: "y" },
-            drawingCtx,
-            { color: "red", lineWidth: 3 }
-          );
-        }
-      }
+      };
     },
     stopScan() {
       this.isScanning = false;
@@ -241,4 +247,21 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.v-overlay {
+  position: relative;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.overlay {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 1);
+  margin-top: 2em;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+}
+</style>
