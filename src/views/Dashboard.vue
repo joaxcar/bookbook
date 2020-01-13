@@ -96,7 +96,8 @@ export default {
         decoder: {
           readers: ["ean_reader"],
           debug: {
-            drawBoundingBox: true
+            drawBoundingBox: true,
+            drawScanline: true
           }
         },
         locate: true,
@@ -131,21 +132,7 @@ export default {
         }
         window.console.log("init complete");
         Quagga.start();
-        // Quagga.onProcessed(result => {
-        //   let drawingCtx = Quagga.canvas.ctx.overlay;
-        //   let drawingCanvas = Quagga.canvas.dom.overlay;
-
-        //   if (result) {
-        //     if (result.boxes) {
-        //       drawingCtx.clearRect(
-        //         0,
-        //         0,
-        //         parseInt(drawingCanvas.getAttribute("width")),
-        //         parseInt(drawingCanvas.getAttribute("height"))
-        //       );
-        //     }
-        //   }
-        // });
+        Quagga.onProcessed(self._onProcessed());
         Quagga.onDetected(
           function(result) {
             if (result) {
@@ -161,6 +148,45 @@ export default {
           }.bind(this)
         );
       });
+    },
+    _onProcessed(result) {
+      var drawingCtx = Quagga.canvas.ctx.overlay,
+        drawingCanvas = Quagga.canvas.dom.overlay;
+
+      if (result) {
+        if (result.boxes) {
+          drawingCtx.clearRect(
+            0,
+            0,
+            parseInt(drawingCanvas.getAttribute("width")),
+            parseInt(drawingCanvas.getAttribute("height"))
+          );
+          result.boxes
+            .filter(function(box) {
+              return box !== result.box;
+            })
+            .forEach(function(box) {
+              Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCtx, {
+                color: "#ffffff",
+                lineWidth: 2
+              });
+            });
+        }
+        if (result.box) {
+          Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, {
+            color: "green",
+            lineWidth: 2
+          });
+        }
+        if (result.codeResult && result.codeResult.code) {
+          Quagga.ImageDebug.drawPath(
+            result.line,
+            { x: "x", y: "y" },
+            drawingCtx,
+            { color: "red", lineWidth: 3 }
+          );
+        }
+      }
     },
     stopScan() {
       this.isScanning = false;
