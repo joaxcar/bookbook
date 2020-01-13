@@ -26,7 +26,12 @@
       </div>
     </v-row>
     <v-row align="center" justify="center">
-      <v-col cols="12" md="8">
+      <v-col v-if="books.length === 0" align="center">
+        <v-icon size="170" class="blue-grey--text text--lighten-4 pa-7">
+          mdi-magnify
+        </v-icon>
+      </v-col>
+      <v-col v-else cols="12" md="8">
         <v-card v-for="item in books" :key="item.id" tile>
           <div class="d-flex flex-no-wrap">
             <div>
