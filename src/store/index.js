@@ -21,6 +21,9 @@ export default new Vuex.Store({
   getters: {
     user(state) {
       return state.user;
+    },
+    book: state => id => {
+      return state.data.books.filter(book => book.id == id);
     }
   },
   mutations: {

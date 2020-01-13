@@ -1,4 +1,5 @@
 let BASE_URL = "https://www.googleapis.com/books/v1/volumes?";
+let BASE_URL_ID = "https://www.googleapis.com/books/v1/volumes";
 
 function processResponse(response) {
   if (response.ok) {
@@ -38,6 +39,12 @@ function getBook(isbn) {
       const items = ret.items.map(data => makeData(data));
       return { totalItems: ret.totalItems, items };
     });
+}
+
+export function getBookById(id) {
+  return fetch(`${BASE_URL_ID}/${id}`)
+    .then(processResponse)
+    .then(data => makeData(data));
 }
 
 export default getBook;

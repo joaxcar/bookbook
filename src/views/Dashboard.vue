@@ -29,11 +29,15 @@
         <v-card v-for="item in books" :key="item.id" tile>
           <div class="d-flex flex-no-wrap">
             <div>
-              <v-img width="60px" :src="item.imageLinks.thumbnail"></v-img>
+              <router-link :to="{ name: 'Details', params: { id: item.id } }">
+                <v-img width="60px" :src="item.imageLinks.thumbnail"> </v-img>
+              </router-link>
             </div>
             <div>
               <v-card-text>
-                <div>{{ item.title }}</div>
+                <div :to="{ name: 'Details', params: { id: item.id } }">
+                  {{ item.title }}
+                </div>
                 <div>{{ item.publisher }}</div>
                 <div>{{ item.authors[0] }}</div>
               </v-card-text>
@@ -42,7 +46,6 @@
           </div>
           <div>
             <v-card-actions>
-              <!-- todo CHANGE BTN WHEN BOOK ALREADY IN LIBRARY  -->
               <v-btn
                 v-if="() => inLibrary(item)"
                 @click="() => addBook(item)"
@@ -170,7 +173,6 @@ export default {
         this.$store.dispatch("addBook", book);
     }
   },
-  // ! can't get v-if to show/hide element dynamically !
   computed: {
     inLibrary(item) {
       return this.library.filter(book => book.id === item.id).length > 0;
