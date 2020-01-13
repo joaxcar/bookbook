@@ -41,16 +41,6 @@
             </div>
             <div>
               <v-card-text>
-<<<<<<< HEAD
-                <div>
-                  <router-link
-                    :to="{ name: 'Details', params: { id: item.id } }"
-                    >{{ item.title }}</router-link
-                  >
-                </div>
-
-                <div>{{ item.publisher }}</div>
-=======
                 <div class="body-2 font-weight-medium">{{ item.title }}</div>
                 <span
                   v-for="author in item.authors"
@@ -62,7 +52,6 @@
                 <div class="caption font-weight-light">
                   {{ item.publisher }}
                 </div>
->>>>>>> 908c401b69085ce5a1c8ede8af9449ff7ec48fef
               </v-card-text>
             </div>
             <v-spacer />
