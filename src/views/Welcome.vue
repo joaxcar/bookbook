@@ -32,14 +32,6 @@
       <v-row>
         <v-col align="center" justify="center" cols="12" light>
           <v-row>
-            <v-col class="pt-7">
-              <h2 class="font-weight-bold">
-                Find and store all your books
-              </h2>
-              Search for ISBN or by barcode scanner
-            </v-col>
-          </v-row>
-          <v-row>
             <v-col>
               <v-card
                 v-for="item in infobox"
@@ -64,40 +56,6 @@
         </v-col>
       </v-row>
     </section>
-
-    <section>
-      <v-row>
-        <v-col justify="center" align="center">
-          <v-card class="elevation-0 transparent">
-            <v-card-title primary-title class="layout justify-center">
-              <div class="headline">Group info</div>
-            </v-card-title>
-            <v-card-text>
-              We are a group of students doing this for the first time. Dont
-              expect greatnes!
-            </v-card-text>
-          </v-card>
-          <v-card class="elevation-0 transparent">
-            <v-card-title primary-title class="layout justify-center">
-              <div class="headline">Project code</div>
-            </v-card-title>
-            <v-card-text>
-              Project source code can be found at
-              <a href="https://github.com/joaxcar/bookbook">GitHub</a>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-    </section>
-
-    <v-row>
-      <v-col align="center" class="display-1">Example API-data: </v-col>
-    </v-row>
-    <v-row>
-      <v-col v-if="book.items" align="center" cols="12" class="testAPI">{{
-        book.items[0].volumeInfo
-      }}</v-col>
-    </v-row>
   </v-container>
 </template>
 
@@ -112,18 +70,18 @@ export default {
       infobox: [
         {
           title: "Search for books",
-          icon: "mdi-book",
-          text: `This text explains how a search is made. How it is awsome, and how to move forward!`
-        },
-        {
-          title: "Store your thoughts",
-          icon: "mdi-book-open-page-variant",
-          text: `This text explains how the data is stored. How it is awsome, and how to move forward!`
+          icon: "mdi-barcode-scan",
+          text: `Click the camera in the search bar and you're a tap away from adding your first book. It's that easy!`
         },
         {
           title: "Organize",
-          icon: "mdi-book-open",
-          text: `This text explains how to organize books. How it is awsome, and how to move forward!`
+          icon: "mdi-bookshelf",
+          text: `Create different shelves! With an ON LOAN shelf, you'll never forget who borrowed that first edition poetry collection that you love.`
+        },
+        {
+          title: "Review",
+          icon: "mdi-star-half",
+          text: `What did you think about the book you just finished? Rate it and review it for future reference.`
         }
       ],
       book: {}

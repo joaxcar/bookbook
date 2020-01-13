@@ -3,7 +3,7 @@
     <v-row dense align="center" justify="center">
       <v-col cols="12" md="8">
         <v-text-field
-          label="Search (pres enter with prefilled content for example)"
+          label="Search for isbn/title/author/publisher"
           filled
           rounded
           v-model="searchText"
@@ -16,6 +16,7 @@
           @keydown.enter="getBook"
           @click:append-outer="getBook"
           @click:append="toggleScan"
+          ref="textArea"
         ></v-text-field>
       </v-col>
     </v-row>
@@ -35,6 +36,7 @@
             </div>
             <div>
               <v-card-text>
+<<<<<<< HEAD
                 <div>
                   <router-link
                     :to="{ name: 'Details', params: { id: item.id } }"
@@ -43,16 +45,30 @@
                 </div>
 
                 <div>{{ item.publisher }}</div>
+=======
+                <div class="body-2 font-weight-medium">{{ item.title }}</div>
+                <span
+                  v-for="author in item.authors"
+                  :key="item.id + author"
+                  class="caption"
+                >
+                  {{ author }}
+                </span>
+                <div class="caption font-weight-light">
+                  {{ item.publisher }}
+                </div>
+>>>>>>> 908c401b69085ce5a1c8ede8af9449ff7ec48fef
               </v-card-text>
             </div>
             <v-spacer />
-            <div>
+            <div justify="center">
               <v-card-actions>
                 <!-- todo CHANGE BTN WHEN BOOK ALREADY IN LIBRARY  -->
                 <v-btn
                   v-if="inLib(item)"
                   @click="() => addBook(item)"
                   outlined
+                  small
                   color="purple"
                 >
                   Add to library
@@ -82,7 +98,7 @@ export default {
     return {
       message: "",
       books: [],
-      searchText: "9781405924412",
+      searchText: "",
       library: [],
       show: false,
       isScanning: false,
@@ -122,6 +138,19 @@ export default {
       }.bind(this),
       2000
     );
+    this.$nextTick(() => this.$refs.textArea.focus());
+  },
+  activated() {
+    this.$nextTick(() => this.$refs.textArea.focus());
+    window.console.log(this.$route.params.type);
+    if (this.$route.params.type === "camera") {
+      this.toggleScan();
+    }
+  },
+  deactivated() {
+    if (this.isScanning) {
+      this.toggleScan();
+    }
   },
   methods: {
     get: getsBook,

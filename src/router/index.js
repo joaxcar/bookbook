@@ -31,6 +31,11 @@ const routes = [
     component: Dashboard
   },
   {
+    path: "/dashboard/:type",
+    name: "DashType",
+    component: Dashboard
+  },
+  {
     path: "/about",
     name: "about",
     // route level code-splitting
