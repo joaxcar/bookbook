@@ -24,7 +24,7 @@ const fs = {
     db.collection("users")
       .doc(user.uid)
       .set({ displayName: user.displayName, email: user.email })
-      .then(() => window.console.log("user added: " + user))
+      .then(() => window.console.log("user added successfully"))
       .catch(err => window.console.error("firestore adduser error: " + err));
   },
   subscribe: uid => {
