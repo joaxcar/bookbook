@@ -93,9 +93,9 @@ export default {
           type: "LiveStream",
           target: document.querySelector("#interactive"),
           constraints: {
-            width: 640,
-            height: 480,
-            facingMode: ""
+            width: innerWidth,
+            height: innerHeight,
+            facingMode: "environment"
           }
         },
         decoder: {
