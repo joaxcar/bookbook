@@ -29,11 +29,19 @@
         <v-card v-for="item in books" :key="item.id" tile>
           <div class="d-flex flex-no-wrap">
             <div>
-              <v-img width="60px" :src="item.imageLinks.thumbnail"></v-img>
+              <router-link :to="{ name: 'Details', params: { id: item.id } }">
+                <v-img width="60px" :src="item.imageLinks.thumbnail"> </v-img>
+              </router-link>
             </div>
             <div>
               <v-card-text>
-                <div>{{ item.title }}</div>
+                <div>
+                  <router-link
+                    :to="{ name: 'Details', params: { id: item.id } }"
+                    >{{ item.title }}</router-link
+                  >
+                </div>
+
                 <div>{{ item.publisher }}</div>
               </v-card-text>
             </div>
