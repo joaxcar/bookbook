@@ -20,6 +20,7 @@ function makeData(d) {
   const industryIdentifiers = d.volumeInfo.industryIdentifiers
     ? d.volumeInfo.industryIdentifiers
     : ["No identifier"];
+
   return {
     id,
     description,
@@ -27,7 +28,11 @@ function makeData(d) {
     authors,
     publisher,
     imageLinks,
-    industryIdentifiers
+    industryIdentifiers,
+    rating: "0",
+    review: "",
+    comment: "",
+    tags: []
   };
 }
 

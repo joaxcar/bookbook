@@ -52,6 +52,18 @@
               <div>{{ item.publisher }}</div>
             </v-card-text>
           </div>
+          <v-spacer />
+          <div>
+            <v-rating
+              v-model="item.rating"
+              background-color="orange lighten-3"
+              color="orange"
+              dense
+              half-increments
+              hover
+              size="18"
+            ></v-rating>
+          </div>
         </v-card>
       </template>
     </v-row>
@@ -75,7 +87,8 @@ export default {
       books: [],
       searchText: "",
       tags: ["In shelf", "On loan", "Reading"],
-      fronts: false
+      fronts: false,
+      rating: "4"
     };
   },
   created() {
