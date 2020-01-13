@@ -105,7 +105,7 @@ export default {
           constraints: {
             width: 640,
             height: 480,
-            facingMode: ""
+            facingMode: "environment"
           }
         },
         decoder: {
