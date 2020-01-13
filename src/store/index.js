@@ -62,7 +62,7 @@ export default new Vuex.Store({
       } else {
         window.console.log("user signed out");
         commit("SET_USER", null);
-        commit("UPDATE_BOOKS", null);
+        commit("UPDATE_BOOKS", []);
       }
     },
     signOut({ commit }) {
@@ -86,7 +86,6 @@ export default new Vuex.Store({
     addBook({ commit }, volumeInfo) {
       window.console.log(volumeInfo);
       // decouple to separate func:
-      fs.addBook(volumeInfo);
       commit("ADD_BOOK", volumeInfo);
     },
     // Subscribe to realtime updates in user's mybooks firestore collection
