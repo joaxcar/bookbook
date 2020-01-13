@@ -43,7 +43,7 @@
             <v-card-actions>
               <!-- todo CHANGE BTN WHEN BOOK ALREADY IN LIBRARY  -->
               <v-btn
-                v-if="() => inLibrary(item)"
+                v-if="inLib(item)"
                 @click="() => addBook(item)"
                 text
                 color="purple"
@@ -74,25 +74,17 @@ import getsBook from "@/data/GoogleAPI";
 import Debounce from "@/utils/debounce";
 import { mapState } from "vuex";
 import Quagga from "quagga";
+import fs from "@/data/fs";
 
 export default {
   computed: {
-    ...mapState(["data"]),
-    inLibrary(item) {
-      return (
-        this.$store.state.data.books.filter(book => book.title === item.title)
-          .length > 0
-      );
-      //return this.library.filter(book => book.id === item.id).length > 0;
-    }
+    ...mapState(["data"])
   },
   data: function() {
     return {
       message: "",
       books: [],
       searchText: "9781405924412",
-      library: [],
-      show: false,
       readerSize: {
         width: 640,
         height: 480
@@ -151,7 +143,10 @@ export default {
       this.books = [];
       getsBook(this.searchText).then(ret => {
         window.console.log(ret);
-        this.books = ret.items.map(item => ({ ...item, inLib: false }));
+        this.books = ret.items.map(item => ({
+          ...item,
+          inLib: false
+        }));
         this.searchText = "";
       });
     },
@@ -177,7 +172,13 @@ export default {
     },
     addBook(book) {
       if (!this.$store.state.data.books.some(item => item.id === book.id))
-        this.$store.dispatch("addBook", book);
+        fs.addBook(book);
+      //this.$store.dispatch("addBook", book);
+    },
+    inLib(item) {
+      return !(
+        this.data.books.filter(book => book.title === item.title).length > 0
+      );
     }
   }
 };

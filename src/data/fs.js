@@ -15,7 +15,7 @@ const fs = {
       .set(volumeInfo)
       .catch(err => window.console.log("error: " + err))
       .then(() => {
-        window.console.log("added " + volumeInfo.title);
+        //window.console.log("added DEL 2 " + volumeInfo.title);
       });
   },
   addUser: () => {
@@ -37,7 +37,7 @@ const fs = {
       .onSnapshot(snapshot => {
         snapshot.docChanges().forEach(change => {
           if (change.type === "added") {
-            window.console.log("added: ", change.doc.data());
+            //window.console.log("addedhmm: ", change.doc.data());
             store.dispatch("addBook", change.doc.data());
           }
           if (change.type === "modified") {

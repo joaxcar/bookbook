@@ -32,7 +32,6 @@ export default new Vuex.Store({
     },
     ADD_BOOK(state, book) {
       state.data.books.push(book);
-      fs.addBook(book);
     },
     UPDATE_BOOKS(state, books) {
       state.data.books = books;

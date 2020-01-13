@@ -7,7 +7,6 @@
           filled
           rounded
           v-model="searchText"
-          append-outer-icon="mdi-send"
           prepend-inner-icon="mdi-book-open-page-variant"
           clear-icon="mdi-close-circle"
           clearable
@@ -18,37 +17,19 @@
         ></v-text-field>
       </v-col>
     </v-row>
-    <v-row align="center" justify="center">
-      <v-col cols="12" md="8">
-        <v-card v-for="item in books" :key="item.title" tile>
-          <div class="d-flex flex-no-wrap">
-            <div>
-              <v-img width="60px" :src="item.imageLinks.thumbnail"></v-img>
-            </div>
-            <div>
-              <v-card-text>
-                <div>{{ item.title }}</div>
-                <div>{{ item.publisher }}</div>
-                <div>{{ item.authors[0] }}</div>
-              </v-card-text>
-            </div>
-            <v-spacer />
-            <div>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-
-                <v-btn icon @click="item.show = !item.show">
-                  <v-icon>{{
-                    item.show ? "mdi-chevron-up" : "mdi-chevron-down"
-                  }}</v-icon>
-                </v-btn>
-              </v-card-actions>
-            </div>
-          </div>
-
-          <div v-if="item.show">{{ item.volumeInfo.description }}</div>
-        </v-card>
+    <v-row align="center" justify="start" v-for="tag in tags" :key="tag">
+      <v-col cols="12">
+        <h1>{{ tag }}</h1>
       </v-col>
+
+      <v-card tile v-for="item in books" :key="item.title" class="ma-1">
+        <v-img
+          height="110px"
+          max-width="70px"
+          :lazy-src="item.imageLinks.smallThumbnail"
+          :src="item.imageLinks.thumbnail"
+        ></v-img>
+      </v-card>
     </v-row>
   </v-container>
 </template>
@@ -68,13 +49,13 @@ export default {
     return {
       message: "",
       books: [],
-      searchText: ""
+      searchText: "",
+      tags: ["In shelf", "On loan", "Reading"]
     };
   },
   created() {
     this.debounceFilterBooks = this.debounce(
       function() {
-        window.console.log("hmm");
         this.filterBooks(this.searchText);
       }.bind(this),
       400
