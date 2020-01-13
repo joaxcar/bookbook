@@ -36,7 +36,7 @@
             <v-card-actions>
               <!-- todo CHANGE BTN WHEN BOOK ALREADY IN LIBRARY  -->
               <v-btn
-                v-if="true"
+                v-if="() => inLibrary(item)"
                 @click="() => addBook(item)"
                 text
                 color="purple"
@@ -65,13 +65,17 @@
 <script>
 import getsBook from "@/data/GoogleAPI";
 import Debounce from "@/utils/debounce";
+import { mapState } from "vuex";
 
 export default {
+  computed: {
+    ...mapState(["data"])
+  },
   data: function() {
     return {
       message: "",
       books: [],
-      searchText: "9781405924412"
+      searchText: ""
     };
   },
   created() {
@@ -89,7 +93,7 @@ export default {
       this.books = [];
       getsBook(this.searchText).then(ret => {
         window.console.log(ret);
-        this.books = ret.items.map(item => ({ ...item, show: false }));
+        this.books = ret.items.map(item => ({ ...item, inLib: false }));
         this.searchText = "";
       });
     },
@@ -97,10 +101,11 @@ export default {
       this.$store.dispatch("addBook", book);
     },
     inLibrary(volumeInfo) {
-      this.show =
+      return (
         this.$store.state.data.books.filter(
           book => book.title === volumeInfo.title
-        ).length > 0;
+        ).length > 0
+      );
     }
   }
 };

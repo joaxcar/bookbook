@@ -32,6 +32,7 @@ export default new Vuex.Store({
     },
     ADD_BOOK(state, book) {
       state.data.books.push(book);
+      fs.addBook(book);
     },
     UPDATE_BOOKS(state, books) {
       state.data.books = books;
@@ -85,7 +86,6 @@ export default new Vuex.Store({
     addBook({ commit }, volumeInfo) {
       window.console.log("adding new book...");
       // decouple to separate func:
-      fs.addBook(volumeInfo);
       commit("ADD_BOOK", volumeInfo);
     },
     // Subscribe to realtime updates in user's mybooks firestore collection

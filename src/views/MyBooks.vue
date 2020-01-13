@@ -60,7 +60,6 @@
 //   .collection("mybooks");
 import Debounce from "@/utils/debounce";
 import { mapState } from "vuex";
-
 export default {
   computed: {
     ...mapState(["data"])
@@ -89,7 +88,7 @@ export default {
         this.searchText === ""
           ? [...this.data.books]
           : this.data.books.filter(book =>
-              book.title.includes(this.searchText)
+              book.title.toLowerCase().includes(this.searchText.toLowerCase())
             );
     },
     getBooks() {
@@ -105,6 +104,15 @@ export default {
             window.console.log("Current data: ", doc.data());
           });
         });
+    }
+  },
+  watch: {
+    data: {
+      deep: true,
+      // We have to move our method to a handler field
+      handler() {
+        this.filterBooks();
+      }
     }
   }
 };

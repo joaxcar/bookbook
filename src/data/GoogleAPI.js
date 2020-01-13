@@ -8,21 +8,15 @@ function processResponse(response) {
 }
 
 function makeData(d) {
-  const id = d.id ? d.id : "noID";
-  const description = d.volumeInfo.description
-    ? d.volumeInfo.description
-    : "No description";
-  const title = d.volumeInfo.title ? d.volumeInfo.title : "No title";
-  const authors = d.volumeInfo.authors ? d.volumeInfo.authors : ["No authors"];
-  const publisher = d.volumeInfo.publisher
-    ? d.volumeInfo.publisher
-    : "No publisher";
-  const imageLinks = d.volumeInfo.imageLinks
-    ? d.volumeInfo.imageLinks
-    : {
-        thumbnail:
-          "https://upload.wikimedia.org/wikipedia/commons/5/50/Closed_Book_Icon.svg"
-      };
+  const id = d.id || "noID";
+  const description = d.volumeInfo.description || "No description";
+  const title = d.volumeInfo.title || "No title";
+  const authors = d.volumeInfo.authors || ["No authors"];
+  const publisher = d.volumeInfo.publisher || "No publisher";
+  const imageLinks = d.volumeInfo.imageLinks || {
+    thumbnail:
+      "https://upload.wikimedia.org/wikipedia/commons/5/50/Closed_Book_Icon.svg"
+  };
   const industryIdentifiers = d.volumeInfo.industryIdentifiers
     ? d.volumeInfo.industryIdentifiers
     : ["No identifier"];
