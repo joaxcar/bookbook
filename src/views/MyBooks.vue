@@ -17,19 +17,43 @@
         ></v-text-field>
       </v-col>
     </v-row>
+    <v-btn @click="fronts = !fronts">
+      List/Fronts
+    </v-btn>
     <v-row align="center" justify="start" v-for="tag in tags" :key="tag">
       <v-col cols="12">
         <h1>{{ tag }}</h1>
       </v-col>
-
-      <v-card tile v-for="item in books" :key="item.title" class="ma-1">
-        <v-img
-          height="110px"
-          max-width="70px"
-          :lazy-src="item.imageLinks.smallThumbnail"
-          :src="item.imageLinks.thumbnail"
-        ></v-img>
-      </v-card>
+      <template v-if="fronts">
+        <v-card tile v-for="item in books" :key="item.title" class="ma-1">
+          <v-img
+            height="110px"
+            max-width="70px"
+            :lazy-src="item.imageLinks.smallThumbnail"
+            :src="item.imageLinks.thumbnail"
+          ></v-img>
+        </v-card>
+      </template>
+      <template v-else>
+        <v-card
+          v-for="item in books"
+          :key="item.id"
+          tile
+          width="100%"
+          class="d-flex flex-no-wrap"
+        >
+          <div>
+            <v-img width="60px" :src="item.imageLinks.thumbnail"></v-img>
+          </div>
+          <div>
+            <v-card-text>
+              <div>{{ item.title }}</div>
+              <div>{{ item.authors[0] }}</div>
+              <div>{{ item.publisher }}</div>
+            </v-card-text>
+          </div>
+        </v-card>
+      </template>
     </v-row>
   </v-container>
 </template>
@@ -50,7 +74,8 @@ export default {
       message: "",
       books: [],
       searchText: "",
-      tags: ["In shelf", "On loan", "Reading"]
+      tags: ["In shelf", "On loan", "Reading"],
+      fronts: false
     };
   },
   created() {
