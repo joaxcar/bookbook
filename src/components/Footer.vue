@@ -5,7 +5,7 @@
         {{ new Date().getFullYear() }} — <strong>{{ title }}</strong>
         <v-btn
           icon
-          color="blue lighten-3"
+          color="blue lighten-2"
           href="https://github.com/joaxcar/bookbook"
         >
           <v-icon>mdi-github-circle</v-icon>
@@ -28,6 +28,6 @@ export default {
 
 <style scoped>
 .text {
-  color: #81d4fa;
+  color: #4fc3f7;
 }
 </style>
