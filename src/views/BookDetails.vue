@@ -53,6 +53,7 @@
                   half-increments
                   hover
                   size="18"
+                  @change="updateData"
                 ></v-rating>
               </v-col>
             </v-row>
@@ -62,9 +63,30 @@
             <v-row>
               <v-col align="center">
                 <v-card-actions>
-                  <v-btn v-if="true" outlined color="purple">
+                  <!-- todo CHANGE BTN WHEN BOOK ALREADY IN LIBRARY  -->
+                  <v-btn
+                    v-if="inLib"
+                    @click="() => addBook(book)"
+                    outlined
+                    small
+                    color="purple"
+                  >
                     Add to library
                   </v-btn>
+                  <v-menu v-else offset-y>
+                    <template v-slot:activator="{ on }">
+                      <v-btn color="green" v-on="on" text>
+                        In My Books ✔
+                      </v-btn>
+                    </template>
+                    <v-list>
+                      <v-list-item>
+                        <v-btn text @click="removeBook"
+                          >Remove from library</v-btn
+                        >
+                      </v-list-item>
+                    </v-list>
+                  </v-menu>
                   <v-spacer />
                   <v-btn v-if="true" outlined color="purple">
                     Edit
@@ -80,6 +102,7 @@
                   :items="tags"
                   label="Status"
                   filled
+                  @change="updateData"
                 ></v-select>
               </v-col>
             </v-row>
@@ -129,6 +152,7 @@
 
 <script>
 import { getBookById } from "@/data/GoogleAPI";
+import fs from "@/data/fs";
 export default {
   data() {
     return {
@@ -156,6 +180,11 @@ export default {
     fromLib(id) {
       return this.$store.state.data.books.filter(book => book.id === id);
     },
+    addBook(book) {
+      if (!this.$store.state.data.books.some(item => item.id === book.id))
+        fs.addBook(book);
+      //this.$store.dispatch("addBook", book);
+    },
     getBookInfo: function() {
       this.loading = true;
       const id = this.$route.params.id;
@@ -163,11 +192,18 @@ export default {
       if (inLib.length > 0) {
         window.console.log(inLib);
         this.book = inLib[0];
+        this.loading = false;
       } else {
         getBookById(id)
           .then(ret => (this.book = ret))
           .then(() => (this.loading = false));
       }
+    },
+    removeBook() {
+      fs.removeBook(this.book.id);
+    },
+    updateData() {
+      fs.modifyBook(this.book.id, this.book);
     }
   }
 };

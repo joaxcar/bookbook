@@ -40,12 +40,18 @@ export default new Vuex.Store({
     UPDATE_BOOKS(state, books) {
       state.data.books = books;
     },
+    UPDATE_BOOK(state, book) {
+      state.data.books = state.data.books.filter(b => b.id !== book.id);
+      state.data.books.push(book);
+    },
+    REMOVE_BOOK(state, id) {
+      state.data.books = state.data.books.filter(book => book.id !== id);
+    },
     SET_UNSUBSCRIBE(state, unsub) {
       state.unsubscribe.func = unsub.func;
     },
     // unsubscribes from firestore realtime updates
-    UNSUBSCRIBE(state, uid) {
-      window.console.log("mutation unsubscribing: " + uid);
+    UNSUBSCRIBE(state) {
       state.unsubscribe.func();
     }
   },
@@ -56,21 +62,18 @@ export default new Vuex.Store({
     fetchUser({ commit, dispatch }, user) {
       commit("SET_LOGGED_IN", user !== null);
       if (user) {
-        window.console.log("user signed in:\n" + user.displayName);
         dispatch("addListener", user);
         commit("SET_USER", {
           displayName: user.displayName,
           email: user.email
         });
       } else {
-        window.console.log("user signed out");
         commit("SET_USER", null);
         commit("UPDATE_BOOKS", []);
       }
     },
     signOut({ commit }) {
       // unsubscribe from firestore observer on signout
-      window.console.log("unsubscribing signOut() action");
       commit("UNSUBSCRIBE", firebase.auth().currentUser.uid);
 
       firebase
@@ -87,7 +90,6 @@ export default new Vuex.Store({
     },
     // TODO: set security rules not to set if same doc exists
     addBook({ commit }, volumeInfo) {
-      window.console.log(volumeInfo);
       // decouple to separate func:
       commit("ADD_BOOK", volumeInfo);
     },
@@ -97,6 +99,12 @@ export default new Vuex.Store({
       unsub.func = fs.subscribe(user);
       // save the returned unsubscribe function
       commit("SET_UNSUBSCRIBE", unsub);
+    },
+    removeBook({ commit }, id) {
+      commit("REMOVE_BOOK", id);
+    },
+    updateBook({ commit }, book) {
+      commit("UPDATE_BOOK", book);
     }
   },
 
