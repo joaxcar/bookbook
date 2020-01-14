@@ -29,7 +29,12 @@
         </div>
       </v-col>
       <template v-if="fronts">
-        <v-card tile v-for="item in books" :key="item.title" class="ma-1">
+        <v-card
+          tile
+          v-for="item in books.filter(b => b.tags.includes(tag))"
+          :key="item.title"
+          class="ma-2"
+        >
           <router-link
             :to="{ name: 'Details', params: { id: item.id } }"
             tag="div"
@@ -49,6 +54,7 @@
           :key="item.id"
           tile
           width="100%"
+          class="ma-2"
         >
           <router-link
             :to="{ name: 'Details', params: { id: item.id } }"
