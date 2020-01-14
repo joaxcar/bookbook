@@ -13,17 +13,16 @@
           clearable
           prepend-inner-icon="mdi-book-open-page-variant"
           type="text"
-          @keydown.enter="getBook"
-          @click:append-outer="getBook"
+          @keydown.enter="searchForBooks"
+          @click:append-outer="searchForBooks"
           @click:append="toggleScan"
-          ref="textArea"
         ></v-text-field>
       </v-col>
     </v-row>
     <v-row>
       <div id="scanner-wrapper" v-show="this.isScanning">
         <div id="interactive" class="viewport">
-          <v-overlay absolute="true">
+          <v-overlay absolute>
             <div class="overlay">
               <v-icon align="center" size="70">mdi-barcode-scan</v-icon>
             </div>
@@ -80,12 +79,15 @@
           </div>
         </v-card>
       </v-col>
+      <v-btn v-if="books.length > 0" @click="loadMoreBooks"
+        >Load more results</v-btn
+      >
     </v-row>
   </v-container>
 </template>
 
 <script>
-import getsBook from "@/data/GoogleAPI";
+import getBooks from "@/data/GoogleAPI";
 import Debounce from "@/utils/debounce";
 import { mapState } from "vuex";
 import Quagga from "quagga";
@@ -99,8 +101,9 @@ export default {
     return {
       message: "",
       books: [],
+      numberOfBooks: 0,
       searchText: "",
-      lastSearchText: "",
+      lastSearch: "",
       library: [],
       show: false,
       isScanning: false,
@@ -137,15 +140,12 @@ export default {
   created() {
     this.debounceGetBooks = this.debounce(
       function() {
-        this.getBook(this.searchText);
+        this.searchForBooks(this.searchText);
       }.bind(this),
       2000
     );
-    this.$nextTick(() => this.$refs.textArea.focus());
   },
   activated() {
-    this.$nextTick(() => this.$refs.textArea.focus());
-    window.console.log(this.$route.params.type);
     if (this.$route.params.type === "camera") {
       this.toggleScan();
     }
@@ -156,7 +156,6 @@ export default {
     }
   },
   methods: {
-    get: getsBook,
     debounce: Debounce,
     toggleScan() {
       this.isScanning ? this.stopScan() : this.startScan();
@@ -191,21 +190,30 @@ export default {
       this.isScanning = false;
       Quagga.stop();
     },
-    getBook() {
+    searchForBooks() {
       if (this.isScanning) this.stopScan();
       this.books = [];
-      getsBook(this.searchText).then(ret => {
-        window.console.log(ret);
+      getBooks(this.searchText, 0).then(ret => {
         this.books = ret.items.map(item => ({
           ...item,
           inLib: false
         }));
-        this.lastSearchText = this.searchText;
+        this.lastSearch = this.searchText;
+      });
+    },
+    loadMoreBooks() {
+      getBooks(this.lastSearch, this.books.length).then(ret => {
+        this.books = [
+          ...this.books,
+          ...ret.items.map(item => ({
+            ...item,
+            inLib: false
+          }))
+        ];
       });
     },
     addBook(book) {
-      if (!this.$store.state.data.books.some(item => item.id === book.id))
-        fs.addBook(book);
+      if (!this.data.books.some(item => item.id === book.id)) fs.addBook(book);
       //this.$store.dispatch("addBook", book);
     },
     inLib(item) {
