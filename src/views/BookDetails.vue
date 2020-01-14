@@ -45,25 +45,7 @@
 
             <v-row>
               <v-col align="center">
-                <v-rating
-                  v-model="book.rating"
-                  background-color="orange lighten-3"
-                  color="orange"
-                  dense
-                  half-increments
-                  hover
-                  :readonly="!edit"
-                  size="18"
-                  @input="updateData"
-                ></v-rating>
-              </v-col>
-            </v-row>
-
-            <v-divider />
-
-            <v-row>
-              <v-col align="center">
-                <v-card-actions>
+                <v-card-actions align="center">
                   <!-- todo CHANGE BTN WHEN BOOK ALREADY IN LIBRARY  -->
                   <v-btn
                     v-if="inLib"
@@ -88,34 +70,33 @@
                       </v-list-item>
                     </v-list>
                   </v-menu>
-                  <v-spacer />
-                  <v-btn
-                    small
-                    v-if="!inLib && !edit"
-                    color="primary"
-                    @click="() => (edit = !edit)"
-                  >
-                    Edit
-                  </v-btn>
-                  <v-btn
-                    small
-                    v-if="!inLib && edit"
-                    color="green"
-                    class="white--text"
-                    @click="() => (edit = !edit)"
-                  >
-                    Save
-                  </v-btn>
                 </v-card-actions>
               </v-col>
             </v-row>
+
+            <v-divider />
+
+            <v-row>
+              <v-col align="center">
+                <v-rating
+                  v-model="book.rating"
+                  background-color="orange lighten-3"
+                  color="orange"
+                  dense
+                  half-increments
+                  hover
+                  size="18"
+                  @input="updateData"
+                ></v-rating>
+              </v-col>
+            </v-row>
+
             <v-divider />
             <v-row class="pt-10">
               <v-col>
                 <v-slider
                   :disabled="inLib"
                   v-model="read"
-                  :readonly="!edit"
                   label="Progress:"
                   thumb-color="green"
                   thumb-label="always"
@@ -173,32 +154,12 @@
       </v-row>
     </template>
 
-    <v-btn
-      fixed
-      bottom
-      left
-      v-if="!edit"
-      fab
-      color="primary"
-      @click="$router.go(-1)"
-    >
+    <v-btn fixed bottom left fab color="primary" @click="$router.go(-1)">
       <v-icon>mdi-undo</v-icon>
     </v-btn>
     <v-spacer />
-    <v-btn fixed bottom right v-if="!edit" fab color="primary" to="/mybooks">
+    <v-btn fixed bottom right fab color="primary" to="/mybooks">
       <v-icon>mdi-home</v-icon>
-    </v-btn>
-    <v-btn
-      fixed
-      bottom
-      right
-      v-if="edit"
-      fab
-      color="green"
-      class="white--text"
-      @click="() => (edit = !edit)"
-    >
-      <v-icon>mdi-content-save</v-icon>
     </v-btn>
   </v-container>
 </template>
@@ -212,7 +173,6 @@ export default {
       book: {},
       read: 0,
       loading: true,
-      edit: false,
       tags: ["Reading", "In bookshelf", "On loan", "Missing"]
     };
   },
