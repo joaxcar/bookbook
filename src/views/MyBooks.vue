@@ -46,11 +46,11 @@
           :key="item.id"
           tile
           width="100%"
-          class="d-flex flex-no-wrap"
         >
           <router-link
             :to="{ name: 'Details', params: { id: item.id } }"
             tag="div"
+            class="d-flex flex-no-wrap"
           >
             <div>
               <v-img width="60px" :src="item.imageLinks.thumbnail"></v-img>
