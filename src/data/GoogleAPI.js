@@ -42,8 +42,8 @@ const filter = `&fields=totalItems,items/id,items/volumeInfo(description,title,s
  * Do an API call to the search API endpoint.
  * @returns {Promise<any>}
  */
-function getBook(isbn) {
-  return fetch(`${BASE_URL}q=${isbn}${filter}`)
+function getBooks(query, index) {
+  return fetch(`${BASE_URL}q=${query}${filter}&startIndex=${index}`)
     .then(processResponse)
     .then(ret => {
       const items = ret.items.map(data => makeData(data));
@@ -57,4 +57,4 @@ export function getBookById(id) {
     .then(data => makeData(data));
 }
 
-export default getBook;
+export default getBooks;
