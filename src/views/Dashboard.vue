@@ -21,9 +21,9 @@
       </v-col>
     </v-row>
     <v-row>
-      <div id="scanner-wrapper" v-show="this.isScanning">
+      <v-col colls="12" id="scanner-wrapper" v-show="this.isScanning">
         <div id="interactive" class="viewport" />
-      </div>
+      </v-col>
     </v-row>
     <v-row align="center" justify="center">
       <v-col v-if="books.length === 0" align="center">
@@ -97,8 +97,8 @@ export default {
       show: false,
       isScanning: false,
       readerSize: {
-        width: 640,
-        height: 480
+        width: innerWidth,
+        height: innerHeight
       },
       quaggaState: {
         inputStream: {

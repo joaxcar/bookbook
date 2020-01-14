@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer v-model="drawer" app absolute temporary>
+  <v-navigation-drawer v-model="drawer" app fixed temporary clipped>
     <v-list>
       <template v-if="user.loggedIn">
         <v-list-item two-line>

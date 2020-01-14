@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar dark fixed color="primary" app hide-on-scroll>
+  <v-app-bar dark fixed color="primary" app elevate-on-scroll>
     <!-- <v-toolbar-side-icon>
       <v-img
         class="mr-3"
