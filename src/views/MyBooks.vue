@@ -17,7 +17,6 @@
           @input="debounceFilterBooks"
           @keydown.enter="filterBooks"
           @click:append="fronts = !fronts"
-          ref="textArea"
         ></v-text-field>
       </v-col>
     </v-row>
@@ -132,10 +131,6 @@ export default {
       400
     );
     this.books = [...this.data.books];
-    this.$nextTick(() => this.$refs.textArea.focus());
-  },
-  activated() {
-    this.$nextTick(() => this.$refs.textArea.focus());
   },
   methods: {
     debounce: Debounce,
