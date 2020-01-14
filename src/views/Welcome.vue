@@ -61,7 +61,6 @@
 
 <script>
 // @ is an alias to /src
-import getBook from "@/data/GoogleAPI";
 export default {
   name: "Home",
   components: {},
@@ -86,14 +85,6 @@ export default {
       ],
       book: {}
     };
-  },
-  created() {
-    this.get(9781405924412).then(ret => {
-      this.book = ret;
-    });
-  },
-  methods: {
-    get: getBook
   }
 };
 </script>
