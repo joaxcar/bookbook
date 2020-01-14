@@ -27,12 +27,17 @@
       </v-col>
       <template v-if="fronts">
         <v-card tile v-for="item in books" :key="item.title" class="ma-1">
-          <v-img
-            height="110px"
-            max-width="70px"
-            :lazy-src="item.imageLinks.smallThumbnail"
-            :src="item.imageLinks.thumbnail"
-          ></v-img>
+          <router-link
+            :to="{ name: 'Details', params: { id: item.id } }"
+            tag="div"
+          >
+            <v-img
+              height="110px"
+              max-width="70px"
+              :lazy-src="item.imageLinks.smallThumbnail"
+              :src="item.imageLinks.thumbnail"
+            ></v-img>
+          </router-link>
         </v-card>
       </template>
       <template v-else>
@@ -43,36 +48,41 @@
           width="100%"
           class="d-flex flex-no-wrap"
         >
-          <div>
-            <v-img width="60px" :src="item.imageLinks.thumbnail"></v-img>
-          </div>
-          <div>
-            <v-card-text>
-              <div class="body-2 font-weight-medium">{{ item.title }}</div>
-              <span
-                v-for="author in item.authors"
-                :key="item.id + author"
-                class="caption"
-              >
-                {{ author }}
-              </span>
-              <div class="caption font-weight-light">
-                {{ item.publisher }}
-              </div>
-            </v-card-text>
-          </div>
-          <v-spacer />
-          <div>
-            <v-rating
-              v-model="item.rating"
-              background-color="orange lighten-3"
-              color="orange"
-              dense
-              half-increments
-              hover
-              size="18"
-            ></v-rating>
-          </div>
+          <router-link
+            :to="{ name: 'Details', params: { id: item.id } }"
+            tag="div"
+          >
+            <div>
+              <v-img width="60px" :src="item.imageLinks.thumbnail"></v-img>
+            </div>
+            <div>
+              <v-card-text>
+                <div class="body-2 font-weight-medium">{{ item.title }}</div>
+                <span
+                  v-for="author in item.authors"
+                  :key="item.id + author"
+                  class="caption"
+                >
+                  {{ author }}
+                </span>
+                <div class="caption font-weight-light">
+                  {{ item.publisher }}
+                </div>
+              </v-card-text>
+            </div>
+            <v-spacer />
+            <div>
+              <v-rating
+                v-model="item.rating"
+                background-color="orange lighten-3"
+                color="orange"
+                dense
+                half-increments
+                hover
+                size="18"
+              ></v-rating>
+            </div>
+          </router-link>
         </v-card>
       </template>
     </v-row>

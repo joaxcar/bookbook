@@ -36,45 +36,48 @@
           hits)</v-card-text
         >
         <v-card v-for="item in books" :key="item.id" tile>
-          <div class="d-flex flex-no-wrap">
-            <div>
-              <router-link :to="{ name: 'Details', params: { id: item.id } }">
+          <router-link
+            :to="{ name: 'Details', params: { id: item.id } }"
+            tag="div"
+          >
+            <div class="d-flex flex-no-wrap">
+              <div>
                 <v-img width="60px" :src="item.imageLinks.thumbnail"> </v-img>
-              </router-link>
+              </div>
+              <!-- <v-card-text>{{ this.searchText }}</v-card-text> -->
+              <div>
+                <v-card-text>
+                  <div class="body-2 font-weight-medium">{{ item.title }}</div>
+                  <span
+                    v-for="author in item.authors"
+                    :key="item.id + author"
+                    class="caption"
+                  >
+                    {{ author }}
+                  </span>
+                  <div class="caption font-weight-light">
+                    {{ item.publisher }}
+                  </div>
+                </v-card-text>
+              </div>
+              <v-spacer />
+              <div justify="center">
+                <v-card-actions>
+                  <!-- todo CHANGE BTN WHEN BOOK ALREADY IN LIBRARY  -->
+                  <v-btn
+                    v-if="inLib(item)"
+                    @click="() => addBook(item)"
+                    outlined
+                    small
+                    color="purple"
+                  >
+                    Add to library
+                  </v-btn>
+                  <v-btn v-else text color="green">In My Books ✔</v-btn>
+                </v-card-actions>
+              </div>
             </div>
-            <!-- <v-card-text>{{ this.searchText }}</v-card-text> -->
-            <div>
-              <v-card-text>
-                <div class="body-2 font-weight-medium">{{ item.title }}</div>
-                <span
-                  v-for="author in item.authors"
-                  :key="item.id + author"
-                  class="caption"
-                >
-                  {{ author }}
-                </span>
-                <div class="caption font-weight-light">
-                  {{ item.publisher }}
-                </div>
-              </v-card-text>
-            </div>
-            <v-spacer />
-            <div justify="center">
-              <v-card-actions>
-                <!-- todo CHANGE BTN WHEN BOOK ALREADY IN LIBRARY  -->
-                <v-btn
-                  v-if="inLib(item)"
-                  @click="() => addBook(item)"
-                  outlined
-                  small
-                  color="purple"
-                >
-                  Add to library
-                </v-btn>
-                <v-btn v-else text color="green">In My Books ✔</v-btn>
-              </v-card-actions>
-            </div>
-          </div>
+          </router-link>
         </v-card>
       </v-col>
       <v-btn v-if="books.length > 0" @click="loadMoreBooks"
@@ -170,7 +173,7 @@ export default {
       getBooks(this.searchText, 0).then(ret => {
         this.$router.push("/details/" + ret.items[0].id);
       });
-      this.lastSearch = this.searchText;
+      this.searchText = "";
     },
     addBook(book) {
       if (!this.data.books.some(item => item.id === book.id)) fs.addBook(book);
