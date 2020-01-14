@@ -1,11 +1,11 @@
 <template>
   <v-footer app absolute padless>
     <v-col class="text-center" cols="12">
-      <div class="text">
+      <div class="blue--text text--lighten-2">
         {{ new Date().getFullYear() }} — <strong>{{ title }}</strong>
         <v-btn
           icon
-          color="blue lighten-2"
+          class="blue--text text--lighten-2"
           href="https://github.com/joaxcar/bookbook"
         >
           <v-icon>mdi-github-circle</v-icon>
@@ -25,9 +25,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.text {
-  color: #4fc3f7;
-}
-</style>
