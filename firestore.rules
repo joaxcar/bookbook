@@ -4,12 +4,13 @@ service cloud.firestore {
     match /{document=**} {
       allow read, write: if false;
     }
-     
-    match /users/{userId}/mybooks/{book} {
-      allow read, write: if belongsTo(userId);
+    match /users/{email} {
+    	allow read ,delete , update : if request.auth.token.email == email;
+			allow create : if true;
     }
-    function belongsTo(userId) {
-        return request.auth.uid == userId
+     
+    match /users/{email}/mybooks/{book} {
+      allow read, write: if request.auth.token.email == email
     }
   }
 }

@@ -5,12 +5,12 @@ import store from "@/store";
 // firestore update methods
 const fs = {
   addBook: volumeInfo => {
+    window.console.log("adding book...");
     db.collection("users")
       // suggestion: maybe get uid from store instead of auth()
       // also could use email as unique identifer instead
-      .doc(firebase.auth().currentUser.uid)
+      .doc(firebase.auth().currentUser.email)
       .collection("mybooks")
-      // takes first identifier in array maybe look for isbn13 first
       .doc(volumeInfo.id)
       .set(volumeInfo)
       .catch(err => window.console.log("error: " + err))
@@ -20,17 +20,17 @@ const fs = {
   },
   addUser: () => {
     const user = firebase.auth().currentUser;
-    window.console.log("addUser to Firestore: " + user.uid);
+    window.console.log("addUser to Firestore: " + user.email);
     db.collection("users")
-      .doc(user.uid)
+      .doc(user.email)
       .set({ displayName: user.displayName, email: user.email })
       .then(() => window.console.log("user added successfully"))
       .catch(err => window.console.error("firestore adduser error: " + err));
   },
-  subscribe: uid => {
+  subscribe: user => {
     const unsub = db
       .collection("users")
-      .doc(uid)
+      .doc(user.email)
       .collection("mybooks")
       // onSnapShot takes a function to call back when specified collection is changed
       // change.doc.data() returns the updated object: document or field
