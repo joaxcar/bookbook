@@ -148,35 +148,13 @@
       </v-row>
     </template>
 
-    <v-btn color="success" fab large bottom right fixed>
-      <v-icon>mdi-close</v-icon>
+    <v-btn fixed bottom left fab color="primary" @click="$router.go(-1)">
+      <v-icon>mdi-undo</v-icon>
     </v-btn>
-    <v-btn color="error" fab large bottom left fixed>
-      <v-icon>mdi-close</v-icon>
+    <v-spacer />
+    <v-btn fixed bottom right fab color="primary" to="/mybooks">
+      <v-icon>mdi-home</v-icon>
     </v-btn>
-    <v-bottom-navigation
-      scroll-target="#scroll-area-2"
-      scroll-threshold="500"
-      fixed
-      flat
-      color="white"
-      horizontal
-    >
-      <v-btn>
-        <span>Recents</span>
-        <v-icon>mdi-history</v-icon>
-      </v-btn>
-
-      <v-btn>
-        <span>Favorites</span>
-        <v-icon>mdi-heart</v-icon>
-      </v-btn>
-
-      <v-btn>
-        <span>Nearby</span>
-        <v-icon>mdi-map-marker</v-icon>
-      </v-btn>
-    </v-bottom-navigation>
   </v-container>
 </template>
 

@@ -64,6 +64,7 @@ export default {
               let isbn = result.codeResult.code;
               if (isbn.startsWith("978")) {
                 self.$emit("search", isbn);
+                self.stopScan();
               }
             }
           }.bind(this)
