@@ -57,7 +57,7 @@ export default new Vuex.Store({
       commit("SET_LOGGED_IN", user !== null);
       if (user) {
         window.console.log("user signed in:\n" + user.displayName);
-        dispatch("addListener", user.uid);
+        dispatch("addListener", user);
         commit("SET_USER", {
           displayName: user.displayName,
           email: user.email
@@ -92,9 +92,9 @@ export default new Vuex.Store({
       commit("ADD_BOOK", volumeInfo);
     },
     // Subscribe to realtime updates in user's mybooks firestore collection
-    addListener({ commit }, uid) {
+    addListener({ commit }, user) {
       const unsub = { func: null };
-      unsub.func = fs.subscribe(uid);
+      unsub.func = fs.subscribe(user);
       // save the returned unsubscribe function
       commit("SET_UNSUBSCRIBE", unsub);
     }
