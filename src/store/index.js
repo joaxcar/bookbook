@@ -40,6 +40,10 @@ export default new Vuex.Store({
     UPDATE_BOOKS(state, books) {
       state.data.books = books;
     },
+    UPDATE_BOOK(state, book) {
+      state.data.books = state.data.books.filter(b => b.id !== book.id);
+      state.data.books.push(book);
+    },
     REMOVE_BOOK(state, id) {
       state.data.books = state.data.books.filter(book => book.id !== id);
     },
@@ -98,6 +102,9 @@ export default new Vuex.Store({
     },
     removeBook({ commit }, id) {
       commit("REMOVE_BOOK", id);
+    },
+    updateBook({ commit }, book) {
+      commit("UPDATE_BOOK", book);
     }
   },
 

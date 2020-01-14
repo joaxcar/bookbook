@@ -27,6 +27,17 @@ const fs = {
       .delete()
       .catch(err => window.console.log("error: " + err));
   },
+  modifyBook(id, data) {
+    window.console.log(data);
+    db.collection("users")
+      // suggestion: maybe get uid from store instead of auth()
+      // also could use email as unique identifer instead
+      .doc(firebase.auth().currentUser.email)
+      .collection("mybooks")
+      .doc(id)
+      .update(data)
+      .catch(err => window.console.log("error: " + err));
+  },
   addUser: () => {
     const user = firebase.auth().currentUser;
     db.collection("users")
@@ -48,6 +59,7 @@ const fs = {
           }
           if (change.type === "modified") {
             window.console.log("Modified: ", change.doc.data());
+            store.dispatch("updateBook", change.doc.data());
           }
           if (change.type === "removed") {
             store.dispatch("removeBook", change.doc.data().id);

@@ -53,6 +53,7 @@
                   half-increments
                   hover
                   size="18"
+                  @change="updateData"
                 ></v-rating>
               </v-col>
             </v-row>
@@ -101,6 +102,7 @@
                   :items="tags"
                   label="Status"
                   filled
+                  @change="updateData"
                 ></v-select>
               </v-col>
             </v-row>
@@ -199,6 +201,9 @@ export default {
     },
     removeBook() {
       fs.removeBook(this.book.id);
+    },
+    updateData() {
+      fs.modifyBook(this.book.id, this.book);
     }
   }
 };
