@@ -23,7 +23,10 @@
 
     <v-row align="center" justify="start" v-for="tag in tags" :key="tag">
       <v-col cols="12">
-        <h1 class="headline">{{ tag }}</h1>
+        <div class="headline">
+          {{ tag }}
+          <span class="font-weight-thin">({{ countByTag(tag) }})</span>
+        </div>
       </v-col>
       <template v-if="fronts">
         <v-card tile v-for="item in books" :key="item.title" class="ma-1">
@@ -155,6 +158,9 @@ export default {
           : this.data.books.filter(book =>
               book.title.toLowerCase().includes(this.searchText.toLowerCase())
             );
+    },
+    countByTag(tag) {
+      return this.books.filter(book => book.tags === tag).length;
     }
   },
   watch: {
