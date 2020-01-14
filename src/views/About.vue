@@ -1,58 +1,78 @@
 <template>
-  <section>
-    <v-row>
-      <v-col align="center">
-        <h1>About us</h1>
+  <v-container>
+    <v-col cols="12">
+      <v-card color="blue darken-2" dark>
+        <v-card-title class="headline">About us</v-card-title>
 
-        <v-card v-for="part in info" :key="part.title">
-          <v-card-title>
-            {{ part.title }}
-          </v-card-title>
-          <v-card-text>
-            {{ part.content }}
-          </v-card-text>
-        </v-card>
+        <v-card-text class="font-regular">
+          Bookbook is made by John Augustsson, Johan Carlsson and Patrik Sjöfors
+          as part of KTH (Royal Institute of Technology) course
+          DH2642.</v-card-text
+        >
 
-        <v-card class="elevation-0 transparent">
-          <v-card-title primary-title class="layout justify-center">
-            <div class="headline">Group info</div>
-          </v-card-title>
-          <v-card-text>
-            We are a group of students doing this for the first time. Dont
-            expect greatnes!
-          </v-card-text>
-        </v-card>
-        <v-card class="elevation-0 transparent">
-          <v-card-title primary-title class="layout justify-center">
-            <div class="headline">Project code</div>
-          </v-card-title>
-          <v-card-text>
-            Project source code can be found at
-            <a href="https://github.com/joaxcar/bookbook">GitHub</a>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-  </section>
+        <v-btn
+          text
+          href="https://www.kth.se/student/kurser/kurs/DH2642?l=en"
+          target="_blank"
+          >VISIT COURSE PAGE<v-icon small class="ml-2"
+            >mdi-open-in-new</v-icon
+          ></v-btn
+        >
+        <v-btn text href="https://github.com/joaxcar/bookbook" target="_blank"
+          >VIEW SOURCE CODE ON GITHUB<v-icon small class="ml-2"
+            >mdi-open-in-new</v-icon
+          ></v-btn
+        >
+      </v-card>
+    </v-col>
+    <v-col cols="12">
+      <v-card color="blue darken-2" dark>
+        <v-card-title class="headline">Technologies used</v-card-title>
+        <ul style="list-style-type: none">
+          <li>
+            <v-btn text href="https://vuejs.org/" target="_blank"
+              ><v-icon small class="mr-2">mdi-image-frame</v-icon>Vue.js</v-btn
+            >
+          </li>
+          <li>
+            <v-btn text href="https://vuetifyjs.com/en/" target="_blank">
+              <v-icon small class="mr-2">mdi-video-input-component</v-icon
+              >Vuetify</v-btn
+            >
+          </li>
+          <li>
+            <v-btn text href="https://firebase.google.com/" target="_blank"
+              ><v-icon small class="mr-2">mdi-database</v-icon>Firebase</v-btn
+            >
+          </li>
+          <li>
+            <v-btn
+              text
+              href="https://serratus.github.io/quaggaJS/"
+              target="_blank"
+            >
+              <v-icon small class="mr-2">mdi-barcode-scan</v-icon
+              >QuaggaJS</v-btn
+            >
+          </li>
+          <li>
+            <v-btn
+              text
+              href="https://developers.google.com/books"
+              target="_blank"
+              ><v-icon small class="mr-2">mdi-magnify</v-icon>Google Books
+              API</v-btn
+            >
+          </li>
+        </ul>
+      </v-card>
+    </v-col>
+  </v-container>
 </template>
 
-<script>
-export default {
-  data: function() {
-    return {
-      info: [
-        {
-          title: "Group info",
-          content: `We are a group of students doing this for the first time. Dont
-            expect greatnes!`
-        },
-        {
-          title: "Project code",
-          content: `Project source code can be found at
-            <a href="https://github.com/joaxcar/bookbook">GitHub</a>`
-        }
-      ]
-    };
-  }
-};
-</script>
+<script></script>
+<style scoped>
+li {
+  margin-left: -1em;
+}
+</style>
