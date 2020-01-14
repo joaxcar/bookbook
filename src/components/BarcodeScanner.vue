@@ -19,27 +19,24 @@ export default {
   },
   data: function() {
     return {
+      frequency: 10,
       readerSize: {
-        width: innerWidth,
-        height: innerHeight
+        width: window.innerWidth,
+        height: window.innerHeight
       },
       quaggaState: {
         inputStream: {
           name: "Live",
           type: "LiveStream",
-          target: document.querySelector("#interactive"),
+          target: window.document.querySelector("#interactive"),
           constraints: {
-            width: innerWidth,
-            height: innerHeight,
+            width: window.innerWidth,
+            height: window.innerHeight,
             facingMode: "environment"
           }
         },
         decoder: {
-          readers: ["ean_reader"],
-          debug: {
-            drawBoundingBox: true,
-            drawScanLine: true
-          }
+          readers: ["ean_reader"]
         },
         locate: true,
         locator: {
@@ -63,7 +60,7 @@ export default {
           function(result) {
             if (result) {
               window.console.log(result.codeResult.code);
-              window.console.log(self);
+              window.console.log("hej");
               let isbn = result.codeResult.code;
               if (isbn.startsWith("978")) {
                 self.$emit("search", isbn);
