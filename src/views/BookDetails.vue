@@ -33,7 +33,7 @@
                     </v-expansion-panel-header>
                     <v-expansion-panel-content
                       v-html="book.description"
-                      class="flex-column"
+                      class="flex-column mx-3"
                     >
                     </v-expansion-panel-content>
                   </v-expansion-panel>
@@ -101,6 +101,7 @@
                   thumb-color="green"
                   thumb-label="always"
                   @mouseup="updateData"
+                  class="ml-2"
                 ></v-slider>
               </v-col>
             </v-row>
@@ -124,7 +125,7 @@
                   color="teal"
                   filled
                   :disabled="inLib"
-                  class="ma-2"
+                  class="mx-2"
                   @change="updateData"
                 >
                   <template v-slot:label>
