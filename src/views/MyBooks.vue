@@ -37,7 +37,7 @@
       </template>
       <template v-else>
         <v-card
-          v-for="item in books"
+          v-for="item in books.filter(b => b.tags.includes(tag))"
           :key="item.id"
           tile
           width="100%"
@@ -117,7 +117,7 @@ export default {
       message: "",
       books: [],
       searchText: "",
-      tags: ["In shelf", "On loan", "Reading"],
+      tags: ["Reading", "In bookshelf", "On loan", "Missing", "No tag"],
       fronts: false,
       rating: "4",
       fab: false
@@ -131,6 +131,10 @@ export default {
       400
     );
     this.books = [...this.data.books];
+    window.console.log(this.books);
+  },
+  actvated() {
+    this.books = [...this.data.books];
   },
   methods: {
     debounce: Debounce,
@@ -141,20 +145,6 @@ export default {
           : this.data.books.filter(book =>
               book.title.toLowerCase().includes(this.searchText.toLowerCase())
             );
-    },
-    getBooks() {
-      window.console.log("getting books...");
-      window.console.log("from uid: " + this.$firebase.auth().currentUser.uid);
-      this.$db
-        .collection("users")
-        .doc(this.$firebase.auth().currentUser.uid)
-        .collection("mybooks")
-        .get()
-        .then(querySnapShot => {
-          querySnapShot.forEach(doc => {
-            window.console.log("Current data: ", doc.data());
-          });
-        });
     }
   },
   watch: {

@@ -5,7 +5,6 @@ import store from "@/store";
 // firestore update methods
 const fs = {
   addBook: volumeInfo => {
-    window.console.log("adding book...");
     db.collection("users")
       // suggestion: maybe get uid from store instead of auth()
       // also could use email as unique identifer instead
@@ -18,13 +17,21 @@ const fs = {
         //window.console.log("added DEL 2 " + volumeInfo.title);
       });
   },
+  removeBook(id) {
+    db.collection("users")
+      // suggestion: maybe get uid from store instead of auth()
+      // also could use email as unique identifer instead
+      .doc(firebase.auth().currentUser.email)
+      .collection("mybooks")
+      .doc(id)
+      .delete()
+      .catch(err => window.console.log("error: " + err));
+  },
   addUser: () => {
     const user = firebase.auth().currentUser;
-    window.console.log("addUser to Firestore: " + user.email);
     db.collection("users")
       .doc(user.email)
       .set({ displayName: user.displayName, email: user.email })
-      .then(() => window.console.log("user added successfully"))
       .catch(err => window.console.error("firestore adduser error: " + err));
   },
   subscribe: user => {
@@ -37,14 +44,13 @@ const fs = {
       .onSnapshot(snapshot => {
         snapshot.docChanges().forEach(change => {
           if (change.type === "added") {
-            //window.console.log("addedhmm: ", change.doc.data());
             store.dispatch("addBook", change.doc.data());
           }
           if (change.type === "modified") {
             window.console.log("Modified: ", change.doc.data());
           }
           if (change.type === "removed") {
-            window.console.log("Removed: ", change.doc.data());
+            store.dispatch("removeBook", change.doc.data().id);
           }
         });
       });
