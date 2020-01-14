@@ -23,8 +23,10 @@
     <v-row>
       <div id="scanner-wrapper" v-show="this.isScanning">
         <div id="interactive" class="viewport">
-          <v-overlay absolute="true" opacity="0.2">
-            <div class="overlay">stay calm</div>
+          <v-overlay absolute="true">
+            <div class="overlay">
+              <v-icon size="70">mdi-barcode-scan</v-icon>
+            </div>
           </v-overlay>
         </div>
       </div>
@@ -264,8 +266,10 @@ export default {
 
 .overlay {
   position: absolute;
-  background-color: rgba(255, 255, 255, 1);
+  background-color: white;
+  opacity: 0.8;
   margin-top: 2em;
+  margin-left: -2em;
   bottom: 0;
   left: 0;
   right: 0;
