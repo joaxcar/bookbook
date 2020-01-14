@@ -38,6 +38,12 @@
         </v-icon>
       </v-col>
       <v-col v-else-if="!isScanning" cols="12" md="8">
+        <v-card-text class="font-weight-thin"
+          >Results for: "{{ lastSearchText }}" ({{
+            this.searchHits
+          }}
+          hits)</v-card-text
+        >
         <v-card v-for="item in books" :key="item.id" tile>
           <div class="d-flex flex-no-wrap">
             <div>
@@ -101,6 +107,7 @@ export default {
       books: [],
       searchText: "",
       lastSearchText: "",
+      searchHits: 0,
       library: [],
       show: false,
       isScanning: false,
@@ -196,6 +203,7 @@ export default {
       this.books = [];
       getsBook(this.searchText).then(ret => {
         window.console.log(ret);
+        this.searchHits = ret.totalItems;
         this.books = ret.items.map(item => ({
           ...item,
           inLib: false
