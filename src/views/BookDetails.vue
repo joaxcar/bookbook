@@ -52,8 +52,9 @@
                   dense
                   half-increments
                   hover
+                  :readonly="!edit"
                   size="18"
-                  @change="updateData"
+                  @input="updateData"
                 ></v-rating>
               </v-col>
             </v-row>
@@ -69,29 +70,57 @@
                     @click="() => addBook(book)"
                     outlined
                     small
-                    color="purple"
+                    color="primary"
                   >
                     Add to library
                   </v-btn>
                   <v-menu v-else offset-y>
                     <template v-slot:activator="{ on }">
-                      <v-btn color="green" v-on="on" text>
+                      <v-btn small color="green" v-on="on" text>
                         In My Books ✔
                       </v-btn>
                     </template>
                     <v-list>
                       <v-list-item>
-                        <v-btn text @click="removeBook"
+                        <v-btn small text @click="removeBook"
                           >Remove from library</v-btn
                         >
                       </v-list-item>
                     </v-list>
                   </v-menu>
                   <v-spacer />
-                  <v-btn v-if="true" outlined color="purple">
+                  <v-btn
+                    small
+                    v-if="!inLib && !edit"
+                    color="primary"
+                    @click="() => (edit = !edit)"
+                  >
                     Edit
                   </v-btn>
+                  <v-btn
+                    small
+                    v-if="!inLib && edit"
+                    color="green"
+                    class="white--text"
+                    @click="() => (edit = !edit)"
+                  >
+                    Save
+                  </v-btn>
                 </v-card-actions>
+              </v-col>
+            </v-row>
+            <v-divider />
+            <v-row class="pt-10">
+              <v-col>
+                <v-slider
+                  :disabled="inLib"
+                  v-model="read"
+                  :readonly="!edit"
+                  label="Progress:"
+                  thumb-color="green"
+                  thumb-label="always"
+                  @mouseup="updateData"
+                ></v-slider>
               </v-col>
             </v-row>
             <v-row>
@@ -100,32 +129,23 @@
                   :disabled="inLib"
                   v-model="book.tags"
                   :items="tags"
-                  label="Status"
+                  label="Tag"
                   filled
                   @change="updateData"
                 ></v-select>
               </v-col>
             </v-row>
             <v-row>
-              <v-col>
-                <v-slider
-                  :disabled="inLib"
-                  v-model="read"
-                  label="Progress:"
-                  thumb-color="green"
-                  thumb-label="always"
-                ></v-slider>
-              </v-col>
-            </v-row>
-            <v-row>
               <v-col cols="12">
                 <v-textarea
-                  v-model="book.review"
+                  v-model="book.comment"
                   color="teal"
+                  filled
                   :disabled="inLib"
+                  @change="updateData"
                 >
                   <template v-slot:label>
-                    <div><strong>Review</strong></div>
+                    <div>Comment</div>
                   </template>
                 </v-textarea>
               </v-col>
@@ -135,10 +155,12 @@
                 <v-textarea
                   v-model="book.review"
                   color="teal"
+                  filled
                   :disabled="inLib"
+                  @change="updateData"
                 >
                   <template v-slot:label>
-                    <div><strong>Comment</strong></div>
+                    <div>Review</div>
                   </template>
                 </v-textarea>
               </v-col>
@@ -148,12 +170,32 @@
       </v-row>
     </template>
 
-    <v-btn fixed bottom left fab color="primary" @click="$router.go(-1)">
+    <v-btn
+      fixed
+      bottom
+      left
+      v-if="!edit"
+      fab
+      color="primary"
+      @click="$router.go(-1)"
+    >
       <v-icon>mdi-undo</v-icon>
     </v-btn>
     <v-spacer />
-    <v-btn fixed bottom right fab color="primary" to="/mybooks">
+    <v-btn fixed bottom right v-if="!edit" fab color="primary" to="/mybooks">
       <v-icon>mdi-home</v-icon>
+    </v-btn>
+    <v-btn
+      fixed
+      bottom
+      right
+      v-if="edit"
+      fab
+      color="green"
+      class="white--text"
+      @click="() => (edit = !edit)"
+    >
+      <v-icon>mdi-content-save</v-icon>
     </v-btn>
   </v-container>
 </template>
@@ -167,6 +209,7 @@ export default {
       book: {},
       read: 0,
       loading: true,
+      edit: false,
       tags: ["Reading", "In bookshelf", "On loan", "Missing"]
     };
   },

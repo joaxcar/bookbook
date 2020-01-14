@@ -80,6 +80,7 @@
                 background-color="orange lighten-3"
                 color="orange"
                 dense
+                readonly
                 half-increments
                 hover
                 size="18"
