@@ -33,7 +33,8 @@ function makeData(d) {
     rating: 0,
     review: "",
     comment: "",
-    tags: ["No tag"]
+    tags: ["No tag"],
+    progress: 0
   };
 }
 
