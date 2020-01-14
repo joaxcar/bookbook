@@ -8,7 +8,7 @@
             <div v-if="error" class="alert alert-danger red--text">
               {{ error }}
             </div>
-            <form>
+            <form @keydown.enter="submit">
               <label for="name" class="col-md-4 col-form-label text-md-right">
                 Name</label
               >
