@@ -104,7 +104,7 @@ export default {
               // add user to firestore
               fs.addUser();
               // user is signed in on account creation goto straight to search
-              this.$router.push("/search");
+              this.$router.replace("/search");
               // reload to force vue to render username in menu
               //location.reload();
             });

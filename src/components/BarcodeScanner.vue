@@ -21,8 +21,8 @@ export default {
     return {
       frequency: 10,
       readerSize: {
-        width: window.innerWidth,
-        height: window.innerHeight
+        width: 600,
+        height: window.visualViewport.height
       },
       quaggaState: {
         inputStream: {
@@ -30,8 +30,8 @@ export default {
           type: "LiveStream",
           target: window.document.querySelector("#interactive"),
           constraints: {
-            width: window.innerWidth,
-            height: window.innerHeight,
+            width: 600,
+            height: window.visualViewport.height,
             facingMode: "environment"
           }
         },

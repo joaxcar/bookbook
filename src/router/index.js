@@ -6,12 +6,25 @@ import Register from "@/views/Register.vue";
 import Login from "@/views/Login.vue";
 import BookDetails from "@/views/BookDetails.vue";
 import MyBooks from "@/views/MyBooks.vue";
+import store from "@/store/index.js";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
+    name: "base",
+    component: Welcome,
+    beforeEnter(to, from, next) {
+      if (!store.state.user.loggedIn) {
+        next("/mybooks");
+      } else {
+        next("/welcome");
+      }
+    }
+  },
+  {
+    path: "/welcome",
     name: "Welcome",
     component: Welcome
   },
