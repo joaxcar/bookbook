@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Dashboard from "@/views/Dashboard.vue";
+import Search from "@/views/Search.vue";
 import Welcome from "@/views/Welcome.vue";
 import Register from "@/views/Register.vue";
 import Login from "@/views/Login.vue";
@@ -26,14 +26,14 @@ const routes = [
     component: Login
   },
   {
-    path: "/dashboard",
-    name: "Dashboard",
-    component: Dashboard
+    path: "/search",
+    name: "Search",
+    component: Search
   },
   {
-    path: "/dashboard/:type",
-    name: "DashType",
-    component: Dashboard
+    path: "/search/:type",
+    name: "SearchType",
+    component: Search
   },
   {
     path: "/about",

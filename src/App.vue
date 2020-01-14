@@ -3,7 +3,7 @@
     <navigation-drawer :value="drawer" :links="items" :title="title" />
     <navigation-bar @drawer="toggleDrawer" :links="items" :title="title" />
     <v-content fluid>
-      <!-- if user is logged in, keep dashboard alive -->
+      <!-- if user is logged in, keep search view alive -->
       <keep-alive v-if="user.loggedIn">
         <router-view></router-view>
       </keep-alive>
@@ -37,7 +37,7 @@ export default {
       title: "Bookbook",
       drawer: false,
       items: [
-        { title: "Dashboard", to: "/dashboard" },
+        { title: "Search", to: "/search" },
         { title: "My books", to: "/mybooks" },
         { title: "About", to: "/about" }
       ],

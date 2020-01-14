@@ -23,7 +23,7 @@
 
     <v-row align="center" justify="start" v-for="tag in tags" :key="tag">
       <v-col cols="12">
-        <h1>{{ tag }}</h1>
+        <h1 class="headline">{{ tag }}</h1>
       </v-col>
       <template v-if="fronts">
         <v-card tile v-for="item in books" :key="item.title" class="ma-1">
@@ -101,10 +101,10 @@
           <v-icon v-else>mdi-plus</v-icon>
         </v-btn>
       </template>
-      <v-btn fab dark small color="green" to="/dashboard">
+      <v-btn fab dark small color="green" to="/search">
         <v-icon>mdi-format-text</v-icon>
       </v-btn>
-      <v-btn fab dark small color="indigo" to="/dashboard/camera">
+      <v-btn fab dark small color="indigo" to="/search/camera">
         <v-icon>mdi-camera</v-icon>
       </v-btn>
     </v-speed-dial>
