@@ -28,6 +28,6 @@ export default {
 
 <style scoped>
 .text {
-  color: #4fc3f7;
+  color: #64b5f6;
 }
 </style>

@@ -33,7 +33,7 @@
           tile
           v-for="item in books.filter(b => b.tags.includes(tag))"
           :key="item.title"
-          class="ma-2"
+          class="mx-2"
         >
           <router-link
             :to="{ name: 'Details', params: { id: item.id } }"
@@ -54,7 +54,7 @@
           :key="item.id"
           tile
           width="100%"
-          class="ma-2"
+          class="mx-2"
         >
           <router-link
             :to="{ name: 'Details', params: { id: item.id } }"
