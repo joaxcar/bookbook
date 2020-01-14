@@ -3,11 +3,12 @@
     <navigation-drawer :value="drawer" :links="items" :title="title" />
     <navigation-bar @drawer="toggleDrawer" :links="items" :title="title" />
     <v-content fluid>
-      <keep-alive>
-        <router-view>
-          <v-container fluid fill-height> </v-container>
-        </router-view>
+      <!-- if user is logged in, keep dashboard alive -->
+      <keep-alive v-if="user.loggedIn">
+        <router-view></router-view>
       </keep-alive>
+      <!-- otherwise don't keep anything alive -->
+      <router-view v-else></router-view>
     </v-content>
     <dpfooter :title="title" />
   </v-app>
@@ -39,7 +40,8 @@ export default {
         { title: "Dashboard", to: "/dashboard" },
         { title: "My books", to: "/mybooks" },
         { title: "About", to: "/about" }
-      ]
+      ],
+      loggedIn: false
     };
   },
   methods: {
