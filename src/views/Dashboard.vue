@@ -193,6 +193,9 @@ export default {
     searchForBooks() {
       if (this.isScanning) this.stopScan();
       this.books = [];
+      if (!this.searchText) {
+        return;
+      }
       getBooks(this.searchText, 0).then(ret => {
         this.books = ret.items.map(item => ({
           ...item,
