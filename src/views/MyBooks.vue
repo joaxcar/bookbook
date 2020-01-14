@@ -167,6 +167,9 @@ export default {
     },
     countByTag(tag) {
       return this.books.filter(book => book.tags === tag).length;
+    },
+    filteredByTag(tag) {
+      return this.books.filter(b => b.tags.includes(tag));
     }
   },
   watch: {

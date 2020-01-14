@@ -1,10 +1,16 @@
 <template>
   <v-footer app absolute padless>
-    <v-col class="text-center" cols="12" color="grey">
-      {{ new Date().getFullYear() }} — <strong>{{ title }}</strong>
-      <v-btn icon color="grey" href="https://github.com/joaxcar/bookbook">
-        <v-icon>mdi-github-circle</v-icon>
-      </v-btn>
+    <v-col class="text-center" cols="12">
+      <div class="text">
+        {{ new Date().getFullYear() }} — <strong>{{ title }}</strong>
+        <v-btn
+          icon
+          color="blue lighten-3"
+          href="https://github.com/joaxcar/bookbook"
+        >
+          <v-icon>mdi-github-circle</v-icon>
+        </v-btn>
+      </div>
     </v-col>
   </v-footer>
 </template>
@@ -21,8 +27,7 @@ export default {
 </script>
 
 <style scoped>
-text-center {
-  color: grey;
-  font-weight: bold;
+.text {
+  color: #81d4fa;
 }
 </style>

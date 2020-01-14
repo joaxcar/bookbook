@@ -103,6 +103,7 @@
                   label="Status"
                   filled
                   @change="updateData"
+                  class="ml-2"
                 ></v-select>
               </v-col>
             </v-row>
@@ -114,6 +115,7 @@
                   label="Progress:"
                   thumb-color="green"
                   thumb-label="always"
+                  class="ma-2"
                 ></v-slider>
               </v-col>
             </v-row>
@@ -123,6 +125,7 @@
                   v-model="book.review"
                   color="teal"
                   :disabled="inLib"
+                  class="ma-2"
                 >
                   <template v-slot:label>
                     <div><strong>Review</strong></div>
@@ -136,6 +139,7 @@
                   v-model="book.review"
                   color="teal"
                   :disabled="inLib"
+                  class="ma-2"
                 >
                   <template v-slot:label>
                     <div><strong>Comment</strong></div>
