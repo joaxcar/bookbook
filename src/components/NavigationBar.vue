@@ -36,7 +36,7 @@
           </template>
           <v-list>
             <v-list-item>
-              <v-btn text class="d-none d-sm-flex">{{
+              <v-btn text class="d-none d-sm-flex" to="/mybooks">{{
                 user.data.displayName
               }}</v-btn>
             </v-list-item>
