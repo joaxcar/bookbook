@@ -25,19 +25,19 @@
         <div id="interactive" class="viewport">
           <v-overlay absolute="true">
             <div class="overlay">
-              <v-icon size="70">mdi-barcode-scan</v-icon>
+              <v-icon align="center" size="70">mdi-barcode-scan</v-icon>
             </div>
           </v-overlay>
         </div>
       </div>
     </v-row>
     <v-row align="center" justify="center">
-      <v-col v-if="books.length === 0" align="center">
+      <v-col v-if="books.length === 0 && !isScanning" align="center">
         <v-icon size="170" class="blue-grey--text text--lighten-4 pa-7">
           mdi-magnify
         </v-icon>
       </v-col>
-      <v-col v-else cols="12" md="8">
+      <v-col v-else-if="!isScanning" cols="12" md="8">
         <v-card v-for="item in books" :key="item.id" tile>
           <div class="d-flex flex-no-wrap">
             <div>
@@ -45,6 +45,7 @@
                 <v-img width="60px" :src="item.imageLinks.thumbnail"> </v-img>
               </router-link>
             </div>
+            <!-- <v-card-text>{{ this.searchText }}</v-card-text> -->
             <div>
               <v-card-text>
                 <div class="body-2 font-weight-medium">{{ item.title }}</div>
@@ -99,6 +100,7 @@ export default {
       message: "",
       books: [],
       searchText: "",
+      lastSearchText: "",
       library: [],
       show: false,
       isScanning: false,
@@ -172,7 +174,6 @@ export default {
         Quagga.onDetected(
           function(result) {
             if (result) {
-              Quagga.onProcessed(self._onProcessed);
               window.console.log(result.codeResult.code);
               window.console.log(self);
               let isbn = result.codeResult.code;
@@ -186,52 +187,12 @@ export default {
         );
       });
     },
-    _onProcessed() {
-      result => {
-        var drawingCtx = Quagga.canvas.ctx.overlay,
-          drawingCanvas = Quagga.canvas.dom.overlay;
-
-        if (result) {
-          if (result.boxes) {
-            drawingCtx.clearRect(
-              0,
-              0,
-              parseInt(drawingCanvas.getAttribute("width")),
-              parseInt(drawingCanvas.getAttribute("height"))
-            );
-            result.boxes
-              .filter(function(box) {
-                return box !== result.box;
-              })
-              .forEach(function(box) {
-                Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCtx, {
-                  color: "#ffffff",
-                  lineWidth: 2
-                });
-              });
-          }
-          if (result.box) {
-            Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, {
-              color: "blue",
-              lineWidth: 2
-            });
-          }
-          if (result.codeResult && result.codeResult.code) {
-            Quagga.ImageDebug.drawPath(
-              result.line,
-              { x: "x", y: "y" },
-              drawingCtx,
-              { color: "red", lineWidth: 3 }
-            );
-          }
-        }
-      };
-    },
     stopScan() {
       this.isScanning = false;
       Quagga.stop();
     },
     getBook() {
+      if (this.isScanning) this.stopScan();
       this.books = [];
       getsBook(this.searchText).then(ret => {
         window.console.log(ret);
@@ -239,7 +200,7 @@ export default {
           ...item,
           inLib: false
         }));
-        this.searchText = "";
+        this.lastSearchText = this.searchText;
       });
     },
     addBook(book) {
