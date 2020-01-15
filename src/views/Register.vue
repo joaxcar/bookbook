@@ -19,6 +19,7 @@
                 class="form-control"
                 name="name"
                 value
+                :rules="[rules.required]"
                 required
                 autofocus
                 v-model="form.name"
@@ -33,6 +34,7 @@
                 type="email"
                 class="form-control"
                 name="email"
+                :rules="[rules.required]"
                 value
                 required
                 v-model="form.email"
