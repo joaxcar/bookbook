@@ -162,6 +162,9 @@ export default {
   methods: {
     debounce: Debounce,
     filterBooks() {
+      if (this.searchText === null) {
+        this.searchText = "";
+      }
       this.books =
         this.searchText === ""
           ? [...this.data.books]

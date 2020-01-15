@@ -102,7 +102,10 @@ export default {
     "barcode-scanner": BarcodeScanner
   },
   computed: {
-    ...mapState(["data"])
+    ...mapState(["data"]),
+    isScanning: function() {
+      return this.$route.params.type ? true : false;
+    }
   },
   data: function() {
     return {
@@ -113,8 +116,7 @@ export default {
       searchHits: 0,
       lastSearch: "",
       library: [],
-      show: false,
-      isScanning: false
+      show: false
     };
   },
   created() {
@@ -125,25 +127,12 @@ export default {
       2000
     );
   },
-  activated() {
-    if (this.$route.params.type === "camera" && !this.isScanning) {
-      this.toggleScan();
-    }
-  },
   deactivated() {
     if (this.isScanning) {
       this.toggleScan();
     }
   },
-  watch: {
-    $route(to) {
-      if (to.params.type === "camera" && !this.isScanning) {
-        this.isScanning = !this.isScanning;
-      } else if (to.params.type !== "camera" && this.isScanning) {
-        this.isScanning = !this.isScanning;
-      }
-    }
-  },
+  watch: {},
   methods: {
     debounce: Debounce,
     toggleScan() {
