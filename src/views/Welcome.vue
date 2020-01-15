@@ -18,10 +18,10 @@
               rounded
               x-large
               class="font-weight-bold"
-              to="/register"
+              :to="startRoute"
               color="primary"
             >
-              Get started
+              {{ start }}
             </v-btn>
           </div>
         </v-col>
@@ -60,10 +60,21 @@
 </template>
 
 <script>
-// @ is an alias to /src
+import { mapGetters } from "vuex";
 export default {
   name: "Home",
   components: {},
+  computed: {
+    ...mapGetters({
+      user: "user"
+    }),
+    start: function() {
+      return this.user.loggedIn ? "Get back to shelfing" : "Get Started";
+    },
+    startRoute: function() {
+      return this.user.loggedIn ? "MyBooks" : "Register";
+    }
+  },
   data() {
     return {
       infobox: [
