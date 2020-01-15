@@ -11,10 +11,12 @@
       <router-view v-else></router-view>
     </v-content>
     <dpfooter :title="title" />
+    <bottom-bar class="d-md-none" />
   </v-app>
 </template>
 
 <script>
+import BottomBar from "@/components/BottomBar";
 import NavigationBar from "@/components/NavigationBar";
 import NavigationDrawer from "@/components/NavigationDrawer";
 import Footer from "@/components/Footer";
@@ -30,6 +32,7 @@ export default {
   components: {
     "navigation-bar": NavigationBar,
     "navigation-drawer": NavigationDrawer,
+    "bottom-bar": BottomBar,
     dpfooter: Footer
   },
   data() {

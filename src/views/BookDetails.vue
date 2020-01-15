@@ -1,5 +1,8 @@
 <template>
   <v-container>
+    <v-btn absolute fixed right fab color="primary" @click="$router.go(-1)">
+      <v-icon>mdi-undo</v-icon>
+    </v-btn>
     <template id="scroll-area-2">
       <v-row align="center" justify="center">
         <v-col cols="12" md="8">
@@ -154,14 +157,6 @@
         </v-col>
       </v-row>
     </template>
-
-    <v-btn fixed bottom left fab color="primary" @click="$router.go(-1)">
-      <v-icon>mdi-undo</v-icon>
-    </v-btn>
-    <v-spacer />
-    <v-btn fixed bottom right fab color="primary" to="/mybooks">
-      <v-icon>mdi-home</v-icon>
-    </v-btn>
   </v-container>
 </template>
 
