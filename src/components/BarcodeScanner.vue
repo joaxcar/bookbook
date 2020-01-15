@@ -21,8 +21,8 @@ export default {
     return {
       frequency: 10,
       readerSize: {
-        width: 600,
-        height: window.visualViewport.height
+        width: innerWidth,
+        height: innerHeight
       },
       quaggaState: {
         inputStream: {
@@ -30,8 +30,8 @@ export default {
           type: "LiveStream",
           target: window.document.querySelector("#interactive"),
           constraints: {
-            width: 600,
-            height: window.visualViewport.height,
+            width: innerWidth,
+            height: innerHeight,
             facingMode: "environment"
           }
         },
@@ -85,6 +85,10 @@ export default {
 </script>
 
 <style scoped>
+.viewPort {
+  width: 100%;
+  height: 100%;
+}
 .v-overlay {
   position: relative;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;

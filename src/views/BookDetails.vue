@@ -141,7 +141,7 @@
                   color="teal"
                   filled
                   :disabled="inLib"
-                  class="ma-2"
+                  class="mx-2"
                   @change="updateData"
                 >
                   <template v-slot:label>
