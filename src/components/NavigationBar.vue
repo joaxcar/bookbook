@@ -11,10 +11,11 @@
     </v-toolbar-side-icon> -->
     <img src="@/assets/icons8-book-shelf-100-3.png" style="height: inherit;" />
     <v-toolbar-title>
-      <a href="/#/" class="white--text font-weight-black">
+      <a href="/" class="white--text font-weight-black">
         {{ title }}
       </a>
     </v-toolbar-title>
+
     <v-spacer />
     <v-app-bar-nav-icon class="d-sm-none" @click.stop="toggleDrawer" />
     <v-toolbar-items>

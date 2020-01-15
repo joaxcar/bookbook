@@ -21,7 +21,7 @@
     </v-row>
     <v-row v-show="isScanning">
       <v-col>
-          <barcode-scanner :is-scanning="isScanning" @search="searchCamera" />
+        <barcode-scanner :is-scanning="isScanning" @search="searchCamera" />
       </v-col>
     </v-row>
     <v-row align="center" justify="center">
@@ -125,7 +125,11 @@ export default {
     );
   },
   activated() {
+<<<<<<< HEAD
     if (this.$route.params.type === "camera") {
+=======
+    if (this.$route.params.type === "camera" && !this.isScanning) {
+>>>>>>> 75dcc5077c6c2fd14119b83e00b50032adae6a7c
       this.toggleScan();
     }
   },
@@ -134,10 +138,23 @@ export default {
       this.toggleScan();
     }
   },
+  watch: {
+    $route(to) {
+      if (to.params.type === "camera" && !this.isScanning) {
+        this.isScanning = !this.isScanning;
+      } else if (to.params.type !== "camera" && this.isScanning) {
+        this.isScanning = !this.isScanning;
+      }
+    }
+  },
   methods: {
     debounce: Debounce,
     toggleScan() {
-      this.isScanning = !this.isScanning;
+      if (this.isScanning) {
+        this.$router.push("/search");
+      } else {
+        this.$router.push("/search/camera");
+      }
     },
     searchForBooks() {
       if (this.isScanning) this.stopScan();

@@ -1,12 +1,10 @@
 <template>
-  <div id="scanner-wrapper">
-    <div id="interactive" class="viewport">
-      <v-overlay>
-        <div class="overlay">
-          <v-icon align="center" size="70">mdi-barcode-scan</v-icon>
-        </div>
-      </v-overlay>
-    </div>
+  <div id="interactive" class="viewport">
+    <v-overlay>
+      <div class="overlay">
+        <v-icon align="center" size="70">mdi-barcode-scan</v-icon>
+      </div>
+    </v-overlay>
   </div>
 </template>
 
@@ -85,7 +83,7 @@ export default {
 </script>
 
 <style scoped>
-#scanner-wrapper {
+#interactive.viewport {
   width: 100%;
   height: 100%;
   overflow: hidden;
