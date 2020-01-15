@@ -58,3 +58,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.navigation-bar {
+  z-index: 100123123;
+}
+</style>

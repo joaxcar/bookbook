@@ -1,6 +1,6 @@
 <template>
   <div id="interactive" class="viewport">
-    <v-overlay>
+    <v-overlay z-index="2">
       <div class="overlay">
         <v-icon align="center" size="70">mdi-barcode-scan</v-icon>
       </div>
