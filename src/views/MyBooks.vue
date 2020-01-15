@@ -96,12 +96,13 @@
         </v-card>
       </template>
     </v-row>
-    <v-speed-dial
+    <!--     <v-speed-dial
       v-model="fab"
+      fab
       bottom
+      value="show"
       right
       absolute
-      fixed
       direction="top"
       transition="slide-x-transition"
     >
@@ -117,7 +118,7 @@
       <v-btn fab dark small color="indigo" to="/search/camera">
         <v-icon>mdi-camera</v-icon>
       </v-btn>
-    </v-speed-dial>
+    </v-speed-dial> -->
   </v-container>
 </template>
 
@@ -140,7 +141,8 @@ export default {
       tags: ["Reading", "In bookshelf", "On loan", "Missing", "No tag"],
       fronts: false,
       rating: "4",
-      fab: false
+      fab: false,
+      show: null
     };
   },
   created() {

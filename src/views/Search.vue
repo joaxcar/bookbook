@@ -16,12 +16,13 @@
           @keydown.enter="searchForBooks"
           @click:append-outer="searchForBooks"
           @click:append="toggleScan"
+          ref="textin"
         ></v-text-field>
       </v-col>
     </v-row>
     <v-row v-show="isScanning">
       <v-col>
-          <barcode-scanner :is-scanning="isScanning" @search="searchCamera" />
+        <barcode-scanner :is-scanning="isScanning" @search="searchCamera" />
       </v-col>
     </v-row>
     <v-row align="center" justify="center">
@@ -113,11 +114,7 @@ export default {
       lastSearch: "",
       library: [],
       show: false,
-      isScanning: false,
-      readerSize: {
-        width: innerWidth,
-        height: innerHeight
-      }
+      isScanning: false
     };
   },
   created() {
@@ -128,15 +125,33 @@ export default {
       2000
     );
   },
+  activated() {
+    if (this.$route.params.type === "camera" && !this.isScanning) {
+      this.toggleScan();
+    }
+  },
   deactivated() {
     if (this.isScanning) {
       this.toggleScan();
     }
   },
+  watch: {
+    $route(to) {
+      if (to.params.type === "camera" && !this.isScanning) {
+        this.isScanning = !this.isScanning;
+      } else if (to.params.type !== "camera" && this.isScanning) {
+        this.isScanning = !this.isScanning;
+      }
+    }
+  },
   methods: {
     debounce: Debounce,
     toggleScan() {
-      this.isScanning = !this.isScanning;
+      if (this.isScanning) {
+        this.$router.push("/search");
+      } else {
+        this.$router.push("/search/camera");
+      }
     },
     searchForBooks() {
       if (this.isScanning) this.stopScan();
@@ -152,6 +167,7 @@ export default {
           inLib: false
         }));
         this.lastSearch = this.searchText;
+        this.$refs.textin.blur();
       });
     },
     loadMoreBooks() {
