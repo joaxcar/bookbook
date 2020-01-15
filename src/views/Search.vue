@@ -111,11 +111,7 @@ export default {
       lastSearch: "",
       library: [],
       show: false,
-      isScanning: false,
-      readerSize: {
-        width: innerWidth,
-        height: innerHeight
-      }
+      isScanning: false
     };
   },
   created() {
@@ -125,6 +121,11 @@ export default {
       }.bind(this),
       2000
     );
+  },
+  activated() {
+    if (this.$route.params.type === "camera") {
+      this.toggleScan();
+    }
   },
   deactivated() {
     if (this.isScanning) {

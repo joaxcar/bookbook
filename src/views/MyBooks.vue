@@ -98,10 +98,10 @@
     </v-row>
     <v-speed-dial
       v-model="fab"
+      fab
       bottom
       right
       absolute
-      fixed
       direction="top"
       transition="slide-x-transition"
     >
