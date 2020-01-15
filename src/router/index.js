@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 import Search from "@/views/Search.vue";
 import Welcome from "@/views/Welcome.vue";
 import Register from "@/views/Register.vue";
-import Login from "@/views/Login.vue";
+import SignIn from "@/views/SignIn.vue";
 import BookDetails from "@/views/BookDetails.vue";
 import MyBooks from "@/views/MyBooks.vue";
 import store from "@/store/index.js";
@@ -34,9 +34,9 @@ const routes = [
     component: Register
   },
   {
-    path: "/login",
-    name: "Login",
-    component: Login
+    path: "/signin",
+    name: "SignIn",
+    component: SignIn
   },
   {
     path: "/search",

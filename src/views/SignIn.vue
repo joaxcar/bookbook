@@ -3,7 +3,6 @@
     <v-row>
       <v-col>
         <v-card>
-          <v-card-title>Login</v-card-title>
           <v-card-text>
             <div v-if="error" class="alert alert-danger red--text">
               {{ error }}
@@ -45,7 +44,7 @@
                 v-model="form.password"
               />
 
-              <v-btn @click="submit" class="btn btn-primary">Login</v-btn>
+              <v-btn @click="submit" class="btn btn-primary">Sign in</v-btn>
             </form>
           </v-card-text>
         </v-card>

@@ -49,8 +49,8 @@
         </v-menu>
       </template>
       <template v-else>
-        <v-btn text class="d-none d-sm-flex" to="/login">
-          Login
+        <v-btn text class="d-none d-sm-flex" to="/signin">
+          Sign in
         </v-btn>
         <v-btn text class="d-none d-sm-flex" to="/register">
           Register

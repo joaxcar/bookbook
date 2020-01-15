@@ -126,11 +126,6 @@ export default {
       2000
     );
   },
-  activated() {
-    if (this.$route.params.type === "camera") {
-      this.toggleScan();
-    }
-  },
   deactivated() {
     if (this.isScanning) {
       this.toggleScan();

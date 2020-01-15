@@ -20,8 +20,8 @@
         </v-list-item>
       </template>
       <template v-else>
-        <v-list-item to="/login">
-          Login
+        <v-list-item to="/signin">
+          Sign in
         </v-list-item>
         <v-list-item to="/register">
           Register
