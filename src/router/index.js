@@ -16,7 +16,7 @@ const routes = [
     name: "base",
     component: Welcome,
     beforeEnter(to, from, next) {
-      if (!store.state.user.loggedIn) {
+      if (store.state.user.loggedIn) {
         next("/mybooks");
       } else {
         next("/welcome");
