@@ -17,6 +17,7 @@
           @input="debounceFilterBooks"
           @keydown.enter="filterBooks"
           @click:append="fronts = !fronts"
+          @click:clear="clearFilter"
         ></v-text-field>
       </v-col>
     </v-row>
@@ -173,6 +174,10 @@ export default {
     },
     filteredByTag(tag) {
       return this.books.filter(b => b.tags.includes(tag));
+    },
+    clearFilter() {
+      this.searchText = "";
+      this.filterBooks();
     }
   },
   watch: {
