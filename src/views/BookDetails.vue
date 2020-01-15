@@ -99,7 +99,7 @@
               <v-col>
                 <v-slider
                   :disabled="inLib"
-                  v-model="read"
+                  v-model="book.progress"
                   label="Progress:"
                   thumb-color="green"
                   thumb-label="always"
