@@ -16,6 +16,7 @@
           @keydown.enter="searchForBooks"
           @click:append-outer="searchForBooks"
           @click:append="toggleScan"
+          ref="textin"
         ></v-text-field>
       </v-col>
     </v-row>
@@ -166,6 +167,7 @@ export default {
           inLib: false
         }));
         this.lastSearch = this.searchText;
+        this.$refs.textin.blur();
       });
     },
     loadMoreBooks() {

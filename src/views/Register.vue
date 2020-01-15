@@ -35,7 +35,6 @@
                 name="email"
                 value
                 required
-                autofocus
                 v-model="form.email"
               />
 
