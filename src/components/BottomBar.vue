@@ -9,7 +9,7 @@
     </v-btn>
 
     <v-btn to="/mybooks" value="hessj">
-      <v-icon>mdi-view-list </v-icon>
+      <v-icon>mdi-bookshelf </v-icon>
     </v-btn>
   </v-bottom-navigation>
 </template>
