@@ -1,7 +1,7 @@
 <template>
   <div id="scanner-wrapper">
     <div id="interactive" class="viewport">
-      <v-overlay absolute>
+      <v-overlay>
         <div class="overlay">
           <v-icon align="center" size="70">mdi-barcode-scan</v-icon>
         </div>
@@ -20,19 +20,19 @@ export default {
   data: function() {
     return {
       frequency: 10,
+      numOfWorkers: 2,
       readerSize: {
         width: innerWidth,
         height: innerHeight
       },
       quaggaState: {
         inputStream: {
-          name: "Live",
           type: "LiveStream",
-          target: window.document.querySelector("#interactive"),
           constraints: {
             width: innerWidth,
             height: innerHeight,
-            facingMode: "environment"
+            facingMode: "environment",
+            aspectRatio: { min: 1, max: 2 }
           }
         },
         decoder: {
@@ -41,7 +41,7 @@ export default {
         locate: true,
         locator: {
           halfSample: true,
-          patchSize: "large"
+          patchSize: "medium"
         }
       }
     };
@@ -85,9 +85,10 @@ export default {
 </script>
 
 <style scoped>
-.viewPort {
+#scanner-wrapper {
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 .v-overlay {
   position: relative;

@@ -20,7 +20,9 @@
       </v-col>
     </v-row>
     <v-row v-show="isScanning">
-      <barcode-scanner :is-scanning="isScanning" @search="searchCamera" />
+      <v-col>
+          <barcode-scanner :is-scanning="isScanning" @search="searchCamera" />
+      </v-col>
     </v-row>
     <v-row align="center" justify="center">
       <v-col v-if="books.length === 0 && !isScanning" align="center">
