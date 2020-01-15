@@ -170,7 +170,7 @@ export default {
             );
     },
     countByTag(tag) {
-      let count = this.books.filter(book => book.tags === tag).length;
+      let count = this.filteredByTag(tag).length;
       return "(" + count + ")";
     },
     filteredByTag(tag) {

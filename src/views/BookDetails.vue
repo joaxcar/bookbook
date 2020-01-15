@@ -169,7 +169,7 @@ export default {
       book: {},
       read: 0,
       loading: true,
-      tags: ["Reading", "In bookshelf", "On loan", "Missing"]
+      tags: ["Reading", "Want to read", "Read", "On loan"]
     };
   },
   computed: {
