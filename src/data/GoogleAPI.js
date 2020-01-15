@@ -1,3 +1,4 @@
+import KEY from "./apiConfig";
 let BASE_URL = "https://www.googleapis.com/books/v1/volumes?";
 let BASE_URL_ID = "https://www.googleapis.com/books/v1/volumes";
 
@@ -44,6 +45,8 @@ const filter = `&fields=totalItems,items/id,items/volumeInfo(description,title,s
  * @returns {Promise<any>}
  */
 function getBooks(query, index) {
+  const key = "&key=" + KEY;
+  window.console.log(key);
   return fetch(`${BASE_URL}q=${query}${filter}&startIndex=${index}`)
     .then(processResponse)
     .then(ret => {

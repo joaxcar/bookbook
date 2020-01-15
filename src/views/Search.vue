@@ -20,7 +20,7 @@
         ></v-text-field>
       </v-col>
     </v-row>
-    <v-row v-show="isScanning">
+    <v-row v-if="isScanning">
       <v-col>
         <barcode-scanner :is-scanning="isScanning" @search="searchCamera" />
       </v-col>

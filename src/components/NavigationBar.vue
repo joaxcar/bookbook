@@ -11,9 +11,9 @@
     </v-toolbar-side-icon> -->
     <img src="@/assets/icons8-book-shelf-100-3.png" style="height: inherit;" />
     <v-toolbar-title>
-      <a href="/" class="white--text font-weight-black">
+      <router-link to="Welcome" class="white--text font-weight-black">
         {{ title }}
-      </a>
+      </router-link>
     </v-toolbar-title>
 
     <v-spacer />
