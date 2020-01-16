@@ -10,6 +10,7 @@
 
 <script>
 import Quagga from "quagga";
+import ISBN from "isbn-verify";
 
 export default {
   props: {
@@ -60,7 +61,7 @@ export default {
               window.console.log(result.codeResult.code);
               window.console.log("hej");
               let isbn = result.codeResult.code;
-              if (isbn.startsWith("978")) {
+              if (ISBN.Verify(isbn)) {
                 self.$emit("search", isbn);
                 self.stopScan();
               }
