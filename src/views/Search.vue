@@ -21,6 +21,7 @@
       </v-col>
     </v-row>
     <v-row v-show="isScanning">
+      {{ isScanning }}
       <v-col>
         <barcode-scanner :is-scanning="isScanning" @search="searchCamera" />
       </v-col>
@@ -67,16 +68,9 @@
               <div justify="center">
                 <v-card-actions>
                   <!-- todo CHANGE BTN WHEN BOOK ALREADY IN LIBRARY  -->
-                  <v-btn
-                    v-if="inLib(item)"
-                    @click="() => addBook(item)"
-                    outlined
-                    small
-                    color="purple"
+                  <v-btn v-if="!inLib(item)" text color="green"
+                    >In My Books ✔</v-btn
                   >
-                    Add to library
-                  </v-btn>
-                  <v-btn v-else text color="green">In My Books ✔</v-btn>
                 </v-card-actions>
               </div>
             </div>
@@ -102,7 +96,10 @@ export default {
     "barcode-scanner": BarcodeScanner
   },
   computed: {
-    ...mapState(["data"])
+    ...mapState(["data"]),
+    isScanning: function() {
+      return this.$route.params.type ? true : false;
+    }
   },
   data: function() {
     return {
@@ -113,8 +110,7 @@ export default {
       searchHits: null,
       lastSearch: "",
       library: [],
-      show: false,
-      isScanning: false
+      show: false
     };
   },
   created() {
@@ -125,25 +121,12 @@ export default {
       2000
     );
   },
-  activated() {
-    if (this.$route.params.type === "camera" && !this.isScanning) {
-      this.toggleScan();
-    }
-  },
   deactivated() {
     if (this.isScanning) {
       this.toggleScan();
     }
   },
-  watch: {
-    $route(to) {
-      if (to.params.type === "camera" && !this.isScanning) {
-        this.isScanning = !this.isScanning;
-      } else if (to.params.type !== "camera" && this.isScanning) {
-        this.isScanning = !this.isScanning;
-      }
-    }
-  },
+  watch: {},
   methods: {
     debounce: Debounce,
     toggleScan() {

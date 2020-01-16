@@ -4,9 +4,7 @@ let BASE_URL_ID = "https://www.googleapis.com/books/v1/volumes";
 
 function processResponse(response) {
   if (response.ok) {
-    if (response.json().totalItems > 0) {
-      return response.json();
-    } else throw "0 searchresults";
+    return response.json();
   }
   throw response;
 }
@@ -51,11 +49,11 @@ function getBooks(query, index) {
   window.console.log(key);
   return fetch(`${BASE_URL}q=${query}${filter}&startIndex=${index}`)
     .then(processResponse)
-    .catch(e => window.console.error("error from api: " + e))
     .then(ret => {
       const items = ret.items.map(data => makeData(data));
       return { totalItems: ret.totalItems, items };
-    });
+    })
+    .catch(e => window.console.error("error from api: " + e));
 }
 
 export function getBookById(id) {

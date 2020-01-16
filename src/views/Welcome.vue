@@ -69,10 +69,10 @@ export default {
       user: "user"
     }),
     start: function() {
-      return this.user.loggedIn ? "Get back" : "Get Started";
+      return this.user.loggedIn ? "To my books" : "Get Started";
     },
     startRoute: function() {
-      return this.user.loggedIn ? "MyBooks" : "Register";
+      return this.user.loggedIn ? "MyBooks" : "Search";
     }
   },
   data() {

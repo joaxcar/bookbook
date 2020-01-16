@@ -16,6 +16,11 @@ export default {
   props: {
     isScanning: Boolean
   },
+  mounted() {
+    if (this.isScanning) {
+      this.startScan();
+    }
+  },
   data: function() {
     return {
       frequency: 10,
