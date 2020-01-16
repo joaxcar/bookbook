@@ -21,6 +21,7 @@
       </v-col>
     </v-row>
     <v-row v-show="isScanning">
+      {{ isScanning }}
       <v-col>
         <barcode-scanner :is-scanning="isScanning" @search="searchCamera" />
       </v-col>

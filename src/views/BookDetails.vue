@@ -90,6 +90,7 @@
                   dense
                   half-increments
                   hover
+                  :readonly="inLib"
                   size="18"
                   @input="updateData"
                 ></v-rating>
