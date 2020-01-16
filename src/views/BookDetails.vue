@@ -45,34 +45,36 @@
             </v-row>
 
             <v-divider />
-
             <v-row>
               <v-col align="center">
                 <v-card-actions align="center">
                   <!-- todo CHANGE BTN WHEN BOOK ALREADY IN LIBRARY  -->
-                  <v-btn
-                    v-if="inLib"
-                    @click="() => addBook(book)"
-                    outlined
-                    small
-                    color="primary"
-                  >
-                    Add to library
-                  </v-btn>
-                  <v-menu v-else offset-y>
-                    <template v-slot:activator="{ on }">
-                      <v-btn small color="green" v-on="on" text>
-                        In My Books ✔
-                      </v-btn>
-                    </template>
-                    <v-list>
-                      <v-list-item>
-                        <v-btn small text @click="removeBook"
-                          >Remove from library</v-btn
-                        >
-                      </v-list-item>
-                    </v-list>
-                  </v-menu>
+                  <no-user-dialog v-if="!loggedIn" />
+                  <template v-else>
+                    <v-btn
+                      v-if="inLib"
+                      @click="() => addBook(book)"
+                      outlined
+                      small
+                      color="primary"
+                    >
+                      Add to library
+                    </v-btn>
+                    <v-menu v-else offset-y>
+                      <template v-slot:activator="{ on }">
+                        <v-btn small color="green" v-on="on" text>
+                          In My Books ✔
+                        </v-btn>
+                      </template>
+                      <v-list>
+                        <v-list-item>
+                          <v-btn small text @click="removeBook"
+                            >Remove from library</v-btn
+                          >
+                        </v-list-item>
+                      </v-list>
+                    </v-menu>
+                  </template>
                 </v-card-actions>
               </v-col>
             </v-row>
@@ -162,23 +164,32 @@
 
 <script>
 import { getBookById } from "@/data/GoogleAPI";
+import NoUserDialog from "@/components/NoUserDialog";
 import fs from "@/data/fs";
 export default {
   data() {
     return {
       book: {},
-      read: 0,
       loading: true,
       tags: ["Reading", "In bookshelf", "On loan", "Missing"]
     };
+  },
+  components: {
+    "no-user-dialog": NoUserDialog
   },
   computed: {
     id: function() {
       return this.$route.params.id;
     },
+    loggedIn: function() {
+      return this.$store.state.user.loggedIn;
+    },
     inLib: function() {
       return !(this.fromLib(this.id).length > 0);
     }
+  },
+  created() {
+    this.getBookInfo();
   },
   activated() {
     this.loading = true;
@@ -188,6 +199,9 @@ export default {
   deactivated() {},
   methods: {
     fromLib(id) {
+      if (!this.loggedIn) {
+        return [];
+      }
       return this.$store.state.data.books.filter(book => book.id === id);
     },
     addBook(book) {

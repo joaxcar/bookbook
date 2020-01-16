@@ -61,7 +61,9 @@
                 v-model="form.password"
               />
 
-              <v-btn @click="submit" class="btn btn-primary">Register</v-btn>
+              <v-btn @click="submit" color="primary" class="btn btn-primary"
+                >Register</v-btn
+              >
             </form>
           </v-card-text>
         </v-card>
