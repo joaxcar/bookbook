@@ -26,7 +26,7 @@
       <v-col cols="12">
         <div class="headline">
           {{ tag }}
-          <span class="font-weight-thin">({{ countByTag(tag) }})</span>
+          <span class="font-weight-thin">{{ countByTag(tag) }}</span>
         </div>
       </v-col>
       <template v-if="fronts">
@@ -139,7 +139,7 @@ export default {
       message: "",
       books: [],
       searchText: "",
-      tags: ["Reading", "In bookshelf", "On loan", "Missing", "No tag"],
+      tags: ["Reading", "Want to read", "Read", "On loan", "All"],
       fronts: false,
       rating: "4",
       fab: false,
@@ -173,7 +173,8 @@ export default {
             );
     },
     countByTag(tag) {
-      return this.books.filter(book => book.tags === tag).length;
+      let count = this.filteredByTag(tag).length;
+      return "(" + count + ")";
     },
     filteredByTag(tag) {
       return this.books.filter(b => b.tags.includes(tag));

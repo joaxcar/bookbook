@@ -1,9 +1,12 @@
+import KEY from "./apiConfig";
 let BASE_URL = "https://www.googleapis.com/books/v1/volumes?";
 let BASE_URL_ID = "https://www.googleapis.com/books/v1/volumes";
 
 function processResponse(response) {
   if (response.ok) {
-    return response.json();
+    if (response.json().totalItems > 0) {
+      return response.json();
+    } else throw "0 searchresults";
   }
   throw response;
 }
@@ -33,7 +36,7 @@ function makeData(d) {
     rating: 0,
     review: "",
     comment: "",
-    tags: ["No tag"],
+    tags: ["All"],
     progress: 0
   };
 }
@@ -44,8 +47,11 @@ const filter = `&fields=totalItems,items/id,items/volumeInfo(description,title,s
  * @returns {Promise<any>}
  */
 function getBooks(query, index) {
+  const key = "&key=" + KEY;
+  window.console.log(key);
   return fetch(`${BASE_URL}q=${query}${filter}&startIndex=${index}`)
     .then(processResponse)
+    .catch(e => window.console.error("error from api: " + e))
     .then(ret => {
       const items = ret.items.map(data => makeData(data));
       return { totalItems: ret.totalItems, items };

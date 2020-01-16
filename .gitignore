@@ -19,7 +19,7 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
-.diff
 .firebase
-
+apiConfig.js
+o.diff
 #service account apikeys
