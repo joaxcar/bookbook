@@ -81,7 +81,7 @@ export default new Vuex.Store({
         .signOut()
         .then(
           () => {
-            router.push("Welcome");
+            router.push("/welcome");
           },
           function(error) {
             this.console.log("Sign out error: ", error);

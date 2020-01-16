@@ -43,8 +43,9 @@
                 @keydown.enter="submit"
                 v-model="form.password"
               />
-
-              <v-btn @click="submit" class="btn btn-primary">Sign in</v-btn>
+              <v-btn @click="submit" color="primary" class="btn btn-primary"
+                >Sign in</v-btn
+              >
             </form>
           </v-card-text>
         </v-card>
@@ -72,7 +73,7 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.form.email, this.form.password)
         .then(() => {
-          this.$router.replace({ name: "MyBooks" });
+          this.$router.go(-1);
         })
         .catch(err => {
           this.error = err.message;

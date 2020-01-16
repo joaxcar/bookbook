@@ -67,16 +67,9 @@
               <div justify="center">
                 <v-card-actions>
                   <!-- todo CHANGE BTN WHEN BOOK ALREADY IN LIBRARY  -->
-                  <v-btn
-                    v-if="inLib(item)"
-                    @click="() => addBook(item)"
-                    outlined
-                    small
-                    color="purple"
+                  <v-btn v-if="!inLib(item)" text color="green"
+                    >In My Books ✔</v-btn
                   >
-                    Add to library
-                  </v-btn>
-                  <v-btn v-else text color="green">In My Books ✔</v-btn>
                 </v-card-actions>
               </div>
             </div>
