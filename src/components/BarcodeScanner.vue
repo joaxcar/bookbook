@@ -68,7 +68,7 @@ export default {
               let isbn = result.codeResult.code;
               if (ISBN.Verify(isbn)) {
                 self.$emit("search", isbn);
-                self.stopScan();
+                // self.stopScan();
               }
             }
           }.bind(this)
