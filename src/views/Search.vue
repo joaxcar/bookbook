@@ -171,7 +171,9 @@ export default {
       window.console.log("traff: " + isbn);
       this.searchText = "isbn:" + isbn;
       getBooks(this.searchText, 0).then(ret => {
-        this.$router.push("/details/" + ret.items[0].id);
+        if (ret.totalItems > 0) {
+          this.$router.push("/details/" + ret.items[0].id);
+        }
       });
       this.toggleScan();
     },

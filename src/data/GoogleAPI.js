@@ -50,7 +50,10 @@ function getBooks(query, index) {
   return fetch(`${BASE_URL}q=${query}${filter}&startIndex=${index}`)
     .then(processResponse)
     .then(ret => {
-      const items = ret.items.map(data => makeData(data));
+      let items = [];
+      if (ret.totalItems > 0) {
+        items = ret.items.map(data => makeData(data));
+      }
       return { totalItems: ret.totalItems, items };
     })
     .catch(e => window.console.error("error from api: " + e));

@@ -58,13 +58,10 @@ export default {
         if (isbns) {
           let isbn = isbns.codeResult.code;
           if (!times.get(isbn)) {
-            window.console.log(isbn);
             times.set(isbn, { val: 1 });
           } else if (times.get(isbn).val > 10) {
-            window.console.log(isbn);
             func(isbns);
           } else {
-            window.console.log(times);
             times.get(isbn).val++;
           }
         }
@@ -77,7 +74,6 @@ export default {
           window.console.log(err);
           return;
         }
-        window.console.log("init complete");
         Quagga.start();
         Quagga.onDetected(
           self
@@ -95,7 +91,6 @@ export default {
       });
     },
     stopScan() {
-      window.console.log("av");
       if (this.isScanning) {
         Quagga.stop();
       }
