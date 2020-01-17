@@ -22,7 +22,7 @@
         ></v-text-field>
       </v-col>
     </v-row>
-    <v-row v-if="loggedIn" justify="center">
+    <v-row v-if="!loggedIn" justify="center">
       <v-card elevation="0">
         <v-card-title class="headline"> Store some books?</v-card-title>
         <v-card-text
