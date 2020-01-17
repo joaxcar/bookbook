@@ -80,10 +80,10 @@
           </router-link>
         </v-card>
       </v-col>
-      <v-btn v-if="books.length > 0" @click="loadMoreBooks"
-        >Load more results</v-btn
-      >
     </v-row>
+    <v-btn v-if="books.length > 0" @click="loadMoreBooks"
+      >Load more results</v-btn
+    >
   </v-container>
 </template>
 
@@ -168,6 +168,7 @@ export default {
       });
     },
     searchCamera(isbn) {
+      window.console.log("traff: " + isbn);
       this.searchText = "isbn:" + isbn;
       getBooks(this.searchText, 0).then(ret => {
         this.$router.push("/details/" + ret.items[0].id);

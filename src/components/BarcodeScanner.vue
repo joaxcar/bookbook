@@ -26,7 +26,7 @@ export default {
   },
   data: function() {
     return {
-      frequency: 10,
+      frequency: 2,
       numOfWorkers: 1,
       readerSize: {
         width: innerWidth,
@@ -65,9 +65,9 @@ export default {
         Quagga.onDetected(
           function(result) {
             if (result) {
-              window.console.log(result.codeResult.code);
               let isbn = result.codeResult.code;
               if (ISBN.Verify(isbn)) {
+                window.console.log(result.codeResult.code);
                 self.$emit("search", isbn);
                 // self.stopScan();
               }
