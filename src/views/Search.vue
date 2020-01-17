@@ -37,7 +37,7 @@
       </v-col>
       <v-col v-else-if="!isScanning" cols="12" md="8">
         <v-card-text class="font-weight-thin"
-          >Results for: "{{ lastSearch }}" ({{
+          >Results for: "{{ searchText }}" ({{
             this.searchHits
           }}
           hits)</v-card-text
@@ -110,7 +110,7 @@ export default {
       books: [],
       numberOfBooks: 0,
       searchText: "",
-      searchHits: 0,
+      searchHits: null,
       lastSearch: "",
       library: [],
       show: false
@@ -172,7 +172,7 @@ export default {
       getBooks(this.searchText, 0).then(ret => {
         this.$router.push("/details/" + ret.items[0].id);
       });
-      this.searchText = "";
+      this.toggleScan();
     },
     addBook(book) {
       if (!this.data.books.some(item => item.id === book.id)) fs.addBook(book);
