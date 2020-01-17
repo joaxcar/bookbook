@@ -10,7 +10,6 @@
 
 <script>
 import Quagga from "quagga";
-import ISBN from "isbn-verify";
 
 export default {
   props: {
@@ -53,6 +52,24 @@ export default {
     };
   },
   methods: {
+    group(func) {
+      let times = new Map();
+      return isbns => {
+        if (isbns) {
+          let isbn = isbns.codeResult.code;
+          if (!times.get(isbn)) {
+            window.console.log(isbn);
+            times.set(isbn, { val: 1 });
+          } else if (times.get(isbn).val > 10) {
+            window.console.log(isbn);
+            func(isbns);
+          } else {
+            window.console.log(times);
+            times.get(isbn).val++;
+          }
+        }
+      };
+    },
     startScan() {
       let self = this;
       Quagga.init(this.quaggaState, function(err) {
@@ -63,16 +80,17 @@ export default {
         window.console.log("init complete");
         Quagga.start();
         Quagga.onDetected(
-          function(result) {
-            if (result) {
-              let isbn = result.codeResult.code;
-              if (ISBN.Verify(isbn)) {
-                window.console.log(result.codeResult.code);
-                self.$emit("search", isbn);
-                // self.stopScan();
-              }
-            }
-          }.bind(this)
+          self
+            .group(
+              function(result) {
+                if (result) {
+                  let isbn = result.codeResult.code;
+                  self.$emit("search", isbn);
+                  // self.stopScan();
+                }
+              }.bind(this)
+            )
+            .bind(self)
         );
       });
     },
