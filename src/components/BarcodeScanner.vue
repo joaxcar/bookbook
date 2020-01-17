@@ -78,7 +78,9 @@ export default {
     },
     stopScan() {
       window.console.log("av");
-      Quagga.stop();
+      if (this.isScanning) {
+        Quagga.stop();
+      }
     }
   },
   watch: {
