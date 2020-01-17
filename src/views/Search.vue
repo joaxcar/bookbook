@@ -84,9 +84,11 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-btn v-if="books.length > 0" @click="loadMoreBooks"
-      >Load more results</v-btn
-    >
+    <v-row justify="center">
+      <v-btn v-if="books.length > 0" @click="loadMoreBooks"
+        >Load more results</v-btn
+      >
+    </v-row>
   </v-container>
 </template>
 

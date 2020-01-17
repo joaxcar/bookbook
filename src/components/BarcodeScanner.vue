@@ -1,8 +1,10 @@
 <template>
   <div id="interactive" class="viewport">
     <v-overlay z-index="2">
-      <div class="overlay">
-        <v-icon align="center" size="70">mdi-barcode-scan</v-icon>
+      <div class="overlay" align="center" justify="center">
+        <v-icon align="center" justify="center" size="70"
+          >mdi-barcode-scan</v-icon
+        >
       </div>
     </v-overlay>
   </div>
@@ -81,8 +83,8 @@ export default {
               function(result) {
                 if (result) {
                   let isbn = result.codeResult.code;
+                  self.stopScan();
                   self.$emit("search", isbn);
-                  // self.stopScan();
                 }
               }.bind(this)
             )
