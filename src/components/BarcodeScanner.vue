@@ -55,16 +55,12 @@ export default {
       let self = this;
       Quagga.init(this.quaggaState, function(err) {
         if (err) {
-          window.console.log(err);
           return;
         }
-        window.console.log("init complete");
         Quagga.start();
         Quagga.onDetected(
           function(result) {
             if (result) {
-              window.console.log(result.codeResult.code);
-              window.console.log("hej");
               let isbn = result.codeResult.code;
               if (ISBN.Verify(isbn)) {
                 self.$emit("search", isbn);
@@ -81,7 +77,6 @@ export default {
   },
   watch: {
     isScanning: function() {
-      window.console.log(this.isScanning);
       this.isScanning === false ? this.stopScan() : this.startScan();
     }
   }

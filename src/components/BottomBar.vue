@@ -34,8 +34,6 @@ export default {
   methods: {},
   watch: {
     $route(to) {
-      window.console.log(to.params, this.activeBtn);
-    }
   }
 };
 </script>

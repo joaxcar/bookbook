@@ -83,9 +83,7 @@ export default new Vuex.Store({
           () => {
             router.push("/welcome");
           },
-          function(error) {
-            this.console.log("Sign out error: ", error);
-          }
+          function(error) {}
         );
     },
     // TODO: set security rules not to set if same doc exists

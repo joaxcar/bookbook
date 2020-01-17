@@ -143,7 +143,6 @@ export default {
         return;
       }
       getBooks(this.searchText, 0).then(ret => {
-        window.console.log(ret);
         this.searchHits = ret.totalItems;
         this.books = ret.items.map(item => ({
           ...item,

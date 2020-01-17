@@ -13,9 +13,7 @@ const fs = {
       .doc(volumeInfo.id)
       .set(volumeInfo)
       .catch(err => window.console.log("error: " + err))
-      .then(() => {
-        //window.console.log("added DEL 2 " + volumeInfo.title);
-      });
+      .then(() => {});
   },
   removeBook(id) {
     db.collection("users")
@@ -28,7 +26,6 @@ const fs = {
       .catch(err => window.console.log("error: " + err));
   },
   modifyBook(id, data) {
-    window.console.log(data);
     db.collection("users")
       // suggestion: maybe get uid from store instead of auth()
       // also could use email as unique identifer instead
@@ -58,7 +55,6 @@ const fs = {
             store.dispatch("addBook", change.doc.data());
           }
           if (change.type === "modified") {
-            window.console.log("Modified: ", change.doc.data());
             store.dispatch("updateBook", change.doc.data());
           }
           if (change.type === "removed") {

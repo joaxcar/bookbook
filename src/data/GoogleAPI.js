@@ -46,7 +46,6 @@ const filter = `&fields=totalItems,items/id,items/volumeInfo(description,title,s
  */
 function getBooks(query, index) {
   const key = "&key=" + KEY;
-  window.console.log(key);
   return fetch(`${BASE_URL}q=${query}${filter}&startIndex=${index}`)
     .then(processResponse)
     .then(ret => {
