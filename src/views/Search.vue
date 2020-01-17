@@ -6,6 +6,7 @@
           label="Search for isbn/title/author/publisher"
           filled
           rounded
+          :error-messages="error"
           v-model="searchText"
           append-outer-icon="mdi-send"
           :append-icon="isScanning ? 'mdi-camera-off' : 'mdi-camera'"
@@ -14,8 +15,10 @@
           prepend-inner-icon="mdi-book-open-page-variant"
           type="text"
           @keydown.enter="searchForBooks"
+          @input="error = null"
           @click:append-outer="searchForBooks"
           @click:append="toggleScan"
+          @click:clear="error = null"
           ref="textin"
         ></v-text-field>
       </v-col>
@@ -113,7 +116,8 @@ export default {
       searchHits: null,
       lastSearch: "",
       library: [],
-      show: false
+      show: false,
+      error: null
     };
   },
   created() {
@@ -124,7 +128,9 @@ export default {
       2000
     );
   },
-  deactivated() {},
+  deactivated() {
+    this.error = null;
+  },
   watch: {},
   beforeRouteLeave(to, from, next) {
     this.$refs.scan.stopScan();
@@ -173,6 +179,8 @@ export default {
       getBooks(this.searchText, 0).then(ret => {
         if (ret.totalItems > 0) {
           this.$router.push("/details/" + ret.items[0].id);
+        } else {
+          this.error = "No search hits for IMDB number, try again";
         }
       });
       this.toggleScan();
