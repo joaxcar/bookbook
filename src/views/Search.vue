@@ -21,9 +21,12 @@
       </v-col>
     </v-row>
     <v-row v-show="isScanning">
-      {{ isScanning }}
-      <v-col>
-        <barcode-scanner :is-scanning="isScanning" @search="searchCamera" />
+      <v-col class="test ma-0 pa-0">
+        <barcode-scanner
+          :is-scanning="isScanning"
+          @search="searchCamera"
+          ref="scan"
+        />
       </v-col>
     </v-row>
     <v-row align="center" justify="center">
@@ -121,12 +124,12 @@ export default {
       2000
     );
   },
-  deactivated() {
-    if (this.isScanning) {
-      this.toggleScan();
-    }
-  },
+  deactivated() {},
   watch: {},
+  beforeRouteLeave(to, from, next) {
+    this.$refs.scan.stopScan();
+    next();
+  },
   methods: {
     debounce: Debounce,
     toggleScan() {
@@ -183,3 +186,11 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.test {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+</style>

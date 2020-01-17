@@ -20,10 +20,13 @@ export default {
       this.startScan();
     }
   },
+  deactivated() {
+    this.stopScan();
+  },
   data: function() {
     return {
       frequency: 10,
-      numOfWorkers: 2,
+      numOfWorkers: 1,
       readerSize: {
         width: innerWidth,
         height: innerHeight
@@ -34,8 +37,7 @@ export default {
           constraints: {
             width: innerWidth,
             height: innerHeight,
-            facingMode: "environment",
-            aspectRatio: { min: 1, max: 2 }
+            facingMode: "environment"
           }
         },
         decoder: {
@@ -63,7 +65,6 @@ export default {
           function(result) {
             if (result) {
               window.console.log(result.codeResult.code);
-              window.console.log("hej");
               let isbn = result.codeResult.code;
               if (isbn.startsWith("978")) {
                 self.$emit("search", isbn);
@@ -75,12 +76,12 @@ export default {
       });
     },
     stopScan() {
+      window.console.log("av");
       Quagga.stop();
     }
   },
   watch: {
     isScanning: function() {
-      window.console.log(this.isScanning);
       this.isScanning === false ? this.stopScan() : this.startScan();
     }
   }
@@ -88,11 +89,6 @@ export default {
 </script>
 
 <style scoped>
-#interactive.viewport {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
 .v-overlay {
   position: relative;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
