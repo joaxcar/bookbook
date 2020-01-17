@@ -24,13 +24,21 @@
               {{ start }}
             </v-btn>
           </div>
-          <v-btn small text to="/register" color="white" class="pr-0 text-none">
-            register
-          </v-btn>
-          /
-          <v-btn small text to="/signin" color="white" class="pl-0 text-none">
-            sign in
-          </v-btn>
+          <template v-if="!this.user.loggedIn">
+            <v-btn
+              small
+              text
+              to="/register"
+              color="white"
+              class="pr-0 text-none"
+            >
+              register
+            </v-btn>
+            /
+            <v-btn small text to="/signin" color="white" class="pl-0 text-none">
+              sign in
+            </v-btn>
+          </template>
         </v-col>
       </v-row>
     </section>
