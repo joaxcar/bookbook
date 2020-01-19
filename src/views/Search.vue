@@ -181,7 +181,7 @@ export default {
         if (ret.totalItems > 0) {
           this.$router.push("/details/" + ret.items[0].id);
         } else {
-          this.error = "No search hits for IMDB number, try again";
+          this.error = "No search hits for ISBN number, try again";
         }
       });
       this.toggleScan();
