@@ -31,9 +31,6 @@ export default {
       activeBtn: null
     };
   },
-  methods: {},
-  watch: {
-    $route(to) {
-  }
+  methods: {}
 };
 </script>

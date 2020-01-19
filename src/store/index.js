@@ -79,12 +79,9 @@ export default new Vuex.Store({
       firebase
         .auth()
         .signOut()
-        .then(
-          () => {
-            router.push("/welcome");
-          },
-          function(error) {}
-        );
+        .then(() => {
+          router.push("/welcome");
+        });
     },
     // TODO: set security rules not to set if same doc exists
     addBook({ commit }, volumeInfo) {

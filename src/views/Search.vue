@@ -6,6 +6,7 @@
           label="Search for isbn/title/author/publisher"
           filled
           rounded
+          :error-messages="error"
           v-model="searchText"
           append-outer-icon="mdi-send"
           :append-icon="isScanning ? 'mdi-camera-off' : 'mdi-camera'"
@@ -14,16 +15,21 @@
           prepend-inner-icon="mdi-book-open-page-variant"
           type="text"
           @keydown.enter="searchForBooks"
+          @input="error = null"
           @click:append-outer="searchForBooks"
           @click:append="toggleScan"
+          @click:clear="error = null"
           ref="textin"
         ></v-text-field>
       </v-col>
     </v-row>
     <v-row v-show="isScanning">
-      {{ isScanning }}
-      <v-col>
-        <barcode-scanner :is-scanning="isScanning" @search="searchCamera" />
+      <v-col class="test ma-0 pa-0">
+        <barcode-scanner
+          :is-scanning="isScanning"
+          @search="searchCamera"
+          ref="scan"
+        />
       </v-col>
     </v-row>
     <v-row align="center" justify="center">
@@ -77,6 +83,8 @@
           </router-link>
         </v-card>
       </v-col>
+    </v-row>
+    <v-row justify="center">
       <v-btn v-if="books.length > 0" @click="loadMoreBooks"
         >Load more results</v-btn
       >
@@ -110,7 +118,8 @@ export default {
       searchHits: null,
       lastSearch: "",
       library: [],
-      show: false
+      show: false,
+      error: null
     };
   },
   created() {
@@ -122,11 +131,13 @@ export default {
     );
   },
   deactivated() {
-    if (this.isScanning) {
-      this.toggleScan();
-    }
+    this.error = null;
   },
   watch: {},
+  beforeRouteLeave(to, from, next) {
+    this.$refs.scan.stopScan();
+    next();
+  },
   methods: {
     debounce: Debounce,
     toggleScan() {
@@ -164,9 +175,14 @@ export default {
       });
     },
     searchCamera(isbn) {
+      window.console.log("traff: " + isbn);
       this.searchText = "isbn:" + isbn;
       getBooks(this.searchText, 0).then(ret => {
-        this.$router.push("/details/" + ret.items[0].id);
+        if (ret.totalItems > 0) {
+          this.$router.push("/details/" + ret.items[0].id);
+        } else {
+          this.error = "No search hits for IMDB number, try again";
+        }
       });
       this.toggleScan();
     },
@@ -182,3 +198,11 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.test {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+</style>

@@ -6,6 +6,7 @@
           label="Filter books"
           filled
           rounded
+          :disabled="!loggedIn"
           v-model="searchText"
           prepend-inner-icon="mdi-magnify"
           clear-icon="mdi-close-circle"
@@ -21,8 +22,34 @@
         ></v-text-field>
       </v-col>
     </v-row>
+    <v-row v-if="!loggedIn" justify="center">
+      <v-card elevation="0">
+        <v-card-title class="headline"> Store some books?</v-card-title>
+        <v-card-text
+          >Please login or register an account to start adding books to your
+          shelf!</v-card-text
+        >
 
-    <v-row align="center" justify="start" v-for="tag in tags" :key="tag">
+        <v-card-actions>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="dialog = false"
+            to="/register"
+            >Register</v-btn
+          >
+          <v-spacer />
+          <v-btn
+            color="green darken-1"
+            text
+            @click="dialog = false"
+            to="/signin"
+            >Sign in</v-btn
+          >
+        </v-card-actions>
+      </v-card>
+    </v-row>
+    <v-row v-else align="center" justify="start" v-for="tag in tags" :key="tag">
       <v-col cols="12">
         <div class="headline">
           {{ tag }}
@@ -132,7 +159,10 @@ import Debounce from "@/utils/debounce";
 import { mapState } from "vuex";
 export default {
   computed: {
-    ...mapState(["data"])
+    ...mapState(["data"]),
+    loggedIn: function() {
+      return this.$store.state.user.loggedIn;
+    }
   },
   data: function() {
     return {

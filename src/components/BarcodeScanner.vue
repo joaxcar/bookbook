@@ -1,8 +1,10 @@
 <template>
   <div id="interactive" class="viewport">
     <v-overlay z-index="2">
-      <div class="overlay">
-        <v-icon align="center" size="70">mdi-barcode-scan</v-icon>
+      <div class="overlay" align="center" justify="center">
+        <v-icon align="center" justify="center" size="70"
+          >mdi-barcode-scan</v-icon
+        >
       </div>
     </v-overlay>
   </div>
@@ -10,7 +12,6 @@
 
 <script>
 import Quagga from "quagga";
-import ISBN from "isbn-verify";
 
 export default {
   props: {
@@ -21,10 +22,13 @@ export default {
       this.startScan();
     }
   },
+  deactivated() {
+    this.stopScan();
+  },
   data: function() {
     return {
-      frequency: 10,
-      numOfWorkers: 2,
+      frequency: 2,
+      numOfWorkers: 1,
       readerSize: {
         width: innerWidth,
         height: innerHeight
@@ -35,8 +39,7 @@ export default {
           constraints: {
             width: innerWidth,
             height: innerHeight,
-            facingMode: "environment",
-            aspectRatio: { min: 1, max: 2 }
+            facingMode: "environment"
           }
         },
         decoder: {
@@ -51,6 +54,21 @@ export default {
     };
   },
   methods: {
+    group(func) {
+      let times = new Map();
+      return isbns => {
+        if (isbns) {
+          let isbn = isbns.codeResult.code;
+          if (!times.get(isbn)) {
+            times.set(isbn, { val: 1 });
+          } else if (times.get(isbn).val > 10) {
+            func(isbns);
+          } else {
+            times.get(isbn).val++;
+          }
+        }
+      };
+    },
     startScan() {
       let self = this;
       Quagga.init(this.quaggaState, function(err) {
@@ -59,20 +77,24 @@ export default {
         }
         Quagga.start();
         Quagga.onDetected(
-          function(result) {
-            if (result) {
-              let isbn = result.codeResult.code;
-              if (ISBN.Verify(isbn)) {
-                self.$emit("search", isbn);
-                // self.stopScan();
-              }
-            }
-          }.bind(this)
+          self
+            .group(
+              function(result) {
+                if (result) {
+                  let isbn = result.codeResult.code;
+                  self.stopScan();
+                  self.$emit("search", isbn);
+                }
+              }.bind(this)
+            )
+            .bind(self)
         );
       });
     },
     stopScan() {
-      Quagga.stop();
+      if (this.isScanning) {
+        Quagga.stop();
+      }
     }
   },
   watch: {
@@ -84,16 +106,8 @@ export default {
 </script>
 
 <style scoped>
-#interactive.viewport {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
 .v-overlay {
   position: relative;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  text-transform: uppercase;
-  font-weight: bold;
 }
 
 .overlay {

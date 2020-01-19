@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-btn absolute fixed right fab color="primary" @click="$router.go(-1)">
-      <v-icon>mdi-undo</v-icon>
+      <v-icon>mdi-close</v-icon>
     </v-btn>
     <template id="scroll-area-2">
       <v-row align="center" justify="center">
