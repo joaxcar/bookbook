@@ -14,7 +14,7 @@
     "isbn-validate": "^1.0.3",
     "isbn-verify": "^1.0.1",
     "quagga": "^0.12.1",
-    "vue": "^2.6.10",
+    "vue": "^3.0.0",
     "vue-quaggajs": "^1.0.10",
     "vue-router": "^3.1.3",
     "vuetify": "^2.1.0",
